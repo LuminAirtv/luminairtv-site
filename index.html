@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b+/kJbrnVwPl4o2qqtR6c5VnL14Q57S2NxyB/Z6corw=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-Prt1q/Ep/7u+wXn0jwwDwRa1n2HeGxq7Wff+Dwc+Tgc=' https://cdn.jsdelivr.net; style-src 'sha256-+Zx335K+BzwB9ugOKzJmQ7o/jjS5MRYYFM/wDFRwoKQ=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b+/kJbrnVwPl4o2qqtR6c5VnL14Q57S2NxyB/Z6corw=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-z23xvmLCqWAV2hUpczHjS7b/71r7ZB/2xSe8c6fmBqQ=' https://cdn.jsdelivr.net; style-src 'sha256-43l5rVTne3K/lZVrlOp0Y0ujUR21QrH/yNERJjrSDKw=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -54,7 +54,7 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 .slogan { margin: 0; font: 800 clamp(30px, 5vw, 58px)/1.02 var(--display); letter-spacing: .005em; text-wrap: balance; }
 .squeeze { display: inline-block; transform: scaleX(.81); white-space: nowrap; }
 .lede { margin: 0; max-width: 40em; color: var(--ink-soft); font-weight: 700; font-size: clamp(12px, 1.3vw, 14px); letter-spacing: .09em; text-transform: uppercase; }
-.stage-wrap { grid-area: stage; position: relative; min-height: 380px; }
+.stage-wrap { grid-area: stage; position: relative; z-index: 2; min-height: 380px; }
 #stage { position: absolute; inset: 0; }
 #stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
 #stage canvas:active { cursor: grabbing; }
@@ -556,12 +556,14 @@ async function start() {
   // 'container' (scrolling page): only the circle of the sphere takes drags, pinches and the wheel, so around it the page
   // scrolls as usual. On touch screens vertical swipes on the sphere scroll the page too, sideways ones turn the sphere.
   const layout = ui.stage.dataset.layout || 'viewport';
+  // The touch circle sits in a box clipped to the stage, so even a zoomed sphere never covers the buttons for touches.
   let hit = null;
   if (layout === 'container') {
-    hit = document.createElement('div');
-    Object.assign(hit.style, { position: 'absolute', borderRadius: '50%', cursor: 'grab' });
-    renderer.domElement.style.pointerEvents = 'none'; ui.stage.style.overflow = 'hidden';
-    ui.stage.append(hit);
+    const clip = document.createElement('div'); hit = document.createElement('div');
+    Object.assign(clip.style, { position: 'absolute', inset: '0', overflow: 'hidden', pointerEvents: 'none' });
+    Object.assign(hit.style, { position: 'absolute', borderRadius: '50%', cursor: 'grab', pointerEvents: 'auto' });
+    renderer.domElement.style.pointerEvents = 'none';
+    clip.append(hit); ui.stage.append(clip);
   }
   const controls = new OrbitControls(camera, hit || renderer.domElement);
   controls.enableDamping = true; controls.enablePan = false; controls.rotateSpeed = .75;
@@ -573,11 +575,11 @@ async function start() {
   }
 
   // The touch circle follows the sphere's size on screen as it is zoomed, from the camera distance.
-  let hitKey = '';
+  let hitKey = '', canvasH = 1;
   function placeHit() {
     if (!hit) return;
     const w = ui.stage.clientWidth, h = ui.stage.clientHeight;
-    const r = Math.round(h / 2 * Math.tan(Math.asin(Math.min(1, R / camera.position.length()))) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1.04);
+    const r = Math.round(canvasH / 2 * Math.tan(Math.asin(Math.min(1, R / camera.position.length()))) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1.04);
     const key = `${w} ${h} ${r}`;
     if (key === hitKey) return;
     hitKey = key;
@@ -585,19 +587,26 @@ async function start() {
   }
 
   // Sphere size. 'viewport' (one-screen page): fit the free band between the slogan and the controls and centre it there.
-  // 'container' (scrolling page): fill the stage box.
+  // 'container' (scrolling page): fill the stage box. The canvas reaches past the stage, across the page and almost half a
+  // stage up and down, so a zoomed sphere draws over the slogan and the controls instead of being cut at the stage edge;
+  // the camera view is shifted so the sphere stays centred on the stage.
   function fit() {
     const w = ui.stage.clientWidth, h = ui.stage.clientHeight;
     if (!w || !h) return;
-    renderer.setSize(w, h, false); camera.aspect = w / h;
     let px;
-    if (layout === 'container') { px = Math.min(w, h) * .44; camera.clearViewOffset(); }
-    else {
+    if (layout === 'container') {
+      const box = ui.stage.getBoundingClientRect(), cw = document.documentElement.clientWidth, ext = Math.round(h * .45), ch = h + 2 * ext;
+      const cx = box.left + w / 2, fw = 2 * Math.max(cx, cw - cx);
+      Object.assign(renderer.domElement.style, { position: 'absolute', left: `${-box.left}px`, top: `${-ext}px`, width: `${cw}px`, height: `${ch}px` });
+      renderer.setSize(cw, ch, false); camera.aspect = fw / ch; camera.setViewOffset(fw, ch, fw / 2 - cx, 0, cw, ch);
+      px = Math.min(w, h) * .44; canvasH = ch;
+    } else {
+      renderer.setSize(w, h, false); camera.aspect = w / h;
       const top = document.querySelector('.brand').getBoundingClientRect().bottom, bottom = document.querySelector('.dock').getBoundingClientRect().top;
       const band = Math.max(bottom - top, h * .4); px = Math.min(band * .47, w * .41);
-      camera.setViewOffset(w, h, 0, h / 2 - (top + bottom) / 2, w, h);
+      camera.setViewOffset(w, h, 0, h / 2 - (top + bottom) / 2, w, h); canvasH = h;
     }
-    const d = R / Math.sin(Math.atan(px / (h / 2) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))));
+    const d = R / Math.sin(Math.atan(px / (canvasH / 2) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))));
     controls.minDistance = d * .55; controls.maxDistance = d * 1.9;
     camera.position.setLength(d);
   }
