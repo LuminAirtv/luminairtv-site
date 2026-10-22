@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b+/kJbrnVwPl4o2qqtR6c5VnL14Q57S2NxyB/Z6corw=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-1VbIW0xLTBYWs7c8u4usFdKtHVjueqyou9UeurmGslE=' https://cdn.jsdelivr.net; style-src 'sha256-5k65CtC5b8t1SRZyBqjNCK1kRsodsct1ECkET55E5JQ=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b+/kJbrnVwPl4o2qqtR6c5VnL14Q57S2NxyB/Z6corw=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-Prt1q/Ep/7u+wXn0jwwDwRa1n2HeGxq7Wff+Dwc+Tgc=' https://cdn.jsdelivr.net; style-src 'sha256-+Zx335K+BzwB9ugOKzJmQ7o/jjS5MRYYFM/wDFRwoKQ=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -130,6 +130,7 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-weight: 700; font-size: 13px; line-height: 1.35; letter-spacing: .03em;
 }
 .panel h2 { margin: 0; font: 800 18px/1.1 var(--display); letter-spacing: .01em; }
+.panel h2.sub { padding-top: 14px; border-top: 1px solid var(--edge); }
 .field { display: grid; gap: 8px; }
 .field > span { display: flex; justify-content: space-between; gap: 8px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; font-size: 11px; }
 .field output { color: var(--ink); font-variant-numeric: tabular-nums; }
@@ -253,7 +254,7 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
         <button class="btn icon" id="sound" type="button" disabled aria-pressed="true" aria-label="Mute" title="Sound">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path id="sound-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path id="sound-off" d="M16 9.5l5 5M21 9.5l-5 5" hidden/></svg>
         </button>
-        <button class="btn icon" id="proj-toggle" type="button" aria-expanded="false" aria-controls="proj-panel" aria-label="Projector settings" title="Projector settings">
+        <button class="btn icon" id="proj-toggle" type="button" aria-expanded="false" aria-controls="proj-panel" aria-label="Video settings" title="Video settings">
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="8" width="13" height="8" rx="2"/><circle cx="11.5" cy="12" r="2.2"/><path d="M15.5 10.5l6-2.5M15.5 13.5l6 2.5"/></svg>
         </button>
       </div>
@@ -372,8 +373,19 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
   </footer>
 </main>
 
-<section class="panel" id="proj-panel" aria-label="Virtual projector" hidden>
-  <h2>Virtual projector</h2>
+<section class="panel" id="proj-panel" aria-label="Video settings" hidden>
+  <h2>Video on the sphere</h2>
+  <div class="field">
+    <span>Framing</span>
+    <div class="seg" id="fit" role="group" aria-label="Framing">
+      <button type="button" data-fit="fill" aria-pressed="true">Fill screen</button>
+      <button type="button" data-fit="whole" aria-pressed="false">Whole video</button>
+    </div>
+  </div>
+  <label class="field" for="spread"><span>Edges <output id="spread-out" for="spread">70% even</output></span>
+    <input id="spread" type="range" min="0" max="100" step="5" value="70"></label>
+  <p class="note">At 0% the video looks flat from straight ahead but stretches at the edges. At 100% it lies evenly over the whole screen.</p>
+  <h2 class="sub">Virtual projector</h2>
   <div class="field">
     <span>Projector frame</span>
     <div class="seg" id="res" role="group" aria-label="Projector frame">
@@ -391,7 +403,7 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
     <figcaption id="frame-caption">What the projector receives · 1280 × 800</figcaption>
   </figure>
   <p class="readout" id="readout"></p>
-  <p class="note">Lens field and depth are estimates until the test chart is checked on the real sphere.</p>
+  <p class="note">These settings prepare the file for the real projector. The converter makes up for the lens, so the picture on the sphere stays the same. Lens field and depth are estimates until the test chart is checked on the real sphere.</p>
 </section>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="YouTube video" hidden>
@@ -514,7 +526,7 @@ if (chartOnly) {
 
 async function start() {
   const ui = { stage: $('stage'), loading: $('loading'), pick: $('pick'), play: $('play'), sound: $('sound'), file: $('video-file'), status: $('status'), hint: $('hint'),
-    toggle: $('proj-toggle'), panel: $('proj-panel'), fov: $('lens-fov'), depth: $('lens-depth'), chart: $('chart'), preview: $('frame-preview'), caption: $('frame-caption'), readout: $('readout') };
+    toggle: $('proj-toggle'), panel: $('proj-panel'), spread: $('spread'), fov: $('lens-fov'), depth: $('lens-depth'), chart: $('chart'), preview: $('frame-preview'), caption: $('frame-caption'), readout: $('readout') };
   const say = (text, isError = false) => { ui.status.textContent = text; ui.status.classList.toggle('error', isError); };
   const clock = (s) => isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}` : '';
   const dir = (az, el) => { const a = THREE.MathUtils.degToRad(az), e = THREE.MathUtils.degToRad(el); return new THREE.Vector3(Math.sin(a) * Math.cos(e), Math.sin(e), Math.cos(a) * Math.cos(e)); };
@@ -541,14 +553,39 @@ async function start() {
     const l = new THREE.DirectionalLight(color, power); l.position.set(...at); scene.add(l);
   }
 
-  const controls = new OrbitControls(camera, renderer.domElement);
+  // 'container' (scrolling page): only the circle of the sphere takes drags, pinches and the wheel, so around it the page
+  // scrolls as usual. On touch screens vertical swipes on the sphere scroll the page too, sideways ones turn the sphere.
+  const layout = ui.stage.dataset.layout || 'viewport';
+  let hit = null;
+  if (layout === 'container') {
+    hit = document.createElement('div');
+    Object.assign(hit.style, { position: 'absolute', borderRadius: '50%', cursor: 'grab' });
+    renderer.domElement.style.pointerEvents = 'none'; ui.stage.style.overflow = 'hidden';
+    ui.stage.append(hit);
+  }
+  const controls = new OrbitControls(camera, hit || renderer.domElement);
   controls.enableDamping = true; controls.enablePan = false; controls.rotateSpeed = .75;
   controls.autoRotate = !reduceMotion; controls.autoRotateSpeed = .55;
+  if (hit) {
+    // After the controls, which set touch-action: none on their element.
+    if (matchMedia('(pointer: coarse)').matches) hit.style.touchAction = 'pan-y';
+    controls.addEventListener('start', () => { hit.style.cursor = 'grabbing'; }); controls.addEventListener('end', () => { hit.style.cursor = 'grab'; });
+  }
+
+  // The touch circle follows the sphere's size on screen as it is zoomed, from the camera distance.
+  let hitKey = '';
+  function placeHit() {
+    if (!hit) return;
+    const w = ui.stage.clientWidth, h = ui.stage.clientHeight;
+    const r = Math.round(h / 2 * Math.tan(Math.asin(Math.min(1, R / camera.position.length()))) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1.04);
+    const key = `${w} ${h} ${r}`;
+    if (key === hitKey) return;
+    hitKey = key;
+    Object.assign(hit.style, { left: `${w / 2 - r}px`, top: `${h / 2 - r}px`, width: `${2 * r}px`, height: `${2 * r}px` });
+  }
 
   // Sphere size. 'viewport' (one-screen page): fit the free band between the slogan and the controls and centre it there.
-  // 'container' (scrolling page): fill the stage box; on touch screens vertical swipes scroll the page, sideways ones turn the sphere.
-  const layout = ui.stage.dataset.layout || 'viewport';
-  if (layout === 'container' && matchMedia('(pointer: coarse)').matches) renderer.domElement.style.touchAction = 'pan-y';
+  // 'container' (scrolling page): fill the stage box.
   function fit() {
     const w = ui.stage.clientWidth, h = ui.stage.clientHeight;
     if (!w || !h) return;
@@ -588,14 +625,29 @@ async function start() {
   video.className = 'offscreen'; video.loop = true; video.preload = 'auto'; video.playsInline = true; video.setAttribute('playsinline', '');
   document.body.append(video);
   const videoTex = new THREE.VideoTexture(video); videoTex.colorSpace = THREE.SRGBColorSpace;
+  // Mipmaps and anisotropic filtering keep the video sharp and calm where the screen turns away or the sphere is small.
+  videoTex.generateMipmaps = true; videoTex.minFilter = THREE.LinearMipmapLinearFilter; videoTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
 
-  // Pass 1, the automatic conversion: for every projector pixel, follow its ray to the sphere. If it lands on the screen,
-  // paint the part of the video that belongs there so that from the front the video looks flat inside the round screen.
+  // How the video lies on the screen. A screen point n (unit vector from the sphere centre, screen axis +Z) at angle th from
+  // the axis takes the video at radius rho: sin(th) looks flat from straight ahead but stretches the video towards the edge,
+  // th / 90° spreads it evenly over the screen; 'spread' mixes the two. Both reach the screen edge at rho = 1.
+  const picture = { videoTex: { value: videoTex }, videoScale: { value: new THREE.Vector2(1, 1) }, spread: { value: .7 } };
+  const VIDEO_UV = `
+      uniform sampler2D videoTex; uniform vec2 videoScale; uniform float spread;
+      vec2 videoUv(vec3 n) {
+        float th = acos(clamp(n.z, -1.0, 1.0)), rho = mix(sin(th), th / 1.5707963, spread), len = length(n.xy);
+        return 0.5 + 0.5 * rho * (len > 1e-6 ? n.xy / len : vec2(0.0)) * videoScale;
+      }
+      bool inside(vec2 uv) { return uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0; }`;
+
+  // Pass 1, the automatic conversion into the projector file: for every projector pixel, follow its ray through the lens to
+  // the sphere. If it lands on the screen, paint the part of the video that belongs to that screen point.
   const frameMat = new THREE.ShaderMaterial({
-    uniforms: { ...lensUniforms, mode: { value: 0 }, videoTex: { value: videoTex }, chartTex: { value: chartTex }, videoScale: { value: new THREE.Vector2(1, 1) } },
+    uniforms: { ...lensUniforms, ...picture, mode: { value: 0 }, chartTex: { value: chartTex } },
     vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
     fragmentShader: `
-      uniform sampler2D videoTex, chartTex; uniform int mode; uniform vec2 frame, videoScale; uniform float circleR, halfFov, R; uniform vec3 lens;
+      uniform sampler2D chartTex; uniform int mode; uniform vec2 frame; uniform float circleR, halfFov, R; uniform vec3 lens;
+      ${VIDEO_UV}
       varying vec2 vUv;
       void main() {
         if (mode == 2) { gl_FragColor = vec4(texture2D(chartTex, vUv).rgb, 1.0); return; }
@@ -607,27 +659,32 @@ async function start() {
         float b = dot(lens, d), t = -b + sqrt(b * b - dot(lens, lens) + R * R);
         vec3 s = lens + t * d;
         if (s.z < 0.0) return;
-        gl_FragColor = vec4(texture2D(videoTex, 0.5 + 0.5 * (s.xy / R) * videoScale).rgb, 1.0);
+        vec2 uv = videoUv(s / R);
+        if (inside(uv)) gl_FragColor = vec4(texture2D(videoTex, uv).rgb, 1.0);
       }`,
   });
   const frameScene = new THREE.Scene(), flatCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
   frameScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), frameMat));
 
-  // Pass 2: the screen lit from inside by that frame through the same lens.
+  // Pass 2: the screen lit from inside. A video is read straight from the video file at full resolution, at the same place the
+  // projector file puts it, so the view is not softened by the projector frame; only screen parts the lens cannot reach stay
+  // dark. The test chart goes through the projector frame and the lens, as on the real sphere.
+  const screenMode = { value: 0 };
   const screenGlow = (gain, base) => new THREE.ShaderMaterial({
-    uniforms: { ...lensUniforms, frameTex: { value: frameRT.texture }, gain: { value: gain }, base: { value: new THREE.Color(base) } },
+    uniforms: { ...lensUniforms, ...picture, mode: screenMode, frameTex: { value: frameRT.texture }, gain: { value: gain }, base: { value: new THREE.Color(base) } },
     vertexShader: `varying vec3 vObj, vN; void main() { vObj = position; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
     fragmentShader: `
-      uniform sampler2D frameTex; uniform vec2 frame; uniform float circleR, halfFov, gain; uniform vec3 lens, base;
+      uniform sampler2D frameTex; uniform int mode; uniform vec2 frame; uniform float circleR, halfFov, gain; uniform vec3 lens, base;
+      ${VIDEO_UV}
       varying vec3 vObj, vN;
       void main() {
         vec3 d = normalize(vObj - lens);
         float a = acos(clamp(d.z, -1.0, 1.0)), r = a / halfFov * circleR, psi = atan(d.y, d.x);
-        vec2 uv = r * vec2(cos(psi), sin(psi)) / frame + 0.5;
-        vec3 light = (r <= circleR && uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0) ? texture2D(frameTex, uv).rgb : vec3(0.0);
+        vec2 uv = mode == 1 ? videoUv(normalize(vObj)) : r * vec2(cos(psi), sin(psi)) / frame + 0.5;
+        vec3 light = vec3(0.0);
+        if (r <= circleR && inside(uv)) light = mode == 1 ? texture2D(videoTex, uv).rgb : texture2D(frameTex, uv).rgb;
         float shade = 0.35 + 0.65 * max(dot(normalize(vN), normalize(vec3(-0.6, 0.6, 0.5))), 0.0);
         gl_FragColor = vec4(base * shade + light * gain, 1.0);
-        #include <tonemapping_fragment>
         #include <colorspace_fragment>
       }`,
   });
@@ -663,7 +720,7 @@ async function start() {
     const lit = mode() !== 0;
     parts.GEO_Screen.material = lit ? glowMats.screen : offMats.screen;
     parts.GEO_Weld_Screen.material = lit ? glowMats.weld : offMats.weld;
-    frameMat.uniforms.mode.value = mode();
+    frameMat.uniforms.mode.value = screenMode.value = mode();
     // Where the screen edge falls in the frame, and how much of the projector the screen uses.
     const edge = Math.atan2(R, -lensZ), reach = edge / halfFov, used = Math.min(1, reach) * circleR;
     ui.preview.height = Math.round(ui.preview.width * proj.h / proj.w);
@@ -679,9 +736,27 @@ async function start() {
     b.addEventListener('click', () => {
       proj.w = +b.dataset.w; proj.h = +b.dataset.h;
       for (const o of document.querySelectorAll('#res button')) o.setAttribute('aria-pressed', String(o === b));
-      applyProjector(); if (ready) say(`${fileName} · fitted to ${proj.w} × ${proj.h}`);
+      applyProjector(); if (ready) say(`${fileName} · projector file ${proj.w} × ${proj.h}`);
     });
   }
+
+  // Fill: the centre of the video covers the round screen. Whole: the full video fits inside the circle, corners on its edge.
+  let fitMode = 'fill', videoAspect = 16 / 9;
+  function applyFit() {
+    const a = videoAspect, k = Math.hypot(a, 1);
+    if (fitMode === 'whole') picture.videoScale.value.set(k / a, k);
+    else picture.videoScale.value.set(a >= 1 ? 1 / a : 1, a >= 1 ? 1 : a);
+    frameDirty = true;
+  }
+  for (const b of document.querySelectorAll('#fit button')) {
+    b.addEventListener('click', () => {
+      fitMode = b.dataset.fit;
+      for (const o of document.querySelectorAll('#fit button')) o.setAttribute('aria-pressed', String(o === b));
+      applyFit();
+    });
+  }
+  const showSpread = () => { picture.spread.value = ui.spread.value / 100; $('spread-out').textContent = `${ui.spread.value}% even`; frameDirty = true; };
+  ui.spread.addEventListener('input', showSpread); showSpread();
   ui.fov.addEventListener('input', () => { proj.fov = +ui.fov.value; applyProjector(); });
   ui.depth.addEventListener('input', () => { proj.depth = +ui.depth.value; applyProjector(); });
   ui.chart.addEventListener('change', () => { proj.chart = ui.chart.checked; applyProjector(); if (proj.chart) faceFront(); });
@@ -726,14 +801,13 @@ async function start() {
     ui.file.value = '';
   });
   video.addEventListener('loadedmetadata', () => {
-    // Cover the round screen: the centre square of a wide video, the centre square of a tall one.
-    const a = video.videoWidth && video.videoHeight ? video.videoWidth / video.videoHeight : 16 / 9;
-    frameMat.uniforms.videoScale.value.set(a >= 1 ? 1 / a : 1, a >= 1 ? 1 : a);
+    videoAspect = video.videoWidth && video.videoHeight ? video.videoWidth / video.videoHeight : 16 / 9;
+    applyFit();
   });
   video.addEventListener('loadeddata', () => {
     ready = true; ui.play.disabled = false; ui.sound.disabled = false; soundIcon(); applyProjector();
     if (video.currentTime === 0 && video.duration > .2) video.currentTime = .1;
-    say(`${fileName} · ${clock(video.duration)} · fitted to ${proj.w} × ${proj.h} · press Play`);
+    say(`${fileName} · ${clock(video.duration)} · press Play`);
     if (!proj.chart) faceFront();
   });
   video.addEventListener('seeked', () => { videoTex.needsUpdate = true; frameDirty = true; });
@@ -757,14 +831,15 @@ async function start() {
   ui.sound.addEventListener('click', () => { video.muted = !video.muted; });
 
   renderer.setAnimationLoop((now) => {
-    stepTween(now); controls.update();
-    const playing = mode() === 1 && !video.paused;
-    if (frameDirty || playing) { renderer.setRenderTarget(frameRT); renderer.render(frameScene, flatCam); renderer.setRenderTarget(null); }
+    stepTween(now); controls.update(); placeHit();
+    // The projector frame is only needed for the test chart on the screen and for the preview in the panel.
+    const playing = mode() === 1 && !video.paused, previewDue = !ui.panel.hidden && (frameDirty || (playing && now - lastPreview > 120));
+    if ((mode() === 2 && frameDirty) || previewDue) { renderer.setRenderTarget(frameRT); renderer.render(frameScene, flatCam); renderer.setRenderTarget(null); }
     renderer.render(scene, camera);
-    if (!ui.panel.hidden && (frameDirty || (playing && now - lastPreview > 120))) { drawPreview(); lastPreview = now; }
+    if (previewDue) { drawPreview(); lastPreview = now; }
     frameDirty = false;
   });
-  window.luminSphere = { model: 'web-v003', parts: Object.keys(parts), video, camera, controls, proj, readout: () => ui.readout.textContent };
+  window.luminSphere = { model: 'web-v003', parts: Object.keys(parts), video, camera, controls, proj, picture: () => ({ fit: fitMode, spread: picture.spread.value }), readout: () => ui.readout.textContent };
 }
 
 </script>
