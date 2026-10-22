@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b+/kJbrnVwPl4o2qqtR6c5VnL14Q57S2NxyB/Z6corw=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-z23xvmLCqWAV2hUpczHjS7b/71r7ZB/2xSe8c6fmBqQ=' https://cdn.jsdelivr.net; style-src 'sha256-43l5rVTne3K/lZVrlOp0Y0ujUR21QrH/yNERJjrSDKw=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b+/kJbrnVwPl4o2qqtR6c5VnL14Q57S2NxyB/Z6corw=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-9U+xz6M2e9/kYlfGhho8tOePYoI5qf+7o2O58Gk7u7c=' https://cdn.jsdelivr.net; style-src 'sha256-43l5rVTne3K/lZVrlOp0Y0ujUR21QrH/yNERJjrSDKw=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -641,11 +641,17 @@ async function start() {
   // the axis takes the video at radius rho: sin(th) looks flat from straight ahead but stretches the video towards the edge,
   // th / 90° spreads it evenly over the screen; 'spread' mixes the two. Both reach the screen edge at rho = 1.
   const picture = { videoTex: { value: videoTex }, videoScale: { value: new THREE.Vector2(1, 1) }, spread: { value: .7 } };
+  // three.js uploads video frames without the sRGB decode that other textures get (its own materials decode in the shader),
+  // so videoColor() decodes here; without it the picture is encoded twice and looks pale.
   const VIDEO_UV = `
       uniform sampler2D videoTex; uniform vec2 videoScale; uniform float spread;
       vec2 videoUv(vec3 n) {
         float th = acos(clamp(n.z, -1.0, 1.0)), rho = mix(sin(th), th / 1.5707963, spread), len = length(n.xy);
         return 0.5 + 0.5 * rho * (len > 1e-6 ? n.xy / len : vec2(0.0)) * videoScale;
+      }
+      vec3 videoColor(vec2 uv) {
+        vec3 c = texture2D(videoTex, uv).rgb;
+        return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), c));
       }
       bool inside(vec2 uv) { return uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0; }`;
 
@@ -669,7 +675,7 @@ async function start() {
         vec3 s = lens + t * d;
         if (s.z < 0.0) return;
         vec2 uv = videoUv(s / R);
-        if (inside(uv)) gl_FragColor = vec4(texture2D(videoTex, uv).rgb, 1.0);
+        if (inside(uv)) gl_FragColor = vec4(videoColor(uv), 1.0);
       }`,
   });
   const frameScene = new THREE.Scene(), flatCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
@@ -691,14 +697,15 @@ async function start() {
         float a = acos(clamp(d.z, -1.0, 1.0)), r = a / halfFov * circleR, psi = atan(d.y, d.x);
         vec2 uv = mode == 1 ? videoUv(normalize(vObj)) : r * vec2(cos(psi), sin(psi)) / frame + 0.5;
         vec3 light = vec3(0.0);
-        if (r <= circleR && inside(uv)) light = mode == 1 ? texture2D(videoTex, uv).rgb : texture2D(frameTex, uv).rgb;
+        if (r <= circleR && inside(uv)) light = mode == 1 ? videoColor(uv) : texture2D(frameTex, uv).rgb;
         float shade = 0.35 + 0.65 * max(dot(normalize(vN), normalize(vec3(-0.6, 0.6, 0.5))), 0.0);
         gl_FragColor = vec4(base * shade + light * gain, 1.0);
         #include <colorspace_fragment>
       }`,
   });
   const offMats = { screen: new THREE.MeshStandardMaterial({ color: SCREEN_OFF, roughness: .62 }), weld: new THREE.MeshStandardMaterial({ color: WELD_OFF, roughness: .5 }) };
-  const glowMats = { screen: screenGlow(1, '#262626'), weld: screenGlow(.72, '#1c1c1c') };
+  // A faint base keeps the round shape readable in black parts of the picture without greying the video's blacks.
+  const glowMats = { screen: screenGlow(1, '#0a0a0a'), weld: screenGlow(.72, '#080808') };
   scene.add(gltf.scene);
   ui.loading.hidden = true;
 
