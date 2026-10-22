@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-dZyh7RwjUieN9YLfrKuEgq5aP6ZyyQajCLi0pxjfo24=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-1VbIW0xLTBYWs7c8u4usFdKtHVjueqyou9UeurmGslE=' https://cdn.jsdelivr.net; style-src 'sha256-Yk07NF27yiawAX3kiF30Ry/ZQIJd7R6Sya2xtsOGl00=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self'; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b+/kJbrnVwPl4o2qqtR6c5VnL14Q57S2NxyB/Z6corw=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-1VbIW0xLTBYWs7c8u4usFdKtHVjueqyou9UeurmGslE=' https://cdn.jsdelivr.net; style-src 'sha256-5k65CtC5b8t1SRZyBqjNCK1kRsodsct1ECkET55E5JQ=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -89,8 +89,19 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 
 /* Sphere controls */
 .dock { grid-area: dock; display: grid; gap: 10px; justify-items: center; text-align: center; }
-.hint { margin: 0; color: var(--ink-soft); font-weight: 700; font-size: 13px; letter-spacing: .04em; transition: opacity .6s ease; }
-.hint.gone { opacity: 0; }
+/* 360° badge: tells visitors the sphere turns. It stays after the first drag, only calmer. */
+.hint {
+  margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px 7px 12px; border: 1px solid var(--edge); border-radius: 999px;
+  background: var(--glass); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  color: var(--ink); font-weight: 700; font-size: 13px; letter-spacing: .04em; transition: opacity .6s ease;
+}
+.hint svg { width: 34px; height: 20px; flex: none; fill: none; stroke: var(--cyan); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: sway 2.6s ease-in-out infinite; }
+.hint b { font: 800 17px/1 var(--display); color: var(--cyan); letter-spacing: .01em; }
+.hint.gone { opacity: .6; }
+.hint.gone svg { animation: none; }
+.touch-only { display: none; }
+@media (pointer: coarse) { .touch-only { display: inline; } .mouse-only { display: none; } }
+@keyframes sway { 0%, 100% { transform: translateX(-3px) rotate(-6deg); } 50% { transform: translateX(3px) rotate(6deg); } }
 .controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
 .btn {
   min-height: 48px; padding: 0 22px; border-radius: 6px; border: 1px solid var(--edge); background: var(--glass); color: var(--ink);
@@ -142,7 +153,45 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 .facts li { display: grid; gap: 4px; padding: 14px 14px 16px; border-top: 2px solid var(--blue); background: rgba(4, 9, 18, .5); }
 .facts b { font: 800 26px/1 var(--display); }
 .facts span { color: var(--ink-soft); font-size: 14px; line-height: 1.35; }
-.soon { margin: 10px 0 0; color: var(--cyan) !important; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.soon { margin: 10px 0 0; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.soon a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid var(--cyan); }
+.soon a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+
+/* Request form */
+.contact { max-width: 760px; margin: clamp(56px, 10vh, 120px) auto 0; display: grid; gap: 14px; }
+.contact h2 { margin: 0; font: 800 clamp(28px, 4vw, 44px)/1.05 var(--display); text-wrap: balance; }
+.contact-lede { margin: 0 0 6px; color: var(--ink-soft); }
+#request { display: grid; gap: 18px; padding: clamp(16px, 3vw, 28px); border: 1px solid var(--edge); border-radius: 8px; background: var(--panel); }
+.choice { margin: 0; padding: 0; border: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.choice legend { padding: 0; margin-bottom: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.choice label { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--edge); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 15px; line-height: 1.25; }
+.choice label:has(input:checked) { border-color: var(--cyan); background: rgba(0, 91, 168, .35); }
+.choice input, .consent input { width: 18px; height: 18px; margin: 0; flex: none; accent-color: var(--cyan); }
+.row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.f { display: grid; gap: 6px; min-width: 0; }
+.f > span { font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.f.wide { grid-column: 1 / -1; }
+.req, .opt { font-weight: 400; letter-spacing: .02em; text-transform: none; color: var(--ink-soft); opacity: .8; }
+.f input, .f select, .f textarea {
+  width: 100%; box-sizing: border-box; min-height: 44px; padding: 10px 12px; border: 1px solid var(--edge); border-radius: 6px;
+  background: rgba(3, 5, 11, .7); color: var(--ink); font: 400 16px/1.4 var(--label);
+}
+.f textarea { resize: vertical; min-height: 120px; }
+.f input:focus-visible, .f select:focus-visible, .f textarea:focus-visible, .choice input:focus-visible, .consent input:focus-visible, .more summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.f [aria-invalid="true"] { border-color: #ff8a7a; }
+.more { border-top: 1px solid var(--edge); border-bottom: 1px solid var(--edge); padding-block: 12px; }
+.more summary { cursor: pointer; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+.more[open] summary { margin-bottom: 14px; }
+.consent { display: flex; gap: 10px; align-items: flex-start; color: var(--ink-soft); font-size: 14px; line-height: 1.45; cursor: pointer; }
+.consent input { margin-top: 2px; }
+.trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.send { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.form-status { margin: 0; font-weight: 700; font-size: 14px; color: var(--ink-soft); }
+.form-status.ok { color: #7fe0a8; }
+.form-status.error { color: #ff8a7a; }
+@media (max-width: 640px) {
+  .choice, .row { grid-template-columns: minmax(0, 1fr); }
+}
 .foot { max-width: 64ch; margin: clamp(48px, 8vh, 96px) auto 0; padding-block: 24px calc(env(safe-area-inset-bottom, 0px) + 32px); border-top: 1px solid var(--edge); display: grid; gap: 8px; color: var(--ink-soft); font-size: 14px; }
 .foot nav { display: flex; flex-wrap: wrap; gap: 8px 20px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
 .foot a { color: var(--ink); text-decoration-color: var(--cyan); text-underline-offset: 4px; }
@@ -174,6 +223,7 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hint, .btn, .win, .win img { transition: none; }
+  .hint svg { animation: none; }
 }
 </style>
 </head>
@@ -193,7 +243,10 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
     </div>
 
     <div class="dock">
-      <p class="hint" id="hint">Drag to turn the sphere · scroll or pinch to zoom</p>
+      <p class="hint" id="hint">
+        <svg viewBox="0 0 40 24" aria-hidden="true"><path d="M23.5 6.3A16 6 0 1 0 31 8.4"/><path d="M27.5 3.4l4.2 4.9-6 1.6"/><circle cx="20" cy="12" r="2.4"/></svg>
+        <b>360°</b><span><span class="mouse-only">Drag to turn the sphere · scroll to zoom</span><span class="touch-only">Swipe to turn the sphere · pinch to zoom</span></span>
+      </p>
       <div class="controls">
         <button class="btn" id="pick" type="button">Upload video</button>
         <button class="btn primary" id="play" type="button" disabled aria-pressed="false">Play</button>
@@ -223,23 +276,97 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
   <section class="about" aria-labelledby="about-title">
     <h2 id="about-title"><span class="squeeze">What is Lumin AirTv</span></h2>
     <p>Flying projection spheres for events, brands and cities. Your video, logo or live broadcast on a 180° sphere screen.</p>
-    <p>The sphere floats in the air, and its 180° screen can show any video: a clip, a logo or a live camera feed. In daylight it is a large light sphere above the crowd. After sunset the screen lights up.</p>
-    <p>It suits city celebrations, hotels and marinas, brand launches, concerts and private events.</p>
+    <p>The sphere brings large-format video to places where an ordinary screen cannot be installed. It works indoors and outdoors and needs no wall or stage to hold it.</p>
+    <p>Its 180° screen shows any video: a clip, a logo or a live camera feed. In daylight it is a large light sphere above the crowd. After sunset the screen lights up.</p>
+    <p>It fits concerts and festivals, trade fairs, product launches and corporate events. It also suits city celebrations, parks, stadiums and arenas, hotels, marinas and private events, for one evening or as a longer installation.</p>
     <ul class="facts">
       <li><b>3.7 m</b><span>flagship sphere</span></li>
       <li><b>180°</b><span>screen on the front half</span></li>
       <li><b>Inside</b><span>the projector lights the screen from within</span></li>
       <li><b>Helium</b><span>floats on a tether, or hangs from four points</span></li>
+      <li><b>Up to 1 h</b><span>usual setup time</span></li>
+      <li><b>Your logo</b><span>fits on the white back half</span></li>
     </ul>
     <p class="try">The sphere at the top of this page is a 3D model. Turn it, upload a video and watch it on the screen.</p>
-    <p class="soon">Bookings coming soon.</p>
+    <p class="soon"><a href="#contact">Planning an event? Tell us about it below.</a></p>
   </section>
   </div>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title"><span class="squeeze">Tell us about your project</span></h2>
+    <p class="contact-lede">Choose what you need and add a few words. We answer by email.</p>
+    <form id="request" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <fieldset class="choice">
+        <legend>What would you like? <span class="req">required</span></legend>
+        <label><input type="radio" name="request" value="A show at my event" required> A show at my event</label>
+        <label><input type="radio" name="request" value="A long-term installation or partnership"> A long-term installation or partnership</label>
+        <label><input type="radio" name="request" value="A sphere made to order"> A sphere made to order</label>
+        <label><input type="radio" name="request" value="Advertising on the sphere"> Advertising on the sphere</label>
+        <label><input type="radio" name="request" value="Operation and support for my own sphere"> Operation and support for my own sphere</label>
+        <label><input type="radio" name="request" value="Something else"> Something else</label>
+      </fieldset>
+      <div class="row">
+        <label class="f" for="f-name"><span>Name <span class="req">required</span></span><input id="f-name" name="name" type="text" autocomplete="name" maxlength="120" required></label>
+        <label class="f" for="f-company"><span>Company</span><input id="f-company" name="company" type="text" autocomplete="organization" maxlength="160"></label>
+        <label class="f" for="f-email"><span>Email <span class="req">required</span></span><input id="f-email" name="email" type="email" autocomplete="email" maxlength="200" required></label>
+        <label class="f" for="f-phone"><span>Phone or WhatsApp</span><input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+      </div>
+      <details class="more">
+        <summary>Details <span class="opt">optional</span></summary>
+        <div class="row">
+          <label class="f" for="f-where"><span>Where will it be used</span>
+            <select id="f-where" name="where">
+              <option value="">Choose…</option>
+              <option>Events and exhibitions</option><option>Concerts, festivals and shows</option><option>Brands and advertising</option>
+              <option>City and public spaces</option><option>Sports</option><option>Hotels, marinas and venues</option>
+              <option>Retail and real estate</option><option>Private events and weddings</option><option>Transport hubs</option>
+              <option>Media and studios</option><option>Other</option>
+            </select></label>
+          <label class="f" for="f-size"><span>Size</span>
+            <select id="f-size" name="size">
+              <option value="">Choose…</option>
+              <option>Not sure yet</option><option>Up to 2.5 m</option><option>About 3.7 m</option><option>4 m and larger</option><option>Special size or shape</option>
+            </select></label>
+          <label class="f" for="f-setup"><span>How it stands</span>
+            <select id="f-setup" name="setup">
+              <option value="">Choose…</option>
+              <option>Floating on helium</option><option>Hanging</option><option>On a stand</option><option>Walking (backpack sphere)</option><option>Not sure</option>
+            </select></label>
+          <label class="f" for="f-content"><span>What to show</span>
+            <select id="f-content" name="content">
+              <option value="">Choose…</option>
+              <option>My own video</option><option>Logo or brand</option><option>Live camera feed</option><option>Moon or visual show</option><option>Need help with content</option>
+            </select></label>
+          <label class="f" for="f-place"><span>Indoor or outdoor</span>
+            <select id="f-place" name="indoor_outdoor">
+              <option value="">Choose…</option><option>Indoor</option><option>Outdoor</option><option>Both</option>
+            </select></label>
+          <label class="f" for="f-length"><span>How long</span>
+            <select id="f-length" name="duration">
+              <option value="">Choose…</option><option>One evening</option><option>A few days</option><option>Long-term</option>
+            </select></label>
+          <label class="f" for="f-date"><span>Date</span><input id="f-date" name="date" type="text" maxlength="60" placeholder="e.g. March 2027 or not decided"></label>
+          <label class="f" for="f-city"><span>City or place</span><input id="f-city" name="city" type="text" maxlength="120"></label>
+          <label class="f wide" for="f-lang"><span>Answer me in</span>
+            <select id="f-lang" name="reply_language"><option>English</option><option>Hebrew</option><option>Russian</option></select></label>
+        </div>
+      </details>
+      <label class="f wide" for="f-message"><span>Message <span class="req">required</span></span><textarea id="f-message" name="message" rows="5" maxlength="4000" required></textarea></label>
+      <label class="consent" for="f-consent"><input id="f-consent" name="consent" type="checkbox" value="yes" required>
+        <span>I agree that Lumin AirTv uses these details only to answer my request. They are sent by email through the Web3Forms service and are not shared with anyone else.</span></label>
+      <input class="trap" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="send">
+        <button class="btn primary" id="send" type="submit">Send request</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+      </div>
+    </form>
+  </section>
 
   <footer class="foot">
     <nav aria-label="Lumin AirTv elsewhere">
       <a href="https://www.youtube.com/@LuminAirTv" target="_blank" rel="noopener">YouTube</a>
       <a href="https://www.facebook.com/LUMIN.AirTv/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.linkedin.com/company/lumin-airtv/" target="_blank" rel="noopener">LinkedIn</a>
     </nav>
     <p class="fine">Lumin AirTv · Israel. The 3D sphere is a preliminary model. Videos you upload stay on your device.</p>
   </footer>
@@ -295,6 +422,40 @@ setTimeout(function () {
   closer.addEventListener('click', close);
   box.addEventListener('click', function (e) { if (e.target === box) close(); });
   addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.hidden) close(); });
+})();
+// Request form. On the website it posts to Web3Forms, which emails the request to the owner; the address is not on the page.
+(function () {
+  var form = document.getElementById('request'), status = document.getElementById('form-status'), send = document.getElementById('send');
+  var KEY = '3cbbeb21-a70c-425d-8152-a025a1675869', live = 'iframe' === 'iframe' && KEY !== '', opened = Date.now();
+  function say(text, kind) { status.textContent = text; status.className = 'form-status' + (kind ? ' ' + kind : ''); }
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var bad = [];
+    ['f-name', 'f-email', 'f-message'].forEach(function (id) {
+      var el = document.getElementById(id), v = el.value.trim();
+      var ok = v !== '' && (id !== 'f-email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      el.setAttribute('aria-invalid', String(!ok)); if (!ok) bad.push(el);
+    });
+    if (!form.querySelector('input[name="request"]:checked')) bad.unshift(form.querySelector('input[name="request"]'));
+    if (!form.consent.checked) bad.push(form.consent);
+    if (bad.length) { say('Please choose what you would like and fill in the marked fields.', 'error'); bad[0].focus(); return; }
+    // Bots tick the hidden box or send within seconds: thank them and send nothing.
+    if (form.botcheck.checked || Date.now() - opened < 3000) { say('Thank you. We received your request.', 'ok'); form.reset(); return; }
+    if (!live) { say('Sending works on luminairtv.co.il. This preview does not send anything.', 'error'); return; }
+    var data = {};
+    new FormData(form).forEach(function (v, k) { if (v !== '' && k !== 'botcheck') data[k] = String(v).trim(); });
+    var subject = '[Lumin AirTv] ' + [data.request, data.where, data.date, data.city].filter(Boolean).join(' · ');
+    var payload = Object.assign({ access_key: KEY, subject: subject, from_name: 'Lumin AirTv website', replyto: data.email }, data);
+    send.disabled = true; say('Sending…');
+    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j.success) { say('Thank you. We received your request and will answer by email.', 'ok'); form.reset(); }
+        else say('The request was not sent: ' + (j.message || 'unknown error') + '. Please try again later.', 'error');
+      })
+      .catch(function () { say('The request was not sent. Check your connection and try again.', 'error'); })
+      .finally(function () { send.disabled = false; });
+  });
 })();
 </script>
 <script type="importmap">{"imports": {"three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js", "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"}}</script>
