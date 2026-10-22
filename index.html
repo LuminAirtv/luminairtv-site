@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-b+/kJbrnVwPl4o2qqtR6c5VnL14Q57S2NxyB/Z6corw=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-9U+xz6M2e9/kYlfGhho8tOePYoI5qf+7o2O58Gk7u7c=' https://cdn.jsdelivr.net; style-src 'sha256-43l5rVTne3K/lZVrlOp0Y0ujUR21QrH/yNERJjrSDKw=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-EtUucFQbiJnvsozzJYvi0J1Q1EGI6j/cTQzmS+02wsU=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-9U+xz6M2e9/kYlfGhho8tOePYoI5qf+7o2O58Gk7u7c=' https://cdn.jsdelivr.net; style-src 'sha256-Ag5E9WPhrlIZyXdSuMNJdh1wXc2rp2+X/kkU0g7ZWto=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -22,6 +22,8 @@
   --blue-hi: #0b6dc3;
   --cyan: #009de0;
   --glass: rgba(4, 9, 18, .62);
+  --film: #07090d;
+  --perf: rgba(243, 246, 249, .16);
   --panel: rgba(4, 9, 18, .88);
   --edge: rgba(243, 246, 249, .28);
   --display: "Work Sans LUMIN", "Work Sans", "Arial Black", sans-serif;
@@ -158,6 +160,42 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 .soon a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid var(--cyan); }
 .soon a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 
+/* Gallery: film strips. With a mouse the strip runs toward the side the pointer is on; on touch screens it is swiped. */
+.gallery { max-width: 1440px; margin: clamp(56px, 10vh, 120px) auto 0; display: grid; gap: 14px; }
+.gallery h2 { margin: 0; font: 800 clamp(28px, 4vw, 44px)/1.05 var(--display); text-wrap: balance; }
+.gallery h3 { margin: 22px 0 0; font: 800 clamp(20px, 2.6vw, 28px)/1.1 var(--display); }
+.gallery-lede { margin: 0; max-width: 64ch; color: var(--ink-soft); }
+.strip {
+  --frame-h: clamp(150px, 21vw, 250px); --perforation: repeating-linear-gradient(90deg, transparent 0 10px, var(--perf) 10px 22px, transparent 22px 32px);
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.strip::-webkit-scrollbar { display: none; }
+.strip ul {
+  list-style: none; margin: 0; padding: 24px 40px; width: max-content; display: flex; gap: 12px;
+  background: var(--perforation) left 8px top 8px / 100% 8px no-repeat, var(--perforation) left 8px bottom 8px / 100% 8px no-repeat, var(--film);
+}
+.strip li { flex: none; }
+.shot { position: relative; display: block; padding: 0; border: 0; border-radius: 3px; overflow: hidden; background: #000; color: inherit; cursor: zoom-in; transition: transform .25s ease, box-shadow .25s ease; }
+.shot img { display: block; height: var(--frame-h); width: auto; }
+.shot:hover, .shot:focus-visible { transform: scale(1.06); position: relative; z-index: 1; box-shadow: 0 10px 30px rgba(0, 0, 0, .6); }
+.shot:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.shot-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 10px 8px; background: linear-gradient(transparent, rgba(2, 4, 10, .88)); font-weight: 700; font-size: 12px; line-height: 1.3; letter-spacing: .05em; text-transform: uppercase; text-align: left; opacity: 0; transition: opacity .2s; }
+.shot:hover .shot-cap, .shot:focus-visible .shot-cap { opacity: 1; }
+
+/* Photo viewer */
+.viewer {
+  position: fixed; inset: 0; z-index: 10; display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; align-items: center; gap: 12px;
+  padding: calc(env(safe-area-inset-top, 0px) + 76px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 20px) max(16px, env(safe-area-inset-left, 0px));
+  background: rgba(2, 4, 10, .95);
+}
+.viewer img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 3px; }
+.viewer p { margin: 0; color: var(--ink-soft); font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; text-align: center; font-variant-numeric: tabular-nums; }
+.viewer .close { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); right: max(16px, env(safe-area-inset-right, 0px)); }
+.viewer .step { position: absolute; top: 50%; translate: 0 -50%; width: 52px; padding: 0; font-size: 28px; line-height: 1; }
+.viewer .step.prev { left: max(12px, env(safe-area-inset-left, 0px)); }
+.viewer .step.next { right: max(12px, env(safe-area-inset-right, 0px)); }
+
 /* Request form */
 .contact { max-width: 760px; margin: clamp(56px, 10vh, 120px) auto 0; display: grid; gap: 14px; }
 .contact h2 { margin: 0; font: 800 clamp(28px, 4vw, 44px)/1.05 var(--display); text-wrap: balance; }
@@ -293,6 +331,51 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
   </section>
   </div>
 
+  <section class="gallery" id="gallery" aria-labelledby="gallery-title">
+    <h2 id="gallery-title"><span class="squeeze">Gallery</span></h2>
+    <p class="gallery-lede">Photos from real installations. <span class="mouse-only">Move the pointer to either side to run the strip. Click a photo to open it.</span><span class="touch-only">Swipe the strip. Tap a photo to open it.</span></p>
+    <div class="strip">
+      <ul>
+        <li><button class="shot" type="button" data-full="gallery/full/01.jpg" data-cap="The white back half of the sphere at night"><img src="gallery/thumb/01.jpg" alt="The white back half of the sphere at night" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">The white back half of the sphere at night</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/02.jpg" data-cap="Night show outside a building"><img src="gallery/thumb/02.jpg" alt="Night show outside a building" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Night show outside a building</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/03.jpg" data-cap="Advertising on the sphere at night"><img src="gallery/thumb/03.jpg" alt="Advertising on the sphere at night" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Advertising on the sphere at night</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/04.jpg" data-cap="City celebration at night, above the stage"><img src="gallery/thumb/04.jpg" alt="City celebration at night, above the stage" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">City celebration at night, above the stage</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/05.jpg" data-cap="City celebration at night"><img src="gallery/thumb/05.jpg" alt="City celebration at night" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">City celebration at night</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/06.jpg" data-cap="Night show over a square"><img src="gallery/thumb/06.jpg" alt="Night show over a square" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Night show over a square</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/07.jpg" data-cap="Above a building at night"><img src="gallery/thumb/07.jpg" alt="Above a building at night" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Above a building at night</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/08.jpg" data-cap="A picture on the screen at dusk"><img src="gallery/thumb/08.jpg" alt="A picture on the screen at dusk" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">A picture on the screen at dusk</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/09.jpg" data-cap="At dusk, next to new buildings"><img src="gallery/thumb/09.jpg" alt="At dusk, next to new buildings" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">At dusk, next to new buildings</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/10.jpg" data-cap="Abstract patterns on the screen"><img src="gallery/thumb/10.jpg" alt="Abstract patterns on the screen" width="720" height="400" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Abstract patterns on the screen</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/11.jpg" data-cap="Fire video on the screen"><img src="gallery/thumb/11.jpg" alt="Fire video on the screen" width="720" height="400" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Fire video on the screen</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/12.jpg" data-cap="Leaves on the screen"><img src="gallery/thumb/12.jpg" alt="Leaves on the screen" width="720" height="400" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Leaves on the screen</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/13.jpg" data-cap="A white dove on the screen"><img src="gallery/thumb/13.jpg" alt="A white dove on the screen" width="720" height="400" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">A white dove on the screen</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/14.jpg" data-cap="Night show in a courtyard"><img src="gallery/thumb/14.jpg" alt="Night show in a courtyard" width="720" height="404" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Night show in a courtyard</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/15.jpg" data-cap="The screen seen from the side"><img src="gallery/thumb/15.jpg" alt="The screen seen from the side" width="720" height="404" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">The screen seen from the side</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/16.jpg" data-cap="The white back half, with the screen edge glowing"><img src="gallery/thumb/16.jpg" alt="The white back half, with the screen edge glowing" width="720" height="404" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">The white back half, with the screen edge glowing</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/17.jpg" data-cap="Car showroom, indoors"><img src="gallery/thumb/17.jpg" alt="Car showroom, indoors" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Car showroom, indoors</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/18.jpg" data-cap="Car showroom: a sunset on the screen"><img src="gallery/thumb/18.jpg" alt="Car showroom: a sunset on the screen" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Car showroom: a sunset on the screen</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/19.jpg" data-cap="Car showroom, seen through the window"><img src="gallery/thumb/19.jpg" alt="Car showroom, seen through the window" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Car showroom, seen through the window</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/20.jpg" data-cap="Live video on the sphere at a concert"><img src="gallery/thumb/20.jpg" alt="Live video on the sphere at a concert" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Live video on the sphere at a concert</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/21.jpg" data-cap="Concert: the singer on the sphere"><img src="gallery/thumb/21.jpg" alt="Concert: the singer on the sphere" width="720" height="520" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Concert: the singer on the sphere</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/22.jpg" data-cap="Concert: a violin solo"><img src="gallery/thumb/22.jpg" alt="Concert: a violin solo" width="720" height="596" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Concert: a violin solo</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/23.jpg" data-cap="Exhibition stage"><img src="gallery/thumb/23.jpg" alt="Exhibition stage" width="720" height="404" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Exhibition stage</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/24.jpg" data-cap="Above a city square by day"><img src="gallery/thumb/24.jpg" alt="Above a city square by day" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Above a city square by day</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/25.jpg" data-cap="Above a celebration by day"><img src="gallery/thumb/25.jpg" alt="Above a celebration by day" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Above a celebration by day</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/26.jpg" data-cap="In the workshop, with a person for scale"><img src="gallery/thumb/26.jpg" alt="In the workshop, with a person for scale" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">In the workshop, with a person for scale</span></button></li>
+      </ul>
+    </div>
+    <h3>Other models</h3>
+    <p class="gallery-lede">Earlier and smaller spheres. The current sphere has one 180° screen.</p>
+    <div class="strip">
+      <ul>
+        <li><button class="shot" type="button" data-full="gallery/full/27.jpg" data-cap="A smaller wearable sphere"><img src="gallery/thumb/27.jpg" alt="A smaller wearable sphere" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">A smaller wearable sphere</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/28.jpg" data-cap="The wearable sphere in a shopping centre"><img src="gallery/thumb/28.jpg" alt="The wearable sphere in a shopping centre" width="720" height="478" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">The wearable sphere in a shopping centre</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/29.jpg" data-cap="Earlier model with separate screen windows"><img src="gallery/thumb/29.jpg" alt="Earlier model with separate screen windows" width="594" height="396" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Earlier model with separate screen windows</span></button></li>
+        <li><button class="shot" type="button" data-full="gallery/full/30.jpg" data-cap="Earlier model on a stand"><img src="gallery/thumb/30.jpg" alt="Earlier model on a stand" width="414" height="552" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Earlier model on a stand</span></button></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="contact" id="contact" aria-labelledby="contact-title">
     <h2 id="contact-title"><span class="squeeze">Tell us about your project</span></h2>
     <p class="contact-lede">Choose what you need and add a few words. We answer by email.</p>
@@ -406,6 +489,14 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
   <p class="note">These settings prepare the file for the real projector. The converter makes up for the lens, so the picture on the sphere stays the same. Lens field and depth are estimates until the test chart is checked on the real sphere.</p>
 </section>
 
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Photo" hidden>
+  <img id="viewer-img" alt="">
+  <p id="viewer-cap"></p>
+  <button class="btn step prev" id="viewer-prev" type="button" aria-label="Previous photo">‹</button>
+  <button class="btn step next" id="viewer-next" type="button" aria-label="Next photo">›</button>
+  <button class="btn close" id="viewer-close" type="button">Close</button>
+</div>
+
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="YouTube video" hidden>
   <div class="lightbox-frame" id="lightbox-frame"></div>
   <button class="btn" id="lightbox-close" type="button">Close</button>
@@ -434,6 +525,42 @@ setTimeout(function () {
   closer.addEventListener('click', close);
   box.addEventListener('click', function (e) { if (e.target === box) close(); });
   addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.hidden) close(); });
+})();
+// Gallery. With a mouse a strip runs toward the side the pointer is on, faster nearer the edge and still in the middle third;
+// a click opens the photo over the page, with previous / next by buttons, arrow keys or a swipe.
+(function () {
+  var slow = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.strip').forEach(function (strip) {
+    var speed = 0, last = 0, carry = 0, running = false;
+    function step(now) {
+      if (!speed) { running = false; return; }
+      carry += speed * Math.min(.05, (now - (last || now)) / 1000); last = now;
+      var whole = Math.trunc(carry); if (whole) { strip.scrollLeft += whole; carry -= whole; }
+      requestAnimationFrame(step);
+    }
+    strip.addEventListener('pointermove', function (e) {
+      if (e.pointerType !== 'mouse') return;
+      var r = strip.getBoundingClientRect(), v = (e.clientX - r.left) / r.width * 2 - 1, a = Math.max(0, Math.abs(v) - 1 / 3) * 1.5;
+      speed = Math.sign(v) * a * a * (slow ? 300 : 900);
+      if (speed && !running) { running = true; last = 0; requestAnimationFrame(step); }
+    });
+    strip.addEventListener('pointerleave', function () { speed = 0; });
+  });
+  var shots = [].slice.call(document.querySelectorAll('.shot')), viewer = document.getElementById('viewer'), img = document.getElementById('viewer-img');
+  var cap = document.getElementById('viewer-cap'), closer = document.getElementById('viewer-close'), at = 0, opener = null, x0 = null;
+  function show(k) { at = (k + shots.length) % shots.length; var b = shots[at]; img.src = b.dataset.full; img.alt = b.dataset.cap; cap.textContent = b.dataset.cap + ' · ' + (at + 1) + ' / ' + shots.length; }
+  function close() { viewer.hidden = true; img.removeAttribute('src'); if (opener) opener.focus(); }
+  shots.forEach(function (b, k) { b.addEventListener('click', function () { opener = b; show(k); viewer.hidden = false; closer.focus(); }); });
+  document.getElementById('viewer-prev').addEventListener('click', function () { show(at - 1); });
+  document.getElementById('viewer-next').addEventListener('click', function () { show(at + 1); });
+  closer.addEventListener('click', close);
+  viewer.addEventListener('click', function (e) { if (e.target === viewer) close(); });
+  viewer.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+  viewer.addEventListener('pointerup', function (e) { if (x0 !== null && Math.abs(e.clientX - x0) > 50) show(at + (e.clientX < x0 ? 1 : -1)); x0 = null; });
+  addEventListener('keydown', function (e) {
+    if (viewer.hidden) return;
+    if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') show(at - 1); else if (e.key === 'ArrowRight') show(at + 1);
+  });
 })();
 // Request form. On the website it posts to Web3Forms, which emails the request to the owner; the address is not on the page.
 (function () {
