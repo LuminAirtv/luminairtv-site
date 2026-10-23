@@ -3,14 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-g5FuoxY20vcf2hK/CZnf9Z3ivu2wwNJ1qtB7PUyze24=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-SYvS2pF1e4lgSlGSwj07byyPiETNiHPgnmtQjwPDfXQ='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2UlmjTzDzNNFLnIAc2yRwxlqtTB9Zwld180SLRsA/NU=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-QogRgO6QN/8Gh1RN7ZfdQ/QG5sSaLdmXM/JeMfVCnoY='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
 <style>
 @font-face { font-family: "Work Sans"; src: url(/fonts/WorkSans-800-latin.woff2) format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
 @font-face { font-family: "Roboto Condensed"; src: url(/fonts/RobotoCondensed-latin-wght.woff2) format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
-/* v13 (23.10.2026, owner on his iPhone): the turn cross is gone. "Когда тыкаешь на нее, на айфоне увеличивается просто сайт… а сам шар не
+/* v14 (23.10.2026, owner on his iPhone): the panel can be swiped down. "Чтобы можно было наполовину скрыть страницу, которая внизу…
+   пальцем ее сдвинуть вниз настолько, чтобы было только управление… чтобы вот этот шар второй, дублирующий, остался." A grip at the top
+   of the panel: swipe it down and only the small sphere with Face me stays; swipe it up and the panel is back. The Controls button
+   does the same. v13 (23.10.2026, owner on his iPhone): the turn cross is gone. "Когда тыкаешь на нее, на айфоне увеличивается просто сайт… а сам шар не
    двигается. Вместо крестовины, чтобы там был шар такой же. И по нему водишь… сам шар поворачивается в пространстве." A small live copy
    of the sphere sits in the panel; dragging on it turns the big sphere the same way, in every direction. Buttons no longer trigger the
    iPhone's double-tap zoom (touch-action: manipulation). Face me stays as one small button.
@@ -37,7 +40,14 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 #stage { touch-action: none; display: block; }
 .top { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 0; pointer-events: none; }
 .pill-btn { pointer-events: auto; min-height: 34px; padding: 0 12px; border-radius: 999px; background: var(--glass); font-size: 12px; }
-.panel.compact > :not(.row:first-child) { display: none; }
+.grip { display: block; width: 100%; height: 22px; margin: -6px 0 -2px; padding: 0; border: 0; background: transparent; touch-action: none; cursor: grab; }
+.grip::before { content: ""; display: block; width: 44px; height: 5px; margin: 8px auto 0; border-radius: 3px; background: rgba(243, 246, 249, .4); }
+.grip:focus-visible::before { outline: 2px solid var(--cyan); outline-offset: 4px; }
+/* Swiped down: only the small sphere and Face me stay, the rest of the screen is free for the camera and the big sphere. */
+.panel.turn-only > :not(.grip):not(.turn-row) { display: none; }
+.panel.turn-only .turn-row { grid-template-columns: auto; justify-content: center; }
+.panel.turn-only .turn-row p { display: none; }
+.panel.turn-only { background: rgba(4, 9, 18, .5); }
 .brand { font: 800 13px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; }
 .pill { padding: 7px 12px; border: 1px solid var(--edge); border-radius: 999px; background: var(--glass); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-weight: 700; font-size: 13px; letter-spacing: .04em; max-width: 60vw; }
 .hint { position: fixed; left: 50%; top: 42%; translate: -50% -50%; padding: 12px 18px; border-radius: 10px; background: var(--glass); border: 1px solid var(--edge); font-weight: 700; font-size: 15px; text-align: center; pointer-events: none; max-width: 80vw; }
@@ -85,10 +95,11 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 <div class="top">
   <span class="brand">Lumin AirTv</span>
   <span class="pill" id="status" aria-live="polite">Tap where the sphere should hang</span>
-  <button class="btn pill-btn" id="compact" type="button" aria-expanded="true" aria-controls="panel">Controls</button>
+  <button class="btn pill-btn" id="compact" type="button" aria-expanded="true" aria-controls="panel">Hide</button>
 </div>
 <div class="hint" id="hint">Tap where the sphere should hang</div>
 <section class="panel" id="panel" aria-label="Controls">
+  <button class="grip" id="grip" type="button" aria-label="Swipe down to keep only the turn control, swipe up for all controls"></button>
   <div class="row">
     <button class="btn primary" id="camera" type="button">Start camera</button>
     <button class="btn" id="pick" type="button">Your video</button>
@@ -269,7 +280,17 @@ turnCanvas.addEventListener('pointerup', turnEnd); turnCanvas.addEventListener('
 $('face').addEventListener('click', () => faceMe());
 $('remove').addEventListener('click', () => { placed = false; sphere.visible = false; hint.hidden = false; say('Tap where the sphere should hang'); });
 $('centre').addEventListener('click', () => place(innerWidth / 2, innerHeight / 2));   // for keyboards and switch access
-$('compact').addEventListener('click', () => { const open = $('panel').classList.toggle('compact') === false; $('compact').setAttribute('aria-expanded', String(open)); });
+// The panel folds down to the turn control: a swipe down on the grip (or the top button), a swipe up (or the button) brings it back.
+const panel = $('panel'), grip = $('grip');
+function foldPanel(turnOnly) { panel.classList.toggle('turn-only', turnOnly); $('compact').setAttribute('aria-expanded', String(!turnOnly)); $('compact').textContent = turnOnly ? 'Controls' : 'Hide'; }
+let gripY = null;
+grip.addEventListener('pointerdown', (e) => { grip.setPointerCapture(e.pointerId); gripY = e.clientY; e.preventDefault(); });
+grip.addEventListener('pointerup', (e) => {
+  if (gripY === null) return; const dy = e.clientY - gripY; gripY = null;
+  if (dy > 24) foldPanel(true); else if (dy < -24) foldPanel(false); else foldPanel(!panel.classList.contains('turn-only'));   // a tap toggles too
+});
+grip.addEventListener('pointercancel', () => { gripY = null; });
+$('compact').addEventListener('click', () => foldPanel(!panel.classList.contains('turn-only')));
 
 // Camera behind and the gyroscope: the camera turns with the phone, the sphere stays in its world direction.
 const zee = new THREE.Vector3(0, 0, 1), euler = new THREE.Euler(), q0 = new THREE.Quaternion(), q1 = new THREE.Quaternion(-Math.SQRT1_2, 0, 0, Math.SQRT1_2), qd = new THREE.Quaternion(), fwd = new THREE.Vector3();
