@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-R45OnSwNi9MiLJEx2y09YfsL7+azwIVIn/fQ7ghSRew=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-saRQq7qh06ms5Sj1GFiHD4Zv8IR7WiAgVDYPk47pxHY=' https://cdn.jsdelivr.net; style-src 'sha256-NbuO2lrH/I2/ARjWKfxZCSbCF4V1fc5lmGQQB6uXhtc=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-R45OnSwNi9MiLJEx2y09YfsL7+azwIVIn/fQ7ghSRew=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-IKcvL4i7V8O2+8ujuDFwL9gGULTi6k2Py23FMwLbl5g=' https://cdn.jsdelivr.net; style-src 'sha256-jG9n55XHhhExGoaXkqC/OuiZaEfXdMapIEefve/E0fo=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -127,6 +127,8 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 .btn.icon[aria-expanded="true"] { border-color: var(--cyan); color: var(--cyan); }
 .status { margin: 0; min-height: 1.35em; max-width: 36em; color: var(--ink-soft); font-weight: 700; font-size: 13px; letter-spacing: .03em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
 .status.error { color: var(--ink); }
+.narrow-only { display: none; }
+@media (max-width: 430px) { .wide-only { display: none; } .narrow-only { display: inline; } }
 .offscreen { position: fixed; left: -4px; top: -4px; width: 2px; height: 2px; opacity: 0; pointer-events: none; }
 
 /* Virtual projector panel */
@@ -309,7 +311,7 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
     </header>
 
     <div class="stage-wrap">
-      <div id="stage" data-layout="container" role="img" aria-label="3D model of the Lumin AirTv projection sphere. Drag to turn it."></div>
+      <div id="stage" data-layout="container" data-demo="demo.mp4" role="img" aria-label="3D model of the Lumin AirTv projection sphere. Drag to turn it."></div>
       <p class="loading" id="loading">Loading the sphere…</p>
     </div>
 
@@ -319,8 +321,8 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
         <b>360°</b><span><span class="mouse-only">Drag to turn the sphere · scroll to zoom</span><span class="touch-only">Swipe to turn the sphere · pinch to zoom</span></span>
       </p>
       <div class="controls">
-        <button class="btn" id="pick" type="button">Upload video</button>
-        <button class="btn primary" id="play" type="button" disabled aria-pressed="false">Play</button>
+        <button class="btn primary" id="play" type="button" disabled aria-pressed="false">Play demo</button>
+        <button class="btn" id="pick" type="button"><span class="wide-only">Choose your video</span><span class="narrow-only">Your video</span></button>
         <button class="btn icon" id="sound" type="button" disabled aria-pressed="true" aria-label="Mute" title="Sound">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path id="sound-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path id="sound-off" d="M16 9.5l5 5M21 9.5l-5 5" hidden/></svg>
         </button>
@@ -328,7 +330,7 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
           <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="8" width="13" height="8" rx="2"/><circle cx="11.5" cy="12" r="2.2"/><path d="M15.5 10.5l6-2.5M15.5 13.5l6 2.5"/></svg>
         </button>
       </div>
-      <p class="status" id="status" aria-live="polite">Upload your own video and play it on the sphere. It stays on your device.</p>
+      <p class="status" id="status" aria-live="polite">Play the demo, or choose your own video. Videos you choose stay on your device.</p>
       <input id="video-file" type="file" accept="video/*" hidden>
     </div>
   </section>
@@ -875,7 +877,7 @@ async function start() {
   // A faint base keeps the round shape readable in black parts of the picture without greying the video's blacks.
   const glowMats = { screen: screenGlow(1, '#0a0a0a'), weld: screenGlow(.72, '#080808') };
   scene.add(gltf.scene);
-  ui.loading.hidden = true;
+  ui.loading.hidden = true; if (ui.stage.dataset.demo) ui.play.disabled = false;   // start() runs before demoSrc below is declared
 
   // What the projector receives, shown small in the panel.
   const previewRT = new THREE.WebGLRenderTarget(320, 200); previewRT.texture.colorSpace = THREE.SRGBColorSpace;
@@ -894,7 +896,8 @@ async function start() {
     previewCtx.putImageData(img, 0, 0);
   }
 
-  let ready = false, fileName = '', blobUrl = null, frameDirty = true;
+  let ready = false, fileName = '', blobUrl = null, frameDirty = true, demo = false, demoLoading = false;
+  const demoSrc = ui.stage.dataset.demo || '';   // the page's demo clip (landing page: demo.mp4), fetched only when Play demo is pressed
   const mode = () => proj.chart ? 2 : ready ? 1 : 0;
   function applyProjector() {
     const halfFov = THREE.MathUtils.degToRad(proj.fov / 2), circleR = proj.h / 2, lensZ = -(R - proj.depth);
@@ -982,7 +985,7 @@ async function start() {
     video.pause();
     if (blobUrl) URL.revokeObjectURL(blobUrl);
     ready = false; ui.play.disabled = true; ui.sound.disabled = true; applyProjector();
-    fileName = f.name; blobUrl = URL.createObjectURL(f);
+    fileName = f.name; demo = false; ui.play.textContent = 'Play'; blobUrl = URL.createObjectURL(f);
     video.muted = false; video.src = blobUrl; video.load();
     say(`Opening ${fileName}…`);
     ui.file.value = '';
@@ -992,21 +995,29 @@ async function start() {
     applyFit();
   });
   video.addEventListener('loadeddata', () => {
-    ready = true; ui.play.disabled = false; ui.sound.disabled = false; soundIcon(); applyProjector();
+    ready = true; ui.play.disabled = false; ui.sound.disabled = demo; soundIcon(); applyProjector();
     if (video.currentTime === 0 && video.duration > .2) video.currentTime = .1;
-    say(`${fileName} · ${clock(video.duration)} · press Play`);
+    if (!demo) say(`${fileName} · ${clock(video.duration)} · press Play`);
     if (!proj.chart) faceFront();
   });
   video.addEventListener('seeked', () => { videoTex.needsUpdate = true; frameDirty = true; });
   video.addEventListener('error', () => {
-    ready = false; ui.play.disabled = true; ui.sound.disabled = true; applyProjector();
-    say('This browser cannot open the file. Try an MP4 (H.264) video.', true);
+    const wasDemo = demo; demo = false; ready = false; ui.sound.disabled = true; applyProjector();
+    ui.play.textContent = demoSrc ? 'Play demo' : 'Play'; ui.play.setAttribute('aria-pressed', 'false'); ui.play.disabled = !demoSrc;
+    say(wasDemo ? 'The demo did not load. Choose your own video instead.' : 'This browser cannot open the file. Try an MP4 (H.264) video.', true);
   });
-  video.addEventListener('play', () => { ui.play.textContent = 'Pause'; ui.play.setAttribute('aria-pressed', 'true'); say(`${fileName} · playing on the sphere`); });
-  video.addEventListener('pause', () => { ui.play.textContent = 'Play'; ui.play.setAttribute('aria-pressed', 'false'); if (ready) say(`${fileName} · paused`); });
+  video.addEventListener('play', () => { ui.play.textContent = 'Pause'; ui.play.setAttribute('aria-pressed', 'true'); say(demo ? 'Demo video on the sphere · choose your video to see your own' : `${fileName} · playing on the sphere`); });
+  video.addEventListener('pause', () => { ui.play.textContent = demo ? 'Play demo' : 'Play'; ui.play.setAttribute('aria-pressed', 'false'); if (ready) say(demo ? 'Demo paused' : `${fileName} · paused`); });
   video.addEventListener('volumechange', soundIcon);
   ui.play.addEventListener('click', async () => {
-    if (!ready) return;
+    if (!ready) {
+      // No video yet: the first press opens the page's demo clip, a separate file fetched only now. It has no sound.
+      if (!demoSrc || demoLoading) return;
+      demoLoading = true; demo = true; fileName = 'Demo video'; video.muted = true; video.src = demoSrc; video.load(); say('Opening the demo…');
+      await new Promise((done) => { video.addEventListener('loadeddata', done, { once: true }); video.addEventListener('error', done, { once: true }); });
+      demoLoading = false;
+      if (!ready) return;
+    }
     if (!video.paused) { video.pause(); return; }
     try { await video.play(); }
     catch (e) {
