@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2UlmjTzDzNNFLnIAc2yRwxlqtTB9Zwld180SLRsA/NU=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-M/3bxRal4PlWvn73wHvBCGS6A2GT2gD8QFTNZZUwN3Q='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-x4sjnKWNtgjoN/mHHDZ/Qfo/7GjJ03n/Redldloy+ZQ=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-M/3bxRal4PlWvn73wHvBCGS6A2GT2gD8QFTNZZUwN3Q='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
@@ -204,7 +204,7 @@ setVideo('assets/splash-v003.mp4', 'Splash', false);
 
 // Placing, moving, resizing (Codex's idea kept: the drag moves the sphere in the plane facing the camera, holding the grabbed point).
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), plane = new THREE.Plane(), hit = new THREE.Vector3(), grab = new THREE.Vector3();
-const dist = $('dist'), size = $('size');
+const dist = $('dist'), size = $('size'), panel = $('panel');
 let placed = false;
 function pointerRay(x, y) {
   ndc.set(x / innerWidth * 2 - 1, -(y / innerHeight) * 2 + 1); ray.setFromCamera(ndc, camera); return ray.ray;
@@ -283,9 +283,13 @@ const turnEnd = () => { turnLast = null; };
 turnCanvas.addEventListener('pointerup', turnEnd); turnCanvas.addEventListener('pointercancel', turnEnd);
 $('face').addEventListener('click', () => faceMe());
 $('remove').addEventListener('click', () => { placed = false; sphere.visible = false; hint.hidden = false; say('Tap where the sphere should hang'); });
-$('centre').addEventListener('click', () => place(innerWidth / 2, innerHeight / 2));   // for keyboards and switch access
+// Place in the middle of the free part of the screen: left of a side panel, above a bottom panel (for keyboards and switch access, and the first look).
+$('centre').addEventListener('click', () => {
+  const r = panel.getBoundingClientRect(), side = r.top <= 1 && r.left > innerWidth * .3, below = !side && r.top > innerHeight * .3;
+  place(side ? r.left / 2 : innerWidth / 2, below ? r.top / 2 : innerHeight / 2);
+});
 // The panel folds down to the turn control: a swipe down on the grip (or the top button), a swipe up (or the button) brings it back.
-const panel = $('panel'), grip = $('grip');
+const grip = $('grip');
 function foldPanel(turnOnly) { panel.classList.toggle('turn-only', turnOnly); $('compact').setAttribute('aria-expanded', String(!turnOnly)); $('compact').textContent = turnOnly ? 'Controls' : 'Hide'; }
 let gripY = null;
 grip.addEventListener('pointerdown', (e) => { grip.setPointerCapture(e.pointerId); gripY = e.clientY; e.preventDefault(); });
