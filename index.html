@@ -3,11 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-EtUucFQbiJnvsozzJYvi0J1Q1EGI6j/cTQzmS+02wsU=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-67exeNT/M8Oft0K+kRqXyMimJ096YKpYcrQVhk1ubeM=' https://cdn.jsdelivr.net; style-src 'sha256-OoN0EbjoJ9gU4QhdjufDVG0q6lFasTdFYJ029WoXwtw=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hS7l/1DrWbDQ41UOqUtCYzh4ZONGwPH7NnmezGG7BCA=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-67exeNT/M8Oft0K+kRqXyMimJ096YKpYcrQVhk1ubeM=' https://cdn.jsdelivr.net; style-src 'sha256-OoN0EbjoJ9gU4QhdjufDVG0q6lFasTdFYJ029WoXwtw=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="Flying projection spheres for events, brands and cities. Your video, logo or live broadcast on a 180° sphere screen.">
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@400;700&display=swap">
@@ -541,6 +545,7 @@ setTimeout(function () {
   var box = document.getElementById('lightbox'), frame = document.getElementById('lightbox-frame'), closer = document.getElementById('lightbox-close'), opener = null;
   function close() { box.hidden = true; frame.replaceChildren(); if (opener) opener.focus(); }
   document.querySelectorAll('.win').forEach(function (a) {
+    if (!a.dataset.yt) return;   // the channel tile is a plain link to YouTube (found by the Codex audit, 23.10.2026)
     a.addEventListener('click', function (e) {
       e.preventDefault(); opener = a;
       if (window.luminSphere && window.luminSphere.video) window.luminSphere.video.pause();
