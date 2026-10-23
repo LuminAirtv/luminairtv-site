@@ -3,34 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ITFHY7UjLnlcJ4jvktHG7QGyvTV/ov2dTYtvD3p1IHA=' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: data:; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ZILxzcsafp0gz66JSmiJ1vH5LarYC22cYzATAdBJORQ=' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: data:; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@800&family=Roboto+Condensed:wght@400;700&display=swap">
 <style>
-/* One screen: heading and height choice, the 3D sphere with the AR button, then the steps. Same night palette as the main page. */
+/* One screen: heading, size and height choice, the 3D sphere with its size in the corner and the AR button, then the steps.
+   The sphere hangs screen forward and its back is a plain white shell (owner: lighter models). Here it turns only within its front half;
+   the sphere on the main page still turns all the way round. */
 :root {
-  --sky: #03050b; --ink: #f3f6f9; --ink-soft: #a9b4c1; --blue: #005ba8; --cyan: #009de0; --edge: rgba(243, 246, 249, .28);
+  --sky: #03050b; --ink: #f3f6f9; --ink-soft: #a9b4c1; --blue: #005ba8; --cyan: #009de0; --edge: rgba(243, 246, 249, .28); --glass: rgba(4, 9, 18, .72);
   --display: "Work Sans", "Arial Black", sans-serif; --label: "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
   color-scheme: dark;
 }
 html, body { height: 100%; }
 body { margin: 0; background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 60%); color: var(--ink); font: 400 17px/1.5 var(--label); -webkit-font-smoothing: antialiased; }
 main {
-  min-height: 100%; box-sizing: border-box; display: grid; grid-template-rows: auto auto minmax(320px, 1fr) auto; grid-template-areas: "h" "heights" "mv" "text";
+  min-height: 100%; box-sizing: border-box; display: grid; grid-template-rows: auto auto minmax(320px, 1fr) auto; grid-template-areas: "h" "pick" "mv" "text";
   gap: 14px; max-width: 760px; margin: 0 auto;
   padding: calc(env(safe-area-inset-top, 0px) + 20px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 24px) max(16px, env(safe-area-inset-left, 0px));
 }
 h1 { grid-area: h; margin: 0; font: 800 clamp(26px, 6vw, 40px)/1.05 var(--display); text-wrap: balance; }
-.heights { grid-area: heights; display: grid; gap: 8px; }
-.heights > span { color: var(--ink-soft); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.pick { grid-area: pick; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 14px 18px; align-items: end; }
+.field { display: grid; gap: 8px; min-width: 0; }
+.field > span { color: var(--ink-soft); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.step { display: flex; align-items: center; gap: 8px; }
+.step output { min-width: 4.6em; text-align: center; font: 800 26px/1 var(--display); font-variant-numeric: tabular-nums; }
+.round { width: 44px; height: 44px; flex: none; border: 1px solid var(--edge); border-radius: 50%; background: transparent; color: var(--ink); font: 700 24px/1 var(--label); cursor: pointer; }
+.round:disabled { opacity: .35; cursor: default; }
 .seg { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
-.seg button { min-height: 44px; padding: 0 6px; border: 1px solid var(--edge); border-radius: 6px; background: transparent; color: var(--ink); font: 700 14px/1.1 var(--label); letter-spacing: .03em; cursor: pointer; font-variant-numeric: tabular-nums; }
+.seg button { min-height: 44px; padding: 0 4px; border: 1px solid var(--edge); border-radius: 6px; background: transparent; color: var(--ink); font: 700 14px/1.1 var(--label); letter-spacing: .02em; cursor: pointer; font-variant-numeric: tabular-nums; }
 .seg button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); }
-.seg button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.round:focus-visible, .seg button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 model-viewer { grid-area: mv; width: 100%; height: 100%; min-height: 320px; --poster-color: transparent; --progress-bar-color: var(--cyan); }
 .poster { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-soft); font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
+/* The size in the corner: on the page and, on Android in Chrome, also inside the camera view. */
+.badge {
+  position: absolute; top: calc(env(safe-area-inset-top, 0px) + 10px); left: max(10px, env(safe-area-inset-left, 0px)); display: flex; align-items: center; gap: 8px;
+  padding: 6px 8px 6px 12px; border: 1px solid var(--edge); border-radius: 999px; background: var(--glass); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+}
+.badge b { font: 800 18px/1 var(--display); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.badge small { color: var(--ink-soft); font-size: 13px; white-space: nowrap; }
+.badge .round { width: 36px; height: 36px; font-size: 20px; background: var(--glass); }
+.badge .round, model-viewer:not([ar-status="session-started"]) .badge .in-ar { display: none; }
+model-viewer[ar-status="session-started"] .badge .round { display: block; }
 .ar {
   position: absolute; left: 50%; bottom: 16px; translate: -50% 0; min-height: 52px; padding: 0 26px; border: 0; border-radius: 6px; background: var(--blue); color: var(--ink);
   font: 700 16px/1 var(--label); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); white-space: nowrap;
@@ -43,13 +60,15 @@ model-viewer { grid-area: mv; width: 100%; height: 100%; min-height: 320px; --po
 .status { font-weight: 700; color: var(--cyan); }
 a { color: var(--ink); text-decoration-color: var(--cyan); text-underline-offset: 4px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: 14px; }
 a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-@media (max-width: 380px) { .seg button { font-size: 13px; padding: 0 3px; } }
+@media (max-width: 520px) { .pick { grid-template-columns: minmax(0, 1fr); } .step { justify-content: space-between; } }
+@media (max-width: 380px) { .seg button { font-size: 13px; padding: 0 2px; } }
 /* Phones and foldables held sideways: the sphere on the left at full height, everything else on the right. */
 @media (orientation: landscape) and (max-height: 700px) {
   main { max-width: 1100px; height: 100%; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto auto auto minmax(0, 1fr);
-    grid-template-areas: "mv ." "mv h" "mv heights" "mv text" "mv ."; column-gap: clamp(16px, 3vw, 40px); row-gap: 10px;
+    grid-template-areas: "mv ." "mv h" "mv pick" "mv text" "mv ."; column-gap: clamp(16px, 3vw, 40px); row-gap: 10px;
     padding-block: calc(env(safe-area-inset-top, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 12px); overflow-y: auto; }
   h1 { font-size: clamp(22px, 3.2vw, 32px); }
+  .pick { grid-template-columns: minmax(0, 1fr); gap: 10px; }
   model-viewer { min-height: 0; }
   .text { font-size: 14px; line-height: 1.4; }
 }
@@ -59,50 +78,78 @@ a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 <body>
 <main>
   <h1>See the sphere in your space</h1>
-  <div class="heights">
-    <span id="heights-label">Height above the ground</span>
-    <div class="seg" role="group" aria-labelledby="heights-label">
-      <button type="button" data-h="h0" aria-pressed="false">On the ground</button>
-      <button type="button" data-h="h2" aria-pressed="false">2 m</button>
-      <button type="button" data-h="h5" aria-pressed="true">5 m</button>
-      <button type="button" data-h="h10" aria-pressed="false">10 m</button>
-      <button type="button" data-h="h20" aria-pressed="false">20 m</button>
+  <div class="pick">
+    <div class="field">
+      <span id="size-label">Sphere size</span>
+      <div class="step" role="group" aria-labelledby="size-label">
+        <button class="round" type="button" data-step="-1" aria-label="Smaller sphere">−</button>
+        <output id="size-out" aria-live="polite">Ø 3.7 m</output>
+        <button class="round" type="button" data-step="1" aria-label="Larger sphere">+</button>
+      </div>
+    </div>
+    <div class="field">
+      <span id="heights-label">Height above the ground</span>
+      <div class="seg" role="group" aria-labelledby="heights-label">
+        <button type="button" data-h="0" aria-pressed="false">On the ground</button>
+        <button type="button" data-h="2" aria-pressed="false">2 m</button>
+        <button type="button" data-h="5" aria-pressed="true">5 m</button>
+        <button type="button" data-h="10" aria-pressed="false">10 m</button>
+        <button type="button" data-h="20" aria-pressed="false">20 m</button>
+      </div>
     </div>
   </div>
-  <model-viewer id="sphere" src="models/lumin-sphere-ar-v002-h5.glb" ios-src="models/lumin-sphere-ar-v002-h5.usdz"
-    alt="The Lumin AirTv sphere, 3.7 m across, on a tether 5 m above the ground"
-    ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto" ar-placement="floor"
-    camera-controls touch-action="pan-y" auto-rotate rotation-per-second="14deg" camera-orbit="-20deg 82deg auto"
+  <model-viewer id="sphere" src="models/lumin-sphere-ar-v004-d3_7-h5.glb" ios-src="models/lumin-sphere-ar-v004-d3_7-h5.usdz"
+    alt="Lumin AirTv sphere, Ø 3.7 m, 5 m above the ground"
+    ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" ar-placement="floor"
+    camera-controls touch-action="pan-y" camera-orbit="-20deg 82deg auto" min-camera-orbit="-75deg 25deg auto" max-camera-orbit="75deg 155deg auto"
     shadow-intensity="0.8" exposure="1.05" interaction-prompt="none">
     <div class="poster" slot="poster">Loading the 3D sphere…</div>
+    <div class="badge" aria-live="polite">
+      <button class="round" type="button" data-step="-1" aria-label="Smaller sphere">−</button>
+      <b id="badge-size">Ø 3.7 m</b><small id="badge-height">5 m up</small>
+      <button class="round" type="button" data-step="1" aria-label="Larger sphere">+</button>
+    </div>
     <button class="ar" slot="ar-button" type="button">View in your space</button>
   </model-viewer>
   <div class="text">
     <ol>
-      <li>Choose a height and tap <b>View in your space</b>.</li>
+      <li>Choose a size and a height and tap <b>View in your space</b>.</li>
       <li>Point the camera at the ground where the sphere should stand: the edge of a square, between trees or houses, above a bus stop. Drag the sphere there with one finger.</li>
-      <li>Walk around it. The sphere stays where you put it, at its real size of 3.7 m across, so it looks right next to people, trees and houses.</li>
-      <li>Pinch with two fingers to make it larger or smaller, for example to try a bigger sphere made to order.</li>
+      <li>Walk around it. The sphere stays where you put it, at the real size shown in the corner, so it looks right next to people, trees and houses.</li>
+      <li>On Android, change the size with − and + in the corner while you look. On iPhone and iPad, choose the size here before you start.</li>
     </ol>
     <p class="status" id="status" aria-live="polite" hidden></p>
-    <p class="soft">The phone needs to see the ground where the sphere stands, so very distant spots may not work. Heights and the tether are only for this preview.</p>
+    <p class="soft">Sizes follow our size table, from Ø 1.5 to 5.2 m; larger spheres are made to order. The phone needs to see the ground where the sphere stands, so very distant spots may not work. Heights and the tether are only for this preview.</p>
     <p><a href="/">Back to luminairtv.co.il</a></p>
   </div>
 </main>
 <script>
-// Height choice swaps the model (GLB for Android and the preview, USDZ for iPhone and iPad). Devices that can show AR get the button;
-// elsewhere the page says where it works.
+// Size steps follow the size table; each size and height is its own real-size model (GLB for Android and the preview, USDZ for iPhone and
+// iPad, which opens with a banner naming the size). The badge shows the size; inside the camera view on Android it also steps the size.
 (function () {
+  var SIZES = [1.5, 2, 2.5, 3, 3.7, 4.2, 4.5, 5, 5.2], at = SIZES.indexOf(3.7), height = 5;
   var mv = document.getElementById('sphere'), status = document.getElementById('status');
-  var names = { h0: 'resting on the ground', h2: 'on a tether 2 m above the ground', h5: 'on a tether 5 m above the ground', h10: 'on a tether 10 m above the ground', h20: 'on a tether 20 m above the ground' };
+  var metres = function (v) { return String(v).replace(/\.0$/, ''); };
   function say(text) { status.textContent = text; status.hidden = !text; }
+  function apply() {
+    var d = SIZES[at], tag = 'd' + metres(d).replace('.', '_') + '-h' + height, size = 'Ø ' + metres(d) + ' m', up = height ? height + ' m above the ground' : 'on the ground';
+    var banner = '#checkoutTitle=' + encodeURIComponent('Lumin AirTv sphere ' + size) + '&checkoutSubtitle=' + encodeURIComponent(up) + '&callToAction=' + encodeURIComponent('Ask about this size');
+    mv.src = 'models/lumin-sphere-ar-v004-' + tag + '.glb'; mv.iosSrc = 'models/lumin-sphere-ar-v004-' + tag + '.usdz' + banner;
+    mv.alt = 'Lumin AirTv sphere, ' + size + ', ' + up;
+    document.getElementById('size-out').textContent = size; document.getElementById('badge-size').textContent = size;
+    document.getElementById('badge-height').textContent = height ? height + ' m up' : 'on the ground';
+    document.querySelectorAll('[data-step]').forEach(function (b) { b.disabled = (+b.dataset.step < 0 && at === 0) || (+b.dataset.step > 0 && at === SIZES.length - 1); });
+  }
+  document.querySelectorAll('[data-step]').forEach(function (b) {
+    b.addEventListener('click', function () { at = Math.max(0, Math.min(SIZES.length - 1, at + +b.dataset.step)); apply(); });
+  });
   document.querySelectorAll('.seg button').forEach(function (b) {
     b.addEventListener('click', function () {
       document.querySelectorAll('.seg button').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
-      mv.src = 'models/lumin-sphere-ar-v002-' + b.dataset.h + '.glb'; mv.iosSrc = 'models/lumin-sphere-ar-v002-' + b.dataset.h + '.usdz';
-      mv.alt = 'The Lumin AirTv sphere, 3.7 m across, ' + names[b.dataset.h];
+      height = +b.dataset.h; apply();
     });
   });
+  mv.addEventListener('quick-look-button-tapped', function () { location.href = '/#contact'; });
   mv.addEventListener('load', function () {
     if (!mv.canActivateAR) say('Augmented reality works on phones and tablets: iPhone or iPad in Safari, Android in Chrome. Open luminairtv.co.il/ar on your phone. Here you can turn the sphere with the mouse.');
   });
@@ -111,6 +158,7 @@ a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
     else if (e.detail.status === 'session-started') say('');
   });
   mv.addEventListener('error', function () { say('The 3D model did not load. Check your connection and reload the page.'); });
+  apply();
 })();
 </script>
 </body>
