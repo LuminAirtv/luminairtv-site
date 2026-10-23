@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-EtUucFQbiJnvsozzJYvi0J1Q1EGI6j/cTQzmS+02wsU=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-9U+xz6M2e9/kYlfGhho8tOePYoI5qf+7o2O58Gk7u7c=' https://cdn.jsdelivr.net; style-src 'sha256-1nLDoPJ3I9pIh6EGMwDz3aUbTGt6I/pKbXCPtaDg1cA=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-EtUucFQbiJnvsozzJYvi0J1Q1EGI6j/cTQzmS+02wsU=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-67exeNT/M8Oft0K+kRqXyMimJ096YKpYcrQVhk1ubeM=' https://cdn.jsdelivr.net; style-src 'sha256-OoN0EbjoJ9gU4QhdjufDVG0q6lFasTdFYJ029WoXwtw=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -24,7 +24,7 @@
   --glass: rgba(4, 9, 18, .62);
   --film: #07090d;
   --perf: rgba(243, 246, 249, .16);
-  --panel: rgba(4, 9, 18, .88);
+  --panel: rgba(4, 9, 18, .88); --panel-head: #050a14;
   --edge: rgba(243, 246, 249, .28);
   --display: "Work Sans LUMIN", "Work Sans", "Arial Black", sans-serif;
   --label: "Roboto Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
@@ -128,9 +128,16 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 .panel {
   position: fixed; z-index: 5; width: min(320px, calc(100vw - 32px)); max-height: calc(100% - 150px); overflow-y: auto; box-sizing: border-box;
   top: calc(env(safe-area-inset-top, 0px) + 124px); right: max(16px, env(safe-area-inset-right, 0px));
-  display: grid; gap: 14px; padding: 16px; border: 1px solid var(--edge); border-radius: 8px; background: var(--panel);
+  display: grid; gap: 14px; padding: 0 16px 16px; border: 1px solid var(--edge); border-radius: 8px; background: var(--panel);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-weight: 700; font-size: 13px; line-height: 1.35; letter-spacing: .03em;
 }
+/* The heading row with Close stays at the top while the panel scrolls. */
+.panel-head {
+  position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  margin: 0 -16px; padding: 12px 12px 10px 16px; background: var(--panel-head);
+}
+.panel-head .close { width: 40px; min-height: 40px; flex: none; }
+.panel-head .close svg { width: 18px; height: 18px; }
 .panel h2 { margin: 0; font: 800 18px/1.1 var(--display); letter-spacing: .01em; }
 .panel h2.sub { padding-top: 14px; border-top: 1px solid var(--edge); }
 .field { display: grid; gap: 8px; }
@@ -473,7 +480,12 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 </main>
 
 <section class="panel" id="proj-panel" aria-label="Video settings" hidden>
-  <h2>Video on the sphere</h2>
+  <div class="panel-head">
+    <h2>Video on the sphere</h2>
+    <button class="btn icon close" id="proj-close" type="button" aria-label="Close video settings" title="Close">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
   <div class="field">
     <span>Framing</span>
     <div class="seg" id="fit" role="group" aria-label="Framing">
@@ -919,9 +931,12 @@ async function start() {
   ui.fov.addEventListener('input', () => { proj.fov = +ui.fov.value; applyProjector(); });
   ui.depth.addEventListener('input', () => { proj.depth = +ui.depth.value; applyProjector(); });
   ui.chart.addEventListener('change', () => { proj.chart = ui.chart.checked; applyProjector(); if (proj.chart) faceFront(); });
-  ui.toggle.addEventListener('click', () => {
-    const open = ui.panel.hidden; ui.panel.hidden = !open; ui.toggle.setAttribute('aria-expanded', String(open)); frameDirty = true;
-  });
+  // On phones the panel covers the button that opened it, so it also closes with its own Close button, a tap outside it, or Escape.
+  const showPanel = (open) => { ui.panel.hidden = !open; ui.toggle.setAttribute('aria-expanded', String(open)); frameDirty = true; };
+  ui.toggle.addEventListener('click', () => showPanel(ui.panel.hidden));
+  $('proj-close')?.addEventListener('click', () => { showPanel(false); ui.toggle.focus(); });
+  document.addEventListener('pointerdown', (e) => { if (!ui.panel.hidden && !ui.panel.contains(e.target) && !ui.toggle.contains(e.target)) showPanel(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !ui.panel.hidden) { showPanel(false); ui.toggle.focus(); } });
   applyProjector();
   document.fonts.ready.then(() => { drawChart(chartCanvas, proj.w, proj.h); chartTex.needsUpdate = true; frameDirty = true; });
 
