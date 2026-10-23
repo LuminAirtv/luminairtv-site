@@ -3,14 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-6MFTLb7s2vsNvVv4bul70XlCgijh62D2afYuILcGj9U=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-CbNlyzIt3QcQO412mQK6XldDaIsCx4/438MxJmoD9s8='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-g5FuoxY20vcf2hK/CZnf9Z3ivu2wwNJ1qtB7PUyze24=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-SYvS2pF1e4lgSlGSwj07byyPiETNiHPgnmtQjwPDfXQ='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
 <style>
 @font-face { font-family: "Work Sans"; src: url(/fonts/WorkSans-800-latin.woff2) format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
 @font-face { font-family: "Roboto Condensed"; src: url(/fonts/RobotoCondensed-latin-wght.woff2) format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
-/* v12 (23.10.2026, Codex audit items 3, 4, 11, 14, 17, 18, 19; owner: do everything in order): the camera mode is named an approximate
+/* v13 (23.10.2026, owner on his iPhone): the turn cross is gone. "Когда тыкаешь на нее, на айфоне увеличивается просто сайт… а сам шар не
+   двигается. Вместо крестовины, чтобы там был шар такой же. И по нему водишь… сам шар поворачивается в пространстве." A small live copy
+   of the sphere sits in the panel; dragging on it turns the big sphere the same way, in every direction. Buttons no longer trigger the
+   iPhone's double-tap zoom (touch-action: manipulation). Face me stays as one small button.
+   v12 (23.10.2026, Codex audit items 3, 4, 11, 14, 17, 18, 19; owner: do everything in order): the camera mode is named an approximate
    mock-up and Apple AR a separate model; Preview size / Virtual distance; the distance follows the sphere after a drag; Start camera /
    Stop camera; a note when motion access is unavailable; Place in centre for keyboards; the Apple AR banner no longer promises a request
    button; a message when 3D cannot start; the splash starts with the first placement, not on page load; a compact Controls state.
@@ -44,19 +48,20 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
   border-top: 1px solid var(--edge); display: grid; gap: 10px;
 }
 .row { display: grid; grid-auto-flow: column; grid-auto-columns: 1fr; gap: 8px; }
-.btn { min-height: 44px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--edge); background: transparent; color: var(--ink); font: 700 13px/1.1 var(--label); letter-spacing: .06em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; }
+.btn { min-height: 44px; padding: 0 10px; border-radius: 6px; border: 1px solid var(--edge); background: transparent; color: var(--ink); font: 700 13px/1.1 var(--label); letter-spacing: .06em; text-transform: uppercase; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; gap: 8px; touch-action: manipulation; }
 .btn.primary { background: var(--blue); border-color: var(--blue); }
 .btn.primary:hover { background: var(--blue-hi); }
 .btn[aria-pressed="true"] { border-color: var(--cyan); color: var(--cyan); }
 .btn:disabled { opacity: .4; cursor: default; }
 .btn:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
 .btn img { width: 22px; height: 22px; border-radius: 4px; }
-.cross-row { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
-.cross { display: grid; grid-template-columns: repeat(3, 46px); grid-template-rows: repeat(3, 46px); gap: 4px; }
-.cross .btn { min-height: 0; padding: 0; font-size: 18px; letter-spacing: 0; text-transform: none; }
-.cross .up { grid-area: 1 / 2; } .cross .left { grid-area: 2 / 1; } .cross .face { grid-area: 2 / 2; } .cross .right { grid-area: 2 / 3; } .cross .down { grid-area: 3 / 2; }
-.cross-row p { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.35; }
-.cross-row b { color: var(--ink); }
+.turn-row { display: grid; grid-template-columns: auto 1fr; gap: 14px; align-items: center; }
+.turn { display: grid; gap: 6px; justify-items: center; }
+#turn { display: block; width: 116px; height: 116px; border-radius: 50%; border: 1px solid var(--edge); background: radial-gradient(circle at 50% 50%, rgba(4, 9, 18, .55), rgba(4, 9, 18, .92)); touch-action: none; cursor: grab; }
+#turn:active { cursor: grabbing; }
+.turn .face { min-height: 30px; padding: 0 10px; font-size: 11px; }
+.turn-row p { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.35; }
+.turn-row b { color: var(--ink); }
 .sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .field { display: grid; gap: 4px; }
 .field > span { display: flex; justify-content: space-between; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; font-weight: 700; }
@@ -65,7 +70,7 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 .note { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.35; }
 .note a { color: var(--ink); text-decoration-color: var(--cyan); text-underline-offset: 3px; font-weight: 700; }
 #ar[hidden], #sound[hidden] { display: none; }
-@media (max-width: 380px) { .btn { font-size: 12px; padding: 0 6px; } .cross { grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(3, 40px); } }
+@media (max-width: 380px) { .btn { font-size: 12px; padding: 0 6px; } #turn { width: 96px; height: 96px; } }
 /* Held sideways, and on a computer: the panel stands on the right, the sphere keeps the whole height. */
 @media (orientation: landscape) and (min-width: 640px) {
   .panel { left: auto; top: 0; bottom: 0; width: min(42vw, 400px); max-height: none; align-content: start; border-top: 0; border-left: 1px solid var(--edge); padding-top: calc(env(safe-area-inset-top, 0px) + 56px); }
@@ -91,15 +96,12 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
     <button class="btn" id="play" type="button" aria-pressed="true" aria-label="Pause the video">Pause</button>
     <button class="btn" id="sound" type="button" aria-pressed="false" hidden>Sound</button>
   </div>
-  <div class="cross-row">
-    <div class="cross" role="group" aria-label="Turn the screen">
-      <button class="btn up" type="button" data-turn="up" aria-label="Tilt up">&#9650;&#xFE0E;</button>
-      <button class="btn left" type="button" data-turn="left" aria-label="Turn left">&#9664;&#xFE0E;</button>
-      <button class="btn face" type="button" data-turn="face" aria-label="Face me">&#9679;</button>
-      <button class="btn right" type="button" data-turn="right" aria-label="Turn right">&#9654;&#xFE0E;</button>
-      <button class="btn down" type="button" data-turn="down" aria-label="Tilt down">&#9660;&#xFE0E;</button>
+  <div class="turn-row">
+    <div class="turn">
+      <canvas id="turn" width="116" height="116" role="img" aria-label="A small copy of the sphere: drag on it to turn the big one"></canvas>
+      <button class="btn face" id="face" type="button">Face me</button>
     </div>
-    <p><b>Tap</b> to place the sphere. <b>One finger</b> moves it, <b>pinch</b> resizes it. The arrows turn and tilt its screen, 10&deg; a tap; the dot turns it to you.</p>
+    <p><b>Tap</b> to place the sphere. <b>One finger</b> moves it, <b>pinch</b> resizes it. <b>Drag on the small sphere</b> to turn the big one the same way, in any direction. <b>Face me</b> turns its screen to you.</p>
   </div>
   <div class="sliders">
     <label class="field" for="dist"><span>Virtual distance <output id="dist-out" for="dist">8 m</output></span><input id="dist" type="range" min="3" max="40" step="0.5" value="8"></label>
@@ -194,7 +196,7 @@ function pointerRay(x, y) {
 }
 function place(x, y) {
   const r = pointerRay(x, y); sphere.position.copy(r.direction).multiplyScalar(+dist.value).add(camera.position);
-  sphere.visible = true; placed = true; hint.hidden = true; faceMe(); say('Drag it with one finger, pinch to resize');
+  const first = !placed; sphere.visible = true; placed = true; hint.hidden = true; if (first) faceMe(); say('Drag it with one finger, pinch to resize');
   video.play().catch(() => {});
 }
 function faceMe() { sphere.lookAt(camera.position); }
@@ -240,13 +242,31 @@ canvas.addEventListener('pointerup', up);
 canvas.addEventListener('pointercancel', (e) => { pointers.delete(e.pointerId); if (!pointers.size) { mode = null; downAt = null; } });   // an interrupted touch places nothing
 canvas.addEventListener('wheel', (e) => { e.preventDefault(); size.value = Math.min(3, Math.max(.3, +size.value * (e.deltaY < 0 ? 1.06 : .94))); showSize(); }, { passive: false });
 const Y = new THREE.Vector3(0, 1, 0), X = new THREE.Vector3();
-document.querySelectorAll('[data-turn]').forEach((b) => b.addEventListener('click', () => {
-  if (!placed) return;
-  const t = b.dataset.turn, a = THREE.MathUtils.degToRad(STEP);
-  if (t === 'face') faceMe();
-  else if (t === 'left' || t === 'right') sphere.rotateOnWorldAxis(Y, t === 'left' ? a : -a);
-  else { X.setFromMatrixColumn(camera.matrixWorld, 0).normalize(); sphere.rotateOnWorldAxis(X, t === 'up' ? a : -a); }
-}));
+// The small sphere in the panel is a live copy of the big one, seen from the same side. Dragging on it turns the big sphere the same
+// way: the surface follows the finger (right, left, up, down), about 0.6° per pixel. It works before placing too, so the first tap
+// already puts the sphere the way it was turned.
+const turnCanvas = $('turn'), mini = new THREE.WebGLRenderer({ canvas: turnCanvas, alpha: true, antialias: true });
+mini.setPixelRatio(Math.min(devicePixelRatio, 2)); mini.setSize(116, 116, false); mini.setClearColor(0, 0);   // 116 css px, drawn at the device's pixel density
+const miniScene = new THREE.Scene(); miniScene.add(new THREE.HemisphereLight(0xdfe8f5, 0x202830, 1.1));
+const miniSun = new THREE.DirectionalLight(0xffffff, 1.2); miniSun.position.set(2, 5, 3); miniScene.add(miniSun);
+const miniSphere = sphere.clone(); miniSphere.visible = true; miniSphere.position.set(0, 0, 0); miniSphere.scale.setScalar(1); miniScene.add(miniSphere);
+const miniCam = new THREE.PerspectiveCamera(36, 1, .1, 50), look = new THREE.Vector3();
+function drawMini() {
+  miniSphere.quaternion.copy(sphere.quaternion);
+  camera.getWorldDirection(look); miniCam.position.copy(look).multiplyScalar(-6.4); miniCam.up.set(0, 1, 0); miniCam.lookAt(0, 0, 0);
+  mini.render(miniScene, miniCam);
+}
+const TURN = THREE.MathUtils.degToRad(.6);
+let turnLast = null;
+turnCanvas.addEventListener('pointerdown', (e) => { turnCanvas.setPointerCapture(e.pointerId); turnLast = { x: e.clientX, y: e.clientY }; e.preventDefault(); });
+turnCanvas.addEventListener('pointermove', (e) => {
+  if (!turnLast) return;
+  const dx = e.clientX - turnLast.x, dy = e.clientY - turnLast.y; turnLast = { x: e.clientX, y: e.clientY };
+  sphere.rotateOnWorldAxis(Y, dx * TURN); X.setFromMatrixColumn(camera.matrixWorld, 0).normalize(); sphere.rotateOnWorldAxis(X, dy * TURN);
+});
+const turnEnd = () => { turnLast = null; };
+turnCanvas.addEventListener('pointerup', turnEnd); turnCanvas.addEventListener('pointercancel', turnEnd);
+$('face').addEventListener('click', () => faceMe());
 $('remove').addEventListener('click', () => { placed = false; sphere.visible = false; hint.hidden = false; say('Tap where the sphere should hang'); });
 $('centre').addEventListener('click', () => place(innerWidth / 2, innerHeight / 2));   // for keyboards and switch access
 $('compact').addEventListener('click', () => { const open = $('panel').classList.toggle('compact') === false; $('compact').setAttribute('aria-expanded', String(open)); });
@@ -294,7 +314,7 @@ $('camera').addEventListener('click', () => (stream ? stopCamera() : startCamera
 let wasPlaying = false;
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) { wasPlaying = !video.paused; video.pause(); renderer.setAnimationLoop(null); }
-  else { renderer.setAnimationLoop(() => renderer.render(scene, camera)); if (wasPlaying) video.play().catch(() => {}); }
+  else { renderer.setAnimationLoop(frame); if (wasPlaying) video.play().catch(() => {}); }
 });
 if (document.createElement('a').relList.supports('ar')) {
   $('ar').hidden = false;
@@ -303,8 +323,9 @@ if (document.createElement('a').relList.supports('ar')) {
 
 function resize() { renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); }
 addEventListener('resize', resize); resize();
-renderer.setAnimationLoop(() => renderer.render(scene, camera));
-window.luminAR = true;
+const frame = () => { renderer.render(scene, camera); try { drawMini(); } catch (err) { console.error('mini:', err); } };
+renderer.setAnimationLoop(frame);
+window.luminAR = { ok: true, sphere, placed: () => placed, frames: () => renderer.info.render.frame, miniFrames: () => mini.info.render.frame };
 </script>
 <script>
 setTimeout(function () {
