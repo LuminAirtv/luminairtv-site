@@ -3,13 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-BcdA27X74qun0EeHExRYxaWMEo5xQiTmVeUpKhzojOU=' https://cdn.jsdelivr.net; style-src 'sha256-2kVwyqCCxvZnrjRAy8IpVPJ0cMw1nfgHbeOHggx/fHQ=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-6MFTLb7s2vsNvVv4bul70XlCgijh62D2afYuILcGj9U=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-CbNlyzIt3QcQO412mQK6XldDaIsCx4/438MxJmoD9s8='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@800&family=Roboto+Condensed:wght@400;700&display=swap">
 <style>
-/* v11 (owner, 23.10.2026): "возьми все самое лучшее от Астры, добавь к своему варианту". One full-screen stage: the phone's camera behind,
+@font-face { font-family: "Work Sans"; src: url(/fonts/WorkSans-800-latin.woff2) format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+@font-face { font-family: "Roboto Condensed"; src: url(/fonts/RobotoCondensed-latin-wght.woff2) format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
+/* v12 (23.10.2026, Codex audit items 3, 4, 11, 14, 17, 18, 19; owner: do everything in order): the camera mode is named an approximate
+   mock-up and Apple AR a separate model; Preview size / Virtual distance; the distance follows the sphere after a drag; Start camera /
+   Stop camera; a note when motion access is unavailable; Place in centre for keyboards; the Apple AR banner no longer promises a request
+   button; a message when 3D cannot start; the splash starts with the first placement, not on page load; a compact Controls state.
+   v11 (owner, 23.10.2026): "возьми все самое лучшее от Астры, добавь к своему варианту". One full-screen stage: the phone's camera behind,
    the sphere drawn over it. Tap to place, one finger moves, pinch resizes, a cross turns and tilts, your own video or the splash plays on the
    screen half. From the Codex (GPT-6-Astra) experiment: the drag in the screen plane with the grab offset, the closer/farther slider, the
    "face me" centre of the cross, the splash as the default video, the camera as background. Ours on top: the phone's gyroscope keeps the
@@ -27,8 +32,10 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 #cam.on { display: block; }
 #stage { touch-action: none; display: block; }
 .top { position: fixed; top: 0; left: 0; right: 0; display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: calc(env(safe-area-inset-top, 0px) + 12px) 16px 0; pointer-events: none; }
+.pill-btn { pointer-events: auto; min-height: 34px; padding: 0 12px; border-radius: 999px; background: var(--glass); font-size: 12px; }
+.panel.compact > :not(.row:first-child) { display: none; }
 .brand { font: 800 13px/1 var(--display); letter-spacing: .12em; text-transform: uppercase; }
-.pill { padding: 7px 12px; border: 1px solid var(--edge); border-radius: 999px; background: var(--glass); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-weight: 700; font-size: 12px; letter-spacing: .04em; max-width: 60vw; }
+.pill { padding: 7px 12px; border: 1px solid var(--edge); border-radius: 999px; background: var(--glass); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); font-weight: 700; font-size: 13px; letter-spacing: .04em; max-width: 60vw; }
 .hint { position: fixed; left: 50%; top: 42%; translate: -50% -50%; padding: 12px 18px; border-radius: 10px; background: var(--glass); border: 1px solid var(--edge); font-weight: 700; font-size: 15px; text-align: center; pointer-events: none; max-width: 80vw; }
 .hint[hidden] { display: none; }
 .panel {
@@ -52,10 +59,10 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 .cross-row b { color: var(--ink); }
 .sliders { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .field { display: grid; gap: 4px; }
-.field > span { display: flex; justify-content: space-between; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; font-size: 11px; font-weight: 700; }
+.field > span { display: flex; justify-content: space-between; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; font-weight: 700; }
 .field output { color: var(--ink); font-variant-numeric: tabular-nums; }
 .field input[type="range"] { width: 100%; margin: 0; accent-color: var(--cyan); }
-.note { margin: 0; color: var(--ink-soft); font-size: 12px; line-height: 1.35; }
+.note { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.35; }
 .note a { color: var(--ink); text-decoration-color: var(--cyan); text-underline-offset: 3px; font-weight: 700; }
 #ar[hidden], #sound[hidden] { display: none; }
 @media (max-width: 380px) { .btn { font-size: 12px; padding: 0 6px; } .cross { grid-template-columns: repeat(3, 40px); grid-template-rows: repeat(3, 40px); } }
@@ -73,9 +80,10 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 <div class="top">
   <span class="brand">Lumin AirTv</span>
   <span class="pill" id="status" aria-live="polite">Tap where the sphere should hang</span>
+  <button class="btn pill-btn" id="compact" type="button" aria-expanded="true" aria-controls="panel">Controls</button>
 </div>
 <div class="hint" id="hint">Tap where the sphere should hang</div>
-<section class="panel" aria-label="Controls">
+<section class="panel" id="panel" aria-label="Controls">
   <div class="row">
     <button class="btn primary" id="camera" type="button">Start camera</button>
     <button class="btn" id="pick" type="button">Your video</button>
@@ -94,27 +102,30 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
     <p><b>Tap</b> to place the sphere. <b>One finger</b> moves it, <b>pinch</b> resizes it. The arrows turn and tilt its screen, 10&deg; a tap; the dot turns it to you.</p>
   </div>
   <div class="sliders">
-    <label class="field" for="dist"><span>Distance <output id="dist-out" for="dist">8 m</output></span><input id="dist" type="range" min="3" max="40" step="0.5" value="8"></label>
-    <label class="field" for="size"><span>Size <output id="size-out" for="size">&Oslash; 3.7 m</output></span><input id="size" type="range" min="0.3" max="3" step="0.05" value="1"></label>
+    <label class="field" for="dist"><span>Virtual distance <output id="dist-out" for="dist">8 m</output></span><input id="dist" type="range" min="3" max="40" step="0.5" value="8"></label>
+    <label class="field" for="size"><span>Preview size <output id="size-out" for="size">&Oslash; 3.7 m</output></span><input id="size" type="range" min="0.3" max="3" step="0.05" value="1"></label>
   </div>
   <div class="row">
     <a class="btn" id="ar" rel="ar" href="models/lumin-sphere-ar-v012-ios.usdz" hidden><img src="assets/poster.png" alt="">Apple AR</a>
+    <button class="btn" id="centre" type="button" aria-label="Place the sphere in the centre">Place</button>
     <button class="btn" id="remove" type="button">Remove</button>
     <a class="btn" href="/">Back</a>
   </div>
-  <p class="note" id="note">The sphere is Ø 3.7 m at the distance you set. With the camera on, the phone's gyroscope keeps the sphere in its direction when you turn. <b>Apple AR</b> opens the same sphere in Apple's own camera view, pinned to the ground around you. Your video stays on your device.</p>
+  <p class="note" id="note">Camera preview is an approximate visual mock-up. It follows the direction of your phone, but does not stay fixed to the room when you walk. Size and distance are virtual settings, not measurements of your venue. <b>Apple AR</b> opens a separate model in Apple's viewer; your video, position and preview settings do not carry over. Videos you choose stay on your device.</p>
 </section>
 <input id="file" type="file" accept="video/*" hidden>
 <script type="module">
 // three.js is pinned; the sphere here is an ideal sphere with the 180° screen half and a white back, not the measured product model.
-import * as THREE from 'https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js';
+import * as THREE from '/vendor/three-0.186.0/three.module.js';   // the site's own copy (creative/prototypes/site-vendor-v001)
 
 const R = 1.85, SPREAD = .7, STEP = 10;           // Ø 3.7 m, the website's video mapping, degrees per cross tap
 const $ = (id) => document.getElementById(id);
 const canvas = $('stage'), cam = $('cam'), status = $('status'), hint = $('hint');
 const say = (t) => { status.textContent = t; };
 
-const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+let renderer;
+try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true }); }
+catch (err) { say('The 3D preview could not start. Reload this page or return to the main site.'); hint.textContent = 'The 3D preview could not start.'; throw err; }
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2)); renderer.setClearColor(0, 0);
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(60, 1, .1, 200);
@@ -139,7 +150,7 @@ function hemisphere(front) {
   g.setAttribute('position', new THREE.Float32BufferAttribute(pos, 3)); g.setAttribute('normal', new THREE.Float32BufferAttribute(nrm, 3));
   g.setAttribute('uv', new THREE.Float32BufferAttribute(uv, 2)); g.setIndex(idx); return g;
 }
-const video = document.createElement('video'); video.playsInline = true; video.muted = true; video.loop = true; video.crossOrigin = 'anonymous'; video.preload = 'auto';
+const video = document.createElement('video'); video.playsInline = true; video.muted = true; video.loop = true; video.crossOrigin = 'anonymous'; video.preload = 'metadata';
 const tex = new THREE.VideoTexture(video); tex.colorSpace = THREE.SRGBColorSpace; tex.center.set(.5, .5);
 const screenMat = new THREE.MeshBasicMaterial({ map: tex, color: 0xffffff });
 const sphere = new THREE.Group();
@@ -155,9 +166,9 @@ function fitVideo() {   // "fill screen": the round screen shows the middle of t
 video.addEventListener('loadedmetadata', fitVideo);
 video.addEventListener('error', () => say('This video cannot play here. Use an MP4 (H.264).'));
 let ownUrl = null;
-function setVideo(url, label) {
+function setVideo(url, label, start = true) {
   video.src = url; video.load();
-  video.play().then(() => say(label)).catch(() => say(label + ' · press Play'));
+  if (start) video.play().then(() => say(label)).catch(() => say(label + ' · press Play'));   // the splash itself starts with the first placement
   $('splash').setAttribute('aria-pressed', String(label === 'Splash'));
   $('sound').hidden = label === 'Splash'; video.muted = true; $('sound').setAttribute('aria-pressed', 'false');
 }
@@ -172,7 +183,7 @@ $('sound').addEventListener('click', () => { video.muted = !video.muted; $('soun
 const showPlay = () => { const on = !video.paused; $('play').textContent = on ? 'Pause' : 'Play'; $('play').setAttribute('aria-pressed', String(on)); $('play').setAttribute('aria-label', on ? 'Pause the video' : 'Play the video'); };
 video.addEventListener('play', showPlay); video.addEventListener('pause', showPlay); showPlay();
 $('play').addEventListener('click', () => { if (video.paused) video.play().catch(() => say('The video could not start. Try another file (MP4, H.264).')); else video.pause(); });
-setVideo('assets/splash-v003.mp4', 'Splash');
+setVideo('assets/splash-v003.mp4', 'Splash', false);
 
 // Placing, moving, resizing (Codex's idea kept: the drag moves the sphere in the plane facing the camera, holding the grabbed point).
 const ray = new THREE.Raycaster(), ndc = new THREE.Vector2(), plane = new THREE.Plane(), hit = new THREE.Vector3(), grab = new THREE.Vector3();
@@ -191,6 +202,10 @@ function showSize() { $('size-out').textContent = 'Ø ' + (3.7 * +size.value).to
 function showDist() {
   $('dist-out').textContent = (+dist.value).toFixed(1).replace(/\.0$/, '') + ' m';
   if (placed) { const d = sphere.position.clone().sub(camera.position).normalize(); sphere.position.copy(d.multiplyScalar(+dist.value).add(camera.position)); }
+}
+function syncDist() {   // after a drag the real distance to the camera is shown; the slider only moves within its own range
+  const d = sphere.position.distanceTo(camera.position); dist.value = Math.min(+dist.max, Math.max(+dist.min, Math.round(d * 2) / 2));
+  $('dist-out').textContent = d.toFixed(1).replace(/\.0$/, '') + ' m';
 }
 size.addEventListener('input', showSize); dist.addEventListener('input', showDist); showSize(); showDist();
 const pointers = new Map(); let mode = null, pinch0 = 0, scale0 = 1, downAt = null, moved = false;
@@ -218,6 +233,7 @@ function up(e) {
   pointers.delete(e.pointerId);
   if (mode === 'pinch') { if (!pointers.size) mode = null; return; }
   if (!moved && downAt && mode !== 'drag') place(downAt.x, downAt.y);   // a tap on empty space (or before placing) puts the sphere there
+  if (mode === 'drag' && moved) syncDist();
   if (!pointers.size) { mode = null; downAt = null; }
 }
 canvas.addEventListener('pointerup', up);
@@ -232,10 +248,12 @@ document.querySelectorAll('[data-turn]').forEach((b) => b.addEventListener('clic
   else { X.setFromMatrixColumn(camera.matrixWorld, 0).normalize(); sphere.rotateOnWorldAxis(X, t === 'up' ? a : -a); }
 }));
 $('remove').addEventListener('click', () => { placed = false; sphere.visible = false; hint.hidden = false; say('Tap where the sphere should hang'); });
+$('centre').addEventListener('click', () => place(innerWidth / 2, innerHeight / 2));   // for keyboards and switch access
+$('compact').addEventListener('click', () => { const open = $('panel').classList.toggle('compact') === false; $('compact').setAttribute('aria-expanded', String(open)); });
 
 // Camera behind and the gyroscope: the camera turns with the phone, the sphere stays in its world direction.
 const zee = new THREE.Vector3(0, 0, 1), euler = new THREE.Euler(), q0 = new THREE.Quaternion(), q1 = new THREE.Quaternion(-Math.SQRT1_2, 0, 0, Math.SQRT1_2), qd = new THREE.Quaternion(), fwd = new THREE.Vector3();
-let gyro = false, yawFix = null;
+let gyro = false, yawFix = null, stream = null, motionNote = '';
 function onOrientation(e) {
   if (e.alpha == null) return;
   const orient = THREE.MathUtils.degToRad((screen.orientation && screen.orientation.angle) || window.orientation || 0);
@@ -246,32 +264,52 @@ function onOrientation(e) {
   }
   camera.quaternion.copy(yawFix).multiply(qd); gyro = true;
 }
+const MOTION_NOTE = 'Motion access is unavailable. The preview will stay relative to the screen.';
 async function startCamera() {
-  const btn = $('camera'); btn.disabled = true;
+  const btn = $('camera'); btn.disabled = true; motionNote = '';
   try {
-    if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
-      if (await DeviceOrientationEvent.requestPermission() === 'granted') addEventListener('deviceorientation', onOrientation);
+    if (typeof DeviceOrientationEvent === 'undefined') motionNote = MOTION_NOTE;
+    else if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+      if (await DeviceOrientationEvent.requestPermission() === 'granted') addEventListener('deviceorientation', onOrientation); else motionNote = MOTION_NOTE;
     } else addEventListener('deviceorientation', onOrientation);
-  } catch (err) { /* no gyroscope permission: the camera still works, the sphere just follows the screen */ }
+  } catch (err) { motionNote = MOTION_NOTE; }   // no gyroscope permission: the camera still works, the sphere just follows the screen
   try {
-    const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 } }, audio: false });
+    stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: { ideal: 'environment' }, width: { ideal: 1920 } }, audio: false });
     cam.srcObject = stream; cam.classList.add('on'); await cam.play().catch(() => {});
-    btn.textContent = 'Camera on'; say(placed ? 'Drag it with one finger, pinch to resize' : 'Tap where the sphere should hang');
+    btn.textContent = 'Stop camera'; btn.disabled = false; btn.setAttribute('aria-pressed', 'true');
+    say(motionNote || (placed ? 'Drag it with one finger, pinch to resize' : 'Tap where the sphere should hang'));
     const track = stream.getVideoTracks()[0], s = track.getSettings ? track.getSettings() : {};
     if (s.width && s.height) { camera.fov = 58; camera.updateProjectionMatrix(); }   // close to a phone's main camera held upright; the gyroscope, not the picture, does the tracking
   } catch (err) {
     btn.disabled = false; say(navigator.mediaDevices ? 'Camera not allowed. The sphere shows on a dark background.' : 'This browser has no camera access.');
   }
 }
-$('camera').addEventListener('click', startCamera);
+function stopCamera() {
+  if (stream) stream.getTracks().forEach((t) => t.stop()); stream = null; cam.srcObject = null; cam.classList.remove('on');
+  removeEventListener('deviceorientation', onOrientation); gyro = false; yawFix = null; camera.quaternion.identity(); camera.fov = 60; camera.updateProjectionMatrix();
+  const btn = $('camera'); btn.textContent = 'Start camera'; btn.setAttribute('aria-pressed', 'false'); say('Camera off. The sphere shows on a dark background.');
+}
+$('camera').addEventListener('click', () => (stream ? stopCamera() : startCamera()));
+// Back from Apple AR or another app: the video resumes only if it was playing; a hidden page stops drawing.
+let wasPlaying = false;
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden) { wasPlaying = !video.paused; video.pause(); renderer.setAnimationLoop(null); }
+  else { renderer.setAnimationLoop(() => renderer.render(scene, camera)); if (wasPlaying) video.play().catch(() => {}); }
+});
 if (document.createElement('a').relList.supports('ar')) {
   $('ar').hidden = false;
-  $('ar').href += '#checkoutTitle=' + encodeURIComponent('Lumin AirTv sphere') + '&checkoutSubtitle=' + encodeURIComponent('Drag with one finger, pinch to resize, arrows turn it.') + '&callToAction=' + encodeURIComponent('Ask about a sphere');
+  $('ar').href += '#checkoutTitle=' + encodeURIComponent('Lumin AirTv sphere') + '&checkoutSubtitle=' + encodeURIComponent('Drag with one finger, pinch to resize, arrows turn it.');   // no callToAction: nothing on this page receives it yet
 }
 
 function resize() { renderer.setSize(innerWidth, innerHeight, false); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); }
 addEventListener('resize', resize); resize();
 renderer.setAnimationLoop(() => renderer.render(scene, camera));
+window.luminAR = true;
+</script>
+<script>
+setTimeout(function () {
+  if (!window.luminAR) { document.getElementById('status').textContent = 'The 3D preview could not start. Reload this page or return to the main site.'; document.getElementById('hint').textContent = 'The 3D preview could not start.'; }
+}, 15000);
 </script>
 </body>
 </html>
