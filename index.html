@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hS7l/1DrWbDQ41UOqUtCYzh4ZONGwPH7NnmezGG7BCA=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-67exeNT/M8Oft0K+kRqXyMimJ096YKpYcrQVhk1ubeM=' https://cdn.jsdelivr.net; style-src 'sha256-OoN0EbjoJ9gU4QhdjufDVG0q6lFasTdFYJ029WoXwtw=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-hS7l/1DrWbDQ41UOqUtCYzh4ZONGwPH7NnmezGG7BCA=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-67exeNT/M8Oft0K+kRqXyMimJ096YKpYcrQVhk1ubeM=' https://cdn.jsdelivr.net; style-src 'sha256-NbuO2lrH/I2/ARjWKfxZCSbCF4V1fc5lmGQQB6uXhtc=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -167,6 +167,10 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 .facts li { display: grid; gap: 4px; padding: 14px 14px 16px; border-top: 2px solid var(--blue); background: rgba(4, 9, 18, .5); }
 .facts b { font: 800 26px/1 var(--display); }
 .facts span { color: var(--ink-soft); font-size: 14px; line-height: 1.35; }
+.press { margin: 6px 0 0; padding: 12px 14px 14px; border-left: 2px solid var(--cyan); background: rgba(4, 9, 18, .5); color: var(--ink-soft); font-size: 14px; line-height: 1.4; }
+.press span { display: block; margin-bottom: 4px; color: var(--cyan); font-weight: 700; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+.press a { color: var(--ink); font-weight: 700; text-decoration-color: var(--cyan); text-underline-offset: 3px; }
+.press a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 .soon { margin: 10px 0 0; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
 .soon a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid var(--cyan); }
 .soon a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
@@ -353,6 +357,7 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
       <li><b>Up to 1 h</b><span>usual setup time</span></li>
       <li><b>Your logo</b><span>fits on the white back half</span></li>
     </ul>
+    <p class="press"><span>In the press</span><a href="https://jerusalemnews.co.il/%d7%9e%d7%94%d7%a4%d7%9b%d7%aa-%d7%94%d7%9b%d7%93%d7%95%d7%a8-%d7%a2%d7%95%d7%9c%d7%94-%d7%94%d7%97%d7%93%d7%a9-%d7%9e%d7%99%d7%a8%d7%95%d7%a9%d7%9c%d7%99%d7%9d-%d7%9c%d7%a2%d7%95%d7%9c%d7%9d-%d7%94/" target="_blank" rel="noopener">Jerusalem News, July 2020</a>: “The sphere revolution: a Jerusalem newcomer brings a spherical screen to the events world”. Also in print in Maariv Jerusalem, 10 July 2020.</p>
     <p class="try">The sphere at the top of this page is a 3D model. Turn it, upload a video and watch it on the screen.</p>
     <p class="soon"><a href="#contact">Planning an event? Tell us about it below.</a></p>
   </section>
