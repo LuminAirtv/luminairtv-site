@@ -3,22 +3,24 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-9B30/3+uZ6CsQbTKUkevro8DiImeXk6hSFi5IAKyy6c=' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: data:; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-EKAPaRcpLon1/P5M438zNwIugDOPkhbQDYxpJ9Q4ECM=' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: data:; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@800&family=Roboto+Condensed:wght@400;700&display=swap">
 <style>
 /* One screen: heading, the 3D sphere with the AR button, then three steps. Same night palette as the main page.
-   Owner: one model; it appears on the ground, is moved with a finger and resized with two. The screen half stays free for video;
-   the size in metres appears on the sphere itself while it is touched, then fades.
-   The preview turns only within the front half, so the back stays out of view. */
+   v9, iPhone first (the owner uses only Apple devices): AR Quick Look opens one USDZ with the six flying sizes, a size tag that shows
+   when the sphere is tapped, and − / + buttons in front of it; pinch is off there so the tag always matches the sphere.
+   Android keeps the v8 camera view: the size appears on the sphere while it is touched and the pinch steps through the sizes.
+   A drag on the preview turns it both ways, up to 40° to the sides and 35° up or down, so the white back stays mostly out of view. */
 :root {
   --sky: #03050b; --ink: #f3f6f9; --ink-soft: #a9b4c1; --blue: #005ba8; --cyan: #009de0; --edge: rgba(243, 246, 249, .28); --glass: rgba(4, 9, 18, .72);
   --display: "Work Sans", "Arial Black", sans-serif; --label: "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
   color-scheme: dark;
 }
 html, body { height: 100%; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }  /* Safari on iPhone enlarged some paragraphs on its own */
 body { margin: 0; background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 60%); color: var(--ink); font: 400 17px/1.5 var(--label); -webkit-font-smoothing: antialiased; }
 main {
   min-height: 100%; box-sizing: border-box; display: grid; grid-template-rows: auto auto minmax(320px, 1fr) auto; grid-template-areas: "h" "sub" "mv" "text";
@@ -73,10 +75,10 @@ a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 <main>
   <h1>See the sphere in your space</h1>
   <p class="sub">Flying spheres, filled with helium: Ø 3.7 to 5.2 m.</p>
-  <model-viewer id="sphere" src="models/lumin-sphere-ar-v006-d3_7-h0.glb" ios-src="models/lumin-sphere-ar-v006-d3_7-h0.usdz"
+  <model-viewer id="sphere" src="models/lumin-sphere-ar-v006-d3_7-h0.glb" ios-src="models/lumin-sphere-ar-v009-ios.usdz"
     alt="Lumin AirTv sphere, Ø 3.7 m"
     ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto" ar-placement="floor"
-    camera-controls touch-action="pan-y" camera-orbit="-20deg 80deg auto" min-camera-orbit="-75deg 25deg auto" max-camera-orbit="75deg 155deg auto"
+    camera-controls touch-action="none" camera-orbit="-20deg 80deg auto" min-camera-orbit="-40deg 55deg auto" max-camera-orbit="40deg 125deg auto"
     shadow-intensity="0.8" exposure="1.05" interaction-prompt="none">
     <div class="poster" slot="poster">Loading the 3D sphere…</div>
     <div class="badge" id="badge"><span id="size-now">Ø 3.7 m</span><span class="hint">Tap the ground to move it · Pinch to resize</span></div>
@@ -85,18 +87,19 @@ a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
   </model-viewer>
   <div class="text">
     <ol>
-      <li>Tap <b>View in your space</b> and point the phone at the ground: a square, a park, a street. The sphere appears there at its real size, Ø 3.7 m, screen towards you.</li>
-      <li>Tap the ground to put the sphere there, or drag it with one finger.</li>
-      <li>Pinch with two fingers to change the size. It steps through the sizes of our flying spheres, 3.7, 4.2, 4.5, 4.7, 5 and 5.2 m, and the size in metres appears on the sphere while you touch it.</li>
+      <li>Tap <b>View in your space</b> and point the phone at the ground, best outdoors: a square, a park, a street. The sphere appears in front of you at its real size, Ø 3.7 m, screen towards you.</li>
+      <li>Tap the sphere to see its size. The <b>−</b> and <b>+</b> buttons in front of it switch between the sizes of our flying spheres: 3.7, 4.2, 4.5, 4.7, 5 and 5.2 m.</li>
+      <li>Drag the sphere with one finger to move it, turn it with two.</li>
     </ol>
     <p class="status" id="status" aria-live="polite" hidden></p>
-    <p class="soft">On iPhone and iPad the camera view is Apple's own: drag the sphere with one finger and resize it with two, but the size in metres is not shown there. For reference, 114% of the start is Ø 4.2 m, 122% is 4.5 m, 127% is 4.7 m, 135% is 5 m and 141% is 5.2 m.</p>
-    <p class="soft">The phone needs to see the ground where the sphere stands, so very distant spots may not work.</p>
+    <p class="soft">On Android phones, pinch with two fingers to change the size instead of the buttons; tap the ground to put the sphere there.</p>
+    <p class="soft">A 3.7 m sphere is taller than most rooms. The phone needs to see the ground where the sphere stands, so very distant spots may not work.</p>
     <p><a href="/">Back to luminairtv.co.il</a></p>
   </div>
 </main>
 <script>
-// One real-size model, Ø 3.7 m (GLB for Android and the preview, USDZ for iPhone and iPad, which opens with a banner).
+// GLB, Ø 3.7 m, for Android and the preview; for iPhone and iPad one USDZ with all flying sizes (3d/scripts/build_ar_v009_ios.py),
+// opened with a banner and without pinch, because the size tag inside the model cannot follow a pinch.
 // In the Android camera view (Chrome, WebXR) the pinch steps through the flying sizes and the badge shows the size in metres.
 (function () {
   var BASE = 3.7, SIZES = [3.7, 4.2, 4.5, 4.7, 5, 5.2];  // the model's size and the flying sizes of the gas table (owner)
@@ -109,7 +112,7 @@ a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
   function released() { clearTimeout(fade); fade = setTimeout(function () { tag.classList.remove('on'); }, 1500); }
   mv.addEventListener('pointerdown', touched);
   addEventListener('pointerup', released); addEventListener('pointercancel', released);
-  mv.setAttribute('ios-src', mv.getAttribute('ios-src') + '#checkoutTitle=' + encodeURIComponent('Lumin AirTv sphere Ø 3.7 m') + '&checkoutSubtitle=' + encodeURIComponent('Real size at the start. Pinch to resize.') + '&callToAction=' + encodeURIComponent('Ask about a sphere'));
+  mv.setAttribute('ios-src', mv.getAttribute('ios-src') + '#checkoutTitle=' + encodeURIComponent('Lumin AirTv sphere') + '&checkoutSubtitle=' + encodeURIComponent('Tap it for its size. − and + change it.') + '&callToAction=' + encodeURIComponent('Ask about a sphere') + '&allowsContentScaling=0');
 
   // model-viewer 4.0.0 (pinned above) turns the sphere when a finger lands off it, lets a twist turn it, and pulls a pinch within 20% back
   // to the real size, so 4.2 m could not be reached from 3.7 m. Its camera-view controller has no public API for this; it is reached by
