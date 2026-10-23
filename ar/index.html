@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2UlmjTzDzNNFLnIAc2yRwxlqtTB9Zwld180SLRsA/NU=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-QogRgO6QN/8Gh1RN7ZfdQ/QG5sSaLdmXM/JeMfVCnoY='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-2UlmjTzDzNNFLnIAc2yRwxlqtTB9Zwld180SLRsA/NU=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-M/3bxRal4PlWvn73wHvBCGS6A2GT2gD8QFTNZZUwN3Q='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
@@ -86,6 +86,10 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
   .panel { left: auto; top: 0; bottom: 0; width: min(42vw, 400px); max-height: none; align-content: start; border-top: 0; border-left: 1px solid var(--edge); padding-top: calc(env(safe-area-inset-top, 0px) + 56px); }
   .top { right: min(42vw, 400px); }
   .hint { left: calc((100vw - min(42vw, 400px)) / 2); }
+  /* Folded while held sideways: a small box in the bottom right corner instead of the whole right column. */
+  .panel.turn-only { top: auto; bottom: 0; left: auto; right: 0; width: auto; height: auto; max-height: none; padding: 6px 18px calc(env(safe-area-inset-bottom, 0px) + 10px); border: 1px solid var(--edge); border-right: 0; border-bottom: 0; border-radius: 14px 0 0 0; }
+  .panel.turn-only .grip { margin-top: 0; }
+  .top:has(~ .panel.turn-only) { right: 0; }
 }
 </style>
 </head>
