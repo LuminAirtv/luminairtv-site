@@ -3,14 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-x4sjnKWNtgjoN/mHHDZ/Qfo/7GjJ03n/Redldloy+ZQ=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-M/3bxRal4PlWvn73wHvBCGS6A2GT2gD8QFTNZZUwN3Q='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-Vm+EwPtbniltv467Ss2SOHD3fmtclBEHC9lMaBmC5do=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-8zJzrVZN953vahq2LZPb4QfGQ0WDedEX2si9+MPdqJY='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
 <style>
 @font-face { font-family: "Work Sans"; src: url(/fonts/WorkSans-800-latin.woff2) format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
 @font-face { font-family: "Roboto Condensed"; src: url(/fonts/RobotoCondensed-latin-wght.woff2) format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
-/* v14 (23.10.2026, owner on his iPhone): the panel can be swiped down. "Чтобы можно было наполовину скрыть страницу, которая внизу…
+/* v15 (23.10.2026, owner): the sphere turns like the one on the main page. "Та, которая на главной… не переворачивается кверх ногами.
+   А виртуальная… поворачиваешь влево-вправо, и она задирается. Может вообще перевернуться." Measured: adding turns about two axes one
+   after another builds up a roll, and 200 px of dragging down left the sphere upside down. Now the turn is kept as two angles, left-right
+   without limit and up-down within ±80°, and the orientation is rebuilt from them every time: no roll, no flipping, the horizon stays level.
+   v14 (23.10.2026, owner on his iPhone): the panel can be swiped down. "Чтобы можно было наполовину скрыть страницу, которая внизу…
    пальцем ее сдвинуть вниз настолько, чтобы было только управление… чтобы вот этот шар второй, дублирующий, остался." A grip at the top
    of the panel: swipe it down and only the small sphere with Face me stays; swipe it up and the panel is back. The Controls button
    does the same. v13 (23.10.2026, owner on his iPhone): the turn cross is gone. "Когда тыкаешь на нее, на айфоне увеличивается просто сайт… а сам шар не
@@ -135,7 +139,8 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 // three.js is pinned; the sphere here is an ideal sphere with the 180° screen half and a white back, not the measured product model.
 import * as THREE from '/vendor/three-0.186.0/three.module.js';   // the site's own copy (creative/prototypes/site-vendor-v001)
 
-const R = 1.85, SPREAD = .7, STEP = 10;           // Ø 3.7 m, the website's video mapping, degrees per cross tap
+const R = 1.85, SPREAD = .7;           // Ø 3.7 m, the website's video mapping
+const Y = new THREE.Vector3(0, 1, 0), X = new THREE.Vector3();
 const $ = (id) => document.getElementById(id);
 const canvas = $('stage'), cam = $('cam'), status = $('status'), hint = $('hint');
 const say = (t) => { status.textContent = t; };
@@ -214,7 +219,17 @@ function place(x, y) {
   const first = !placed; sphere.visible = true; placed = true; hint.hidden = true; if (first) faceMe(); say('Drag it with one finger, pinch to resize');
   video.play().catch(() => {});
 }
-function faceMe() { sphere.lookAt(camera.position); }
+// The turn is two angles on top of the facing orientation, like the camera orbit on the main page: yaw around the world's up axis
+// (no limit) and pitch around the camera's sideways axis (±80°). Rebuilt from the angles each time, so no roll can creep in.
+const TILT_LIMIT = THREE.MathUtils.degToRad(80);
+let yaw = 0, pitch = 0;
+const base = new THREE.Quaternion(), qYaw = new THREE.Quaternion(), qPitch = new THREE.Quaternion();
+function applyTurn() {
+  X.setFromMatrixColumn(camera.matrixWorld, 0).normalize();
+  qYaw.setFromAxisAngle(Y, yaw); qPitch.setFromAxisAngle(X, pitch);
+  sphere.quaternion.copy(qYaw).multiply(qPitch).multiply(base);
+}
+function faceMe() { sphere.lookAt(camera.position); base.copy(sphere.quaternion); yaw = 0; pitch = 0; }
 function showSize() { $('size-out').textContent = 'Ø ' + (3.7 * +size.value).toFixed(1).replace(/\.0$/, '') + ' m'; sphere.scale.setScalar(+size.value); }
 function showDist() {
   $('dist-out').textContent = (+dist.value).toFixed(1).replace(/\.0$/, '') + ' m';
@@ -256,7 +271,6 @@ function up(e) {
 canvas.addEventListener('pointerup', up);
 canvas.addEventListener('pointercancel', (e) => { pointers.delete(e.pointerId); if (!pointers.size) { mode = null; downAt = null; } });   // an interrupted touch places nothing
 canvas.addEventListener('wheel', (e) => { e.preventDefault(); size.value = Math.min(3, Math.max(.3, +size.value * (e.deltaY < 0 ? 1.06 : .94))); showSize(); }, { passive: false });
-const Y = new THREE.Vector3(0, 1, 0), X = new THREE.Vector3();
 // The small sphere in the panel is a live copy of the big one, seen from the same side. Dragging on it turns the big sphere the same
 // way: the surface follows the finger (right, left, up, down), about 0.6° per pixel. It works before placing too, so the first tap
 // already puts the sphere the way it was turned.
@@ -277,7 +291,7 @@ turnCanvas.addEventListener('pointerdown', (e) => { turnCanvas.setPointerCapture
 turnCanvas.addEventListener('pointermove', (e) => {
   if (!turnLast) return;
   const dx = e.clientX - turnLast.x, dy = e.clientY - turnLast.y; turnLast = { x: e.clientX, y: e.clientY };
-  sphere.rotateOnWorldAxis(Y, dx * TURN); X.setFromMatrixColumn(camera.matrixWorld, 0).normalize(); sphere.rotateOnWorldAxis(X, dy * TURN);
+  yaw += dx * TURN; pitch = Math.max(-TILT_LIMIT, Math.min(TILT_LIMIT, pitch + dy * TURN)); applyTurn();
 });
 const turnEnd = () => { turnLast = null; };
 turnCanvas.addEventListener('pointerup', turnEnd); turnCanvas.addEventListener('pointercancel', turnEnd);
