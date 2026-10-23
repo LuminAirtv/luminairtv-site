@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-f4IyOSI94TakF3HkVEvVVpOGTwkKIcXzKyCdhfwuDNY=' 'sha256-wgxWwhWAlGRaobwllB+P8wzUgGL1cEXBN2putcxDYtc=' 'sha256-/kfHLrI8O+62AoeApypA0QVMWKrziYfVP1sT0HUqdTU='; style-src 'sha256-apfyp+sBKbkw07TtVtcAQJ6BjqyuYVnYqPwOK+MTz9U='; font-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-f4IyOSI94TakF3HkVEvVVpOGTwkKIcXzKyCdhfwuDNY=' 'sha256-wgxWwhWAlGRaobwllB+P8wzUgGL1cEXBN2putcxDYtc=' 'sha256-WPqsTt8XtK1dtQEKLG2Zx0mkul2xLHeiCxzPz2lOUDw='; style-src 'sha256-x+S5VQSXjdFtoJWwOdnMLFlny+jVlywhCkjsLcL2tKg='; font-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv — Flying Projection Spheres in Israel</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -204,11 +204,20 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
   display: grid; gap: 14px; padding: 0 16px 16px; border: 1px solid var(--edge); border-radius: 8px; background: var(--panel);
   -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-weight: 700; font-size: 13px; line-height: 1.35; letter-spacing: .03em;
 }
-/* The heading row with Close stays at the top while the panel scrolls. */
+/* The heading row stays at the top while the panel scrolls. It is also the handle (owner, 23.10.2026): drag it to move the panel
+   anywhere on the screen, and the fold button leaves a strip with only Framing and Edges. */
 .panel-head {
-  position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 10px;
-  margin: 0 -16px; padding: 12px 12px 10px 16px; background: var(--panel-head);
+  position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  margin: 0 -16px; padding: 18px 12px 10px 16px; background: var(--panel-head); touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none;
 }
+.panel-head::before { content: ""; position: absolute; left: 50%; top: 6px; width: 44px; height: 5px; translate: -50%; border-radius: 3px; background: rgba(243, 246, 249, .4); }
+.panel-head:active { cursor: grabbing; }
+.panel-head h2 { flex: 1; }
+.panel-head .fold { width: 40px; min-height: 40px; flex: none; }
+.panel-head .fold svg { width: 18px; height: 18px; transition: rotate .2s; }
+.panel.strip .fold svg { rotate: 180deg; }
+.panel.strip > :not(.panel-head):not(.keep) { display: none; }
+.panel.strip { gap: 10px; }
 .panel-head .close { width: 40px; min-height: 40px; flex: none; }
 .panel-head .close svg { width: 18px; height: 18px; }
 .panel h2 { margin: 0; font: 800 18px/1.1 var(--display); letter-spacing: .01em; }
@@ -623,20 +632,23 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 </main>
 
 <section class="panel" id="proj-panel" aria-label="Video settings" hidden>
-  <div class="panel-head">
+  <div class="panel-head" id="proj-head">
     <h2>Video on the sphere</h2>
+    <button class="btn icon fold" id="proj-fold" type="button" aria-expanded="true" aria-label="Fold to a strip with Framing and Edges" title="Fold">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
+    </button>
     <button class="btn icon close" id="proj-close" type="button" aria-label="Close video settings" title="Close">
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
     </button>
   </div>
-  <div class="field">
+  <div class="field keep">
     <span>Framing</span>
     <div class="seg" id="fit" role="group" aria-label="Framing">
       <button type="button" data-fit="fill" aria-pressed="true">Fill screen</button>
       <button type="button" data-fit="whole" aria-pressed="false">Whole video</button>
     </div>
   </div>
-  <label class="field" for="spread"><span>Edges <output id="spread-out" for="spread">70% even</output></span>
+  <label class="field keep" for="spread"><span>Edges <output id="spread-out" for="spread">70% even</output></span>
     <input id="spread" type="range" min="0" max="100" step="5" value="70"></label>
   <p class="note">At 0% the video looks flat from straight ahead but stretches at the edges. At 100% it lies evenly over the whole screen.</p>
   <details class="adv">
@@ -1124,6 +1136,32 @@ async function start() {
   $('proj-close')?.addEventListener('click', () => { showPanel(false); ui.toggle.focus(); });
   document.addEventListener('pointerdown', (e) => { if (!ui.panel.hidden && !ui.panel.contains(e.target) && !ui.toggle.contains(e.target)) showPanel(false); });
   addEventListener('keydown', (e) => { if (e.key === 'Escape' && !ui.panel.hidden) { showPanel(false); ui.toggle.focus(); } });
+  // The panel's head is a handle: a finger or the mouse drags the panel anywhere on the screen (owner, 23.10.2026). It stays within
+  // the window with its head visible. The fold button keeps only the rows marked .keep (Framing and Edges).
+  const head = $('proj-head'), fold = $('proj-fold');
+  if (head) {
+    let drag = null;
+    head.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button')) return;
+      const r = ui.panel.getBoundingClientRect(); drag = { x: e.clientX, y: e.clientY, left: r.left, top: r.top, w: r.width, moved: false };
+      head.setPointerCapture(e.pointerId); e.preventDefault();
+    });
+    head.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved && Math.hypot(dx, dy) < 4) return;
+      drag.moved = true;
+      const left = Math.min(Math.max(8, drag.left + dx), Math.max(8, innerWidth - drag.w - 8)), top = Math.min(Math.max(8, drag.top + dy), innerHeight - 64);
+      ui.panel.style.right = 'auto'; ui.panel.style.left = `${left}px`; ui.panel.style.top = `${top}px`;
+    });
+    const endDrag = () => { drag = null; };
+    head.addEventListener('pointerup', endDrag); head.addEventListener('pointercancel', endDrag);
+  }
+  fold?.addEventListener('click', () => {
+    const strip = ui.panel.classList.toggle('strip');
+    fold.setAttribute('aria-expanded', String(!strip)); fold.setAttribute('aria-label', strip ? 'Unfold the settings' : 'Fold to a strip with Framing and Edges'); fold.title = strip ? 'Unfold' : 'Fold';
+    frameDirty = true;
+  });
   applyProjector();
   document.fonts.ready.then(() => { drawChart(chartCanvas, proj.w, proj.h); chartTex.needsUpdate = true; frameDirty = true; });
 
