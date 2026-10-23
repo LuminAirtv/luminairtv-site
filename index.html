@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-EtUucFQbiJnvsozzJYvi0J1Q1EGI6j/cTQzmS+02wsU=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-9U+xz6M2e9/kYlfGhho8tOePYoI5qf+7o2O58Gk7u7c=' https://cdn.jsdelivr.net; style-src 'sha256-Ag5E9WPhrlIZyXdSuMNJdh1wXc2rp2+X/kkU0g7ZWto=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-EtUucFQbiJnvsozzJYvi0J1Q1EGI6j/cTQzmS+02wsU=' 'sha256-PGPKRKvAgtu+d4CBiPYYCjNyaI1M6DyzKPK7kRHfNqs=' 'sha256-9U+xz6M2e9/kYlfGhho8tOePYoI5qf+7o2O58Gk7u7c=' https://cdn.jsdelivr.net; style-src 'sha256-1nLDoPJ3I9pIh6EGMwDz3aUbTGt6I/pKbXCPtaDg1cA=' https://fonts.googleapis.com; font-src data: https://fonts.gstatic.com; img-src 'self' data: blob:; media-src blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -243,13 +243,29 @@ body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55
 .lightbox-frame iframe { width: 100%; height: 100%; border: 0; border-radius: 6px; }
 .lightbox .btn { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); right: max(16px, env(safe-area-inset-right, 0px)); }
 
+/* Phones, tablets and unfolded foldables upright: the first screen is the sphere, with the slogan above and the controls below. */
 @media (max-width: 1024px) {
-  .hero { min-height: 0; grid-template-rows: auto auto auto; }
-  .stage-wrap { min-height: 0; height: min(92vw, 62svh); }
+  .hero { grid-template-rows: auto minmax(0, 1fr) auto; }
+  .stage-wrap { min-height: min(92vw, 300px); }
   .story { grid-template-columns: minmax(0, 1fr); grid-template-areas: "walls" "about"; margin-top: clamp(32px, 6vh, 56px); }
   .walls { grid-area: walls; display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px 2px 12px; }
   .wall { display: contents; }
   .walls li { flex: 0 0 min(72vw, 300px); scroll-snap-align: start; }
+}
+/* Phones and foldables held sideways: the sphere takes the left half at full height, slogan and controls stand on the right. */
+@media (orientation: landscape) and (max-width: 1024px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto auto minmax(0, 1fr);
+    grid-template-areas: "stage ." "stage brand" "stage dock" "stage ."; column-gap: clamp(12px, 3vw, 32px); row-gap: 12px;
+    padding-block: calc(env(safe-area-inset-top, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 12px);
+  }
+  .stage-wrap { min-height: 0; }
+  .slogan { font-size: clamp(24px, 4vw, 44px); }
+  .controls { flex-wrap: nowrap; gap: 8px; }
+  .btn { padding: 0 14px; font-size: 13px; }
+  .btn.primary { min-width: 6.2em; }
+  .btn.icon { width: 44px; padding: 0; }
+  .panel { top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100% - 24px); }
 }
 @media (max-width: 560px) {
   .lede { font-size: 11px; letter-spacing: .07em; }
