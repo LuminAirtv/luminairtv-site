@@ -3,13 +3,13 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-U7jqCXx8/yui7qxYvYnyJ4TnhYRIjXyspeNkaEe5sHk=' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: data:; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-ITFHY7UjLnlcJ4jvktHG7QGyvTV/ov2dTYtvD3p1IHA=' https://cdn.jsdelivr.net; style-src 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' blob: data:; worker-src blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@800&family=Roboto+Condensed:wght@400;700&display=swap">
 <style>
-/* One screen: the 3D sphere fills the top, the button and three short lines sit under it. Same night palette as the main page. */
+/* One screen: heading and height choice, the 3D sphere with the AR button, then the steps. Same night palette as the main page. */
 :root {
   --sky: #03050b; --ink: #f3f6f9; --ink-soft: #a9b4c1; --blue: #005ba8; --cyan: #009de0; --edge: rgba(243, 246, 249, .28);
   --display: "Work Sans", "Arial Black", sans-serif; --label: "Roboto Condensed", "Arial Narrow", Arial, sans-serif;
@@ -18,30 +18,40 @@
 html, body { height: 100%; }
 body { margin: 0; background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 60%); color: var(--ink); font: 400 17px/1.5 var(--label); -webkit-font-smoothing: antialiased; }
 main {
-  min-height: 100%; box-sizing: border-box; display: grid; grid-template-rows: auto minmax(320px, 1fr) auto; gap: 14px; max-width: 760px; margin: 0 auto;
+  min-height: 100%; box-sizing: border-box; display: grid; grid-template-rows: auto auto minmax(320px, 1fr) auto; grid-template-areas: "h" "heights" "mv" "text";
+  gap: 14px; max-width: 760px; margin: 0 auto;
   padding: calc(env(safe-area-inset-top, 0px) + 20px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 24px) max(16px, env(safe-area-inset-left, 0px));
 }
-h1 { margin: 0; font: 800 clamp(26px, 6vw, 40px)/1.05 var(--display); text-wrap: balance; }
-model-viewer { width: 100%; height: 100%; min-height: 320px; --poster-color: transparent; --progress-bar-color: var(--cyan); }
+h1 { grid-area: h; margin: 0; font: 800 clamp(26px, 6vw, 40px)/1.05 var(--display); text-wrap: balance; }
+.heights { grid-area: heights; display: grid; gap: 8px; }
+.heights > span { color: var(--ink-soft); font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.seg { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.seg button { min-height: 44px; padding: 0 6px; border: 1px solid var(--edge); border-radius: 6px; background: transparent; color: var(--ink); font: 700 14px/1.1 var(--label); letter-spacing: .03em; cursor: pointer; font-variant-numeric: tabular-nums; }
+.seg button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); }
+.seg button:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+model-viewer { grid-area: mv; width: 100%; height: 100%; min-height: 320px; --poster-color: transparent; --progress-bar-color: var(--cyan); }
 .poster { position: absolute; inset: 0; display: grid; place-items: center; color: var(--ink-soft); font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; }
 .ar {
   position: absolute; left: 50%; bottom: 16px; translate: -50% 0; min-height: 52px; padding: 0 26px; border: 0; border-radius: 6px; background: var(--blue); color: var(--ink);
-  font: 700 16px/1 var(--label); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, .45);
+  font: 700 16px/1 var(--label); letter-spacing: .08em; text-transform: uppercase; cursor: pointer; box-shadow: 0 8px 24px rgba(0, 0, 0, .45); white-space: nowrap;
 }
 .ar:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-.text { display: grid; gap: 10px; }
-.text p { margin: 0; }
+.text { grid-area: text; display: grid; gap: 10px; }
+.text p, .text ol { margin: 0; }
+.text ol { padding-left: 1.3em; display: grid; gap: 6px; }
 .soft { color: var(--ink-soft); font-size: 15px; }
 .status { font-weight: 700; color: var(--cyan); }
 a { color: var(--ink); text-decoration-color: var(--cyan); text-underline-offset: 4px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; font-size: 14px; }
 a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
-/* Phones and foldables held sideways: the sphere on the left at full height, heading and text on the right. */
+@media (max-width: 380px) { .seg button { font-size: 13px; padding: 0 3px; } }
+/* Phones and foldables held sideways: the sphere on the left at full height, everything else on the right. */
 @media (orientation: landscape) and (max-height: 700px) {
-  main { max-width: 1100px; height: 100%; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto auto minmax(0, 1fr);
-    grid-template-areas: "mv ." "mv h" "mv text" "mv ."; column-gap: clamp(16px, 3vw, 40px); row-gap: 12px; padding-block: calc(env(safe-area-inset-top, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 12px); }
-  h1 { grid-area: h; font-size: clamp(22px, 3.4vw, 34px); }
-  model-viewer { grid-area: mv; min-height: 0; }
-  .text { grid-area: text; font-size: 15px; }
+  main { max-width: 1100px; height: 100%; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto auto auto minmax(0, 1fr);
+    grid-template-areas: "mv ." "mv h" "mv heights" "mv text" "mv ."; column-gap: clamp(16px, 3vw, 40px); row-gap: 10px;
+    padding-block: calc(env(safe-area-inset-top, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 12px); overflow-y: auto; }
+  h1 { font-size: clamp(22px, 3.2vw, 32px); }
+  model-viewer { min-height: 0; }
+  .text { font-size: 14px; line-height: 1.4; }
 }
 </style>
 <script type="module" src="https://cdn.jsdelivr.net/npm/@google/model-viewer@4.0.0/dist/model-viewer.min.js"></script>
@@ -49,26 +59,50 @@ a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
 <body>
 <main>
   <h1>See the sphere in your space</h1>
-  <model-viewer id="sphere" src="models/lumin-sphere-ar-v001.glb" ios-src="models/lumin-sphere-ar-v001.usdz"
-    alt="The Lumin AirTv sphere, 3.7 m across, floating 2 m above the floor on a tether"
-    ar ar-modes="webxr scene-viewer quick-look" ar-scale="fixed" ar-placement="floor"
+  <div class="heights">
+    <span id="heights-label">Height above the ground</span>
+    <div class="seg" role="group" aria-labelledby="heights-label">
+      <button type="button" data-h="h0" aria-pressed="false">On the ground</button>
+      <button type="button" data-h="h2" aria-pressed="false">2 m</button>
+      <button type="button" data-h="h5" aria-pressed="true">5 m</button>
+      <button type="button" data-h="h10" aria-pressed="false">10 m</button>
+      <button type="button" data-h="h20" aria-pressed="false">20 m</button>
+    </div>
+  </div>
+  <model-viewer id="sphere" src="models/lumin-sphere-ar-v002-h5.glb" ios-src="models/lumin-sphere-ar-v002-h5.usdz"
+    alt="The Lumin AirTv sphere, 3.7 m across, on a tether 5 m above the ground"
+    ar ar-modes="webxr scene-viewer quick-look" ar-scale="auto" ar-placement="floor"
     camera-controls touch-action="pan-y" auto-rotate rotation-per-second="14deg" camera-orbit="-20deg 82deg auto"
     shadow-intensity="0.8" exposure="1.05" interaction-prompt="none">
     <div class="poster" slot="poster">Loading the 3D sphere…</div>
     <button class="ar" slot="ar-button" type="button">View in your space</button>
   </model-viewer>
   <div class="text">
-    <p>Tap <b>View in your space</b> and point the camera at the floor where the sphere should be. It appears at its real size: 3.7 m across, floating 2 m above the floor on a tether. Walk around it to see the round screen and the white back.</p>
+    <ol>
+      <li>Choose a height and tap <b>View in your space</b>.</li>
+      <li>Point the camera at the ground where the sphere should stand: the edge of a square, between trees or houses, above a bus stop. Drag the sphere there with one finger.</li>
+      <li>Walk around it. The sphere stays where you put it, at its real size of 3.7 m across, so it looks right next to people, trees and houses.</li>
+      <li>Pinch with two fingers to make it larger or smaller, for example to try a bigger sphere made to order.</li>
+    </ol>
     <p class="status" id="status" aria-live="polite" hidden></p>
-    <p class="soft">The height and the tether are only for this preview.</p>
+    <p class="soft">The phone needs to see the ground where the sphere stands, so very distant spots may not work. Heights and the tether are only for this preview.</p>
     <p><a href="/">Back to luminairtv.co.il</a></p>
   </div>
 </main>
 <script>
-// Phones and tablets that can show AR get the button; elsewhere the page says where it works.
+// Height choice swaps the model (GLB for Android and the preview, USDZ for iPhone and iPad). Devices that can show AR get the button;
+// elsewhere the page says where it works.
 (function () {
   var mv = document.getElementById('sphere'), status = document.getElementById('status');
+  var names = { h0: 'resting on the ground', h2: 'on a tether 2 m above the ground', h5: 'on a tether 5 m above the ground', h10: 'on a tether 10 m above the ground', h20: 'on a tether 20 m above the ground' };
   function say(text) { status.textContent = text; status.hidden = !text; }
+  document.querySelectorAll('.seg button').forEach(function (b) {
+    b.addEventListener('click', function () {
+      document.querySelectorAll('.seg button').forEach(function (o) { o.setAttribute('aria-pressed', String(o === b)); });
+      mv.src = 'models/lumin-sphere-ar-v002-' + b.dataset.h + '.glb'; mv.iosSrc = 'models/lumin-sphere-ar-v002-' + b.dataset.h + '.usdz';
+      mv.alt = 'The Lumin AirTv sphere, 3.7 m across, ' + names[b.dataset.h];
+    });
+  });
   mv.addEventListener('load', function () {
     if (!mv.canActivateAR) say('Augmented reality works on phones and tablets: iPhone or iPad in Safari, Android in Chrome. Open luminairtv.co.il/ar on your phone. Here you can turn the sphere with the mouse.');
   });
