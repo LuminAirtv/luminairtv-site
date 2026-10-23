@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-K8bbJCNEfVY9NAWSZCH1++mgZLtAYe/yx2oxz8O/yBE=' https://cdn.jsdelivr.net; style-src 'sha256-2kVwyqCCxvZnrjRAy8IpVPJ0cMw1nfgHbeOHggx/fHQ=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'sha256-BcdA27X74qun0EeHExRYxaWMEo5xQiTmVeUpKhzojOU=' https://cdn.jsdelivr.net; style-src 'sha256-2kVwyqCCxvZnrjRAy8IpVPJ0cMw1nfgHbeOHggx/fHQ=' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
@@ -72,7 +72,7 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 <canvas id="stage" aria-label="The sphere in your space"></canvas>
 <div class="top">
   <span class="brand">Lumin AirTv</span>
-  <span class="pill" id="status">Tap where the sphere should hang</span>
+  <span class="pill" id="status" aria-live="polite">Tap where the sphere should hang</span>
 </div>
 <div class="hint" id="hint">Tap where the sphere should hang</div>
 <section class="panel" aria-label="Controls">
@@ -80,6 +80,7 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
     <button class="btn primary" id="camera" type="button">Start camera</button>
     <button class="btn" id="pick" type="button">Your video</button>
     <button class="btn" id="splash" type="button" aria-pressed="true">Splash</button>
+    <button class="btn" id="play" type="button" aria-pressed="true" aria-label="Pause the video">Pause</button>
     <button class="btn" id="sound" type="button" aria-pressed="false" hidden>Sound</button>
   </div>
   <div class="cross-row">
@@ -156,7 +157,7 @@ video.addEventListener('error', () => say('This video cannot play here. Use an M
 let ownUrl = null;
 function setVideo(url, label) {
   video.src = url; video.load();
-  video.play().then(() => say(label)).catch(() => say(label + ' · tap the sphere to play'));
+  video.play().then(() => say(label)).catch(() => say(label + ' · press Play'));
   $('splash').setAttribute('aria-pressed', String(label === 'Splash'));
   $('sound').hidden = label === 'Splash'; video.muted = true; $('sound').setAttribute('aria-pressed', 'false');
 }
@@ -167,6 +168,10 @@ $('file').addEventListener('change', () => {
   if (ownUrl) URL.revokeObjectURL(ownUrl); ownUrl = URL.createObjectURL(f); setVideo(ownUrl, f.name);
 });
 $('sound').addEventListener('click', () => { video.muted = !video.muted; $('sound').setAttribute('aria-pressed', String(!video.muted)); });
+// Play / Pause follows the video itself, so a refused autoplay (iPhone) is fixed with one obvious tap.
+const showPlay = () => { const on = !video.paused; $('play').textContent = on ? 'Pause' : 'Play'; $('play').setAttribute('aria-pressed', String(on)); $('play').setAttribute('aria-label', on ? 'Pause the video' : 'Play the video'); };
+video.addEventListener('play', showPlay); video.addEventListener('pause', showPlay); showPlay();
+$('play').addEventListener('click', () => { if (video.paused) video.play().catch(() => say('The video could not start. Try another file (MP4, H.264).')); else video.pause(); });
 setVideo('assets/splash-v003.mp4', 'Splash');
 
 // Placing, moving, resizing (Codex's idea kept: the drag moves the sphere in the plane facing the camera, holding the grabbed point).
@@ -215,7 +220,8 @@ function up(e) {
   if (!moved && downAt && mode !== 'drag') place(downAt.x, downAt.y);   // a tap on empty space (or before placing) puts the sphere there
   if (!pointers.size) { mode = null; downAt = null; }
 }
-canvas.addEventListener('pointerup', up); canvas.addEventListener('pointercancel', up);
+canvas.addEventListener('pointerup', up);
+canvas.addEventListener('pointercancel', (e) => { pointers.delete(e.pointerId); if (!pointers.size) { mode = null; downAt = null; } });   // an interrupted touch places nothing
 canvas.addEventListener('wheel', (e) => { e.preventDefault(); size.value = Math.min(3, Math.max(.3, +size.value * (e.deltaY < 0 ? 1.06 : .94))); showSize(); }, { passive: false });
 const Y = new THREE.Vector3(0, 1, 0), X = new THREE.Vector3();
 document.querySelectorAll('[data-turn]').forEach((b) => b.addEventListener('click', () => {
@@ -252,7 +258,7 @@ async function startCamera() {
     cam.srcObject = stream; cam.classList.add('on'); await cam.play().catch(() => {});
     btn.textContent = 'Camera on'; say(placed ? 'Drag it with one finger, pinch to resize' : 'Tap where the sphere should hang');
     const track = stream.getVideoTracks()[0], s = track.getSettings ? track.getSettings() : {};
-    if (s.width && s.height) camera.fov = 58;   // close to a phone's main camera held upright; the gyroscope, not the picture, does the tracking
+    if (s.width && s.height) { camera.fov = 58; camera.updateProjectionMatrix(); }   // close to a phone's main camera held upright; the gyroscope, not the picture, does the tracking
   } catch (err) {
     btn.disabled = false; say(navigator.mediaDevices ? 'Camera not allowed. The sphere shows on a dark background.' : 'This browser has no camera access.');
   }

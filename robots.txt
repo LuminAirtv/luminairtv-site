@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Disallow: /ar/
 
 Sitemap: https://luminairtv.co.il/sitemap.xml
