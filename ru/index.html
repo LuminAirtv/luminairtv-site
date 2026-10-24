@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-+3hbiw59ZQ2x8gBkbyPkxejfe4DSWsosqI4tLNxMQms=' 'sha256-li/KBF27NSwqd0cMUrT0oPxh9n4izHzIZxbvQcOuOAo=' 'sha256-WLGmiF2syucc+6/JCYOsjBd903TGsslXWen+oaPQ8qM='; style-src 'sha256-RqsJ8vHZyDWLYPCDgvbAj4i1R/jt0Bgr0g7SQuaAa78='; font-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-iXGI7Jf8xVvLu4SyZTL/oQwgyLkmABwIY4vQ6Ee0BVI=' 'sha256-+3hbiw59ZQ2x8gBkbyPkxejfe4DSWsosqI4tLNxMQms=' 'sha256-li/KBF27NSwqd0cMUrT0oPxh9n4izHzIZxbvQcOuOAo=' 'sha256-WLGmiF2syucc+6/JCYOsjBd903TGsslXWen+oaPQ8qM='; style-src 'sha256-RqsJ8vHZyDWLYPCDgvbAj4i1R/jt0Bgr0g7SQuaAa78='; font-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv — летающие проекционные шары в Израиле</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -481,6 +481,29 @@ html[lang="he"] :is(.lede, .loading, .hint, .btn, .status, .ar-plate i, .win .ca
 </head>
 <body>
 
+<script>
+// Language on arrival (owner, 24.10.2026): the English front page opens in the browser's language, Hebrew or Russian, on a first visit;
+// a language chosen in the switcher is remembered on this device and wins afterwards. Direct links to /he/ and /ru/, our own
+// in-site navigation and search-engine crawlers are left alone. Only on luminairtv.co.il, never in previews.
+(function () {
+  var KEY = 'luminLang', here = document.documentElement.lang || 'en';
+  function pick(hereLang, langs, stored, referrer, ua, host) {
+    if (host !== 'luminairtv.co.il' || hereLang !== 'en') return null;
+    if (/bot|crawl|spider|slurp|facebookexternalhit|preview|lighthouse/i.test(ua || '')) return null;
+    if (referrer && referrer.indexOf('https://luminairtv.co.il') === 0) return null;
+    var first = ((langs && langs[0]) || '').toLowerCase().slice(0, 2), want = stored || (first === 'iw' ? 'he' : first);
+    return want === 'he' ? '/he/' : want === 'ru' ? '/ru/' : null;
+  }
+  window.luminPickLang = pick;
+  var stored = null; try { stored = localStorage.getItem(KEY); } catch (e) {}
+  var to = pick(here, navigator.languages || [navigator.language], stored, document.referrer, navigator.userAgent, location.hostname);
+  if (to && location.pathname !== to) { location.replace(to + location.search + location.hash); return; }
+  document.addEventListener('click', function (e) {
+    var a = e.target && e.target.closest ? e.target.closest('nav.langs a[hreflang]') : null; if (!a) return;
+    try { localStorage.setItem(KEY, a.getAttribute('hreflang')); } catch (err) {}
+  });
+})();
+</script>
 <div class="sky" aria-hidden="true"></div>
 <main class="page">
   <section class="hero" aria-label="Шар Lumin AirTv">
