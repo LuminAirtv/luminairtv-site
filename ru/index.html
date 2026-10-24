@@ -1,0 +1,1334 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-+3hbiw59ZQ2x8gBkbyPkxejfe4DSWsosqI4tLNxMQms=' 'sha256-li/KBF27NSwqd0cMUrT0oPxh9n4izHzIZxbvQcOuOAo=' 'sha256-WLGmiF2syucc+6/JCYOsjBd903TGsslXWen+oaPQ8qM='; style-src 'sha256-7n7J0XH/M7BPjBLGe0GqRZZN15Sxj9tCS2cfsVmv3yE='; font-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>Lumin AirTv — летающие проекционные шары в Израиле</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="Летающие проекционные шары для событий, брендов и городов в Израиле. Флагманская модель диаметром 3,7 м с углом обзора 160°, фото реальных установок и форма заявки на проект.">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Lumin AirTv">
+<meta property="og:title" content="Lumin AirTv — Your own moon. Anywhere.">
+<meta property="og:description" content="Летающие проекционные шары для событий, брендов и городов. Фото реальных установок и форма заявки на ваш проект.">
+<meta property="og:url" content="https://luminairtv.co.il/ru/">
+<meta name="twitter:card" content="summary">
+<link rel="canonical" href="https://luminairtv.co.il/ru/">
+<link rel="alternate" hreflang="en" href="https://luminairtv.co.il/">
+<link rel="alternate" hreflang="he" href="https://luminairtv.co.il/he/">
+<link rel="alternate" hreflang="ru" href="https://luminairtv.co.il/ru/">
+<link rel="alternate" hreflang="x-default" href="https://luminairtv.co.il/">
+<meta property="og:locale" content="ru_RU">
+<meta property="og:locale:alternate" content="en_IL">
+<meta property="og:locale:alternate" content="he_IL">
+<script type="application/ld+json">{
+ "@context": "https://schema.org",
+ "@graph": [
+  {
+   "@type": "Organization",
+   "@id": "https://luminairtv.co.il/#organization",
+   "name": "Lumin AirTv",
+   "alternateName": "LUMIN AirTv",
+   "url": "https://luminairtv.co.il/",
+   "logo": "https://luminairtv.co.il/apple-touch-icon.png",
+   "description": "Flying projection spheres for events, brands and cities in Israel.",
+   "areaServed": {
+    "@type": "Country",
+    "name": "Israel"
+   },
+   "sameAs": [
+    "https://www.facebook.com/LUMIN.AirTv/",
+    "https://www.linkedin.com/company/lumin-airtv/",
+    "https://www.youtube.com/@LuminAirTv"
+   ],
+   "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "IL"
+   }
+  },
+  {
+   "@type": "WebSite",
+   "@id": "https://luminairtv.co.il/#website",
+   "url": "https://luminairtv.co.il/",
+   "name": "Lumin AirTv",
+   "inLanguage": ["en", "he", "ru"],
+   "publisher": {
+    "@id": "https://luminairtv.co.il/#organization"
+   }
+  }
+ ]
+}</script>
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/png" sizes="96x96" href="/favicon-96.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<style>
+/* Layout: one night sky. First screen belongs to the sphere alone: slogan on top, the interactive sphere, its controls.
+   Below: what Lumin AirTv is, with two YouTube windows on each side of the text, and "Bookings coming soon". */
+:root {
+  --sky: #03050b;
+  --ink: #f3f6f9;
+  --ink-soft: #a9b4c1;
+  --blue: #005ba8;
+  --blue-hi: #0b6dc3;
+  --cyan: #009de0;
+  --glass: rgba(4, 9, 18, .62);
+  --film: #07090d;
+  --perf: rgba(243, 246, 249, .16);
+  --panel: rgba(4, 9, 18, .88); --panel-head: #050a14;
+  --edge: rgba(243, 246, 249, .28);
+  --display: "Work Sans LUMIN", "Work Sans", "Arial Black", sans-serif;
+  --label: "Roboto Condensed", "Arial Narrow", "Helvetica Neue", Arial, sans-serif;
+  color-scheme: dark;
+}
+@font-face {
+  font-family: "Work Sans LUMIN";
+  src: url(../fonts/WorkSans-800-latin.woff2) format("woff2");
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url(../fonts/RobotoCondensed-latin-wght.woff2) format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Rubik";
+  src: url(../fonts/rubik-hebrew-300-900.woff2) format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0307-0308, U+0590-05FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F;
+}
+@font-face {
+  font-family: "Rubik";
+  src: url(../fonts/rubik-latin-300-900.woff2) format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "Rubik";
+  src: url(../fonts/rubik-cyrillic-300-900.woff2) format("woff2");
+  font-weight: 300 900;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Roboto Condensed";
+  src: url(../fonts/RobotoCondensed-cyrillic-wght.woff2) format("woff2");
+  font-weight: 400 700;
+  font-style: normal;
+  font-display: swap;
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--sky); color: var(--ink); font: 400 17px/1.55 var(--label); -webkit-font-smoothing: antialiased; }
+[hidden] { display: none !important; }
+.sky { position: fixed; inset: 0; z-index: -1; background: var(--sky) url(../sky-v003.jpg) center / cover no-repeat; }
+.page { padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* First screen */
+.hero {
+  min-height: 100svh; box-sizing: border-box; display: grid; row-gap: 14px;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  grid-template-areas: "brand" "stage" "dock";
+  padding-block: calc(env(safe-area-inset-top, 0px) + clamp(18px, 4vh, 40px)) clamp(18px, 3vh, 32px);
+  max-width: 1440px; margin-inline: auto;
+}
+.brand { grid-area: brand; display: grid; gap: 10px; justify-items: center; text-align: center; }
+.slogan { margin: 0; font: 800 clamp(30px, 5vw, 58px)/1.02 var(--display); letter-spacing: .005em; text-wrap: balance; }
+.squeeze { display: inline-block; transform: scaleX(.81); white-space: nowrap; }
+.lede { margin: 0; max-width: 40em; color: var(--ink-soft); font-weight: 700; font-size: clamp(13px, 1.3vw, 14px); letter-spacing: .09em; text-transform: uppercase; }
+.stage-wrap { grid-area: stage; position: relative; z-index: 2; min-height: 380px; }
+#stage { position: absolute; inset: 0; }
+.poster { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; pointer-events: none; transition: opacity .5s; }
+.poster.gone { opacity: 0; }
+#stage canvas { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; }
+#stage canvas:active { cursor: grabbing; }
+.loading { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--ink-soft); font-weight: 700; font-size: 14px; letter-spacing: .08em; text-transform: uppercase; pointer-events: none; }
+
+/* Text with video windows on both sides */
+.story {
+  display: grid; justify-content: center; align-items: center; column-gap: clamp(24px, 4vw, 64px); row-gap: 18px;
+  grid-template-columns: minmax(200px, 300px) minmax(0, 64ch) minmax(200px, 300px); grid-template-areas: "left about right";
+  max-width: 1440px; margin: clamp(48px, 10vh, 120px) auto 0;
+}
+.walls { display: contents; }
+.wall { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(18px, 3vh, 32px); align-content: center; }
+.wall.left { grid-area: left; } .wall.right { grid-area: right; }
+.win {
+  position: relative; display: block; aspect-ratio: 16 / 9; max-width: 100%; overflow: hidden; border-radius: 6px;
+  border: 1px solid var(--edge); background: var(--sky); color: var(--ink); text-decoration: none; transition: border-color .2s, transform .2s;
+}
+.win img { display: block; width: 100%; height: 100%; object-fit: cover; opacity: .88; transition: opacity .2s; }
+.win::after { content: ""; position: absolute; inset: 40% 0 0; background: linear-gradient(to top, rgba(3, 5, 11, .92), rgba(3, 5, 11, 0)); pointer-events: none; }
+.win:hover, .win:focus-visible { border-color: var(--cyan); }
+.win:hover img { opacity: 1; }
+.win:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.win .play { position: absolute; left: 50%; top: 44%; width: 40px; height: 40px; translate: -50% -50%; border-radius: 50%; background: rgba(0, 91, 168, .82); display: grid; place-items: center; }
+.win .play::before { content: ""; margin-left: 3px; border-style: solid; border-width: 8px 0 8px 13px; border-color: transparent transparent transparent var(--ink); }
+.win .cap { position: absolute; z-index: 1; left: 10px; right: 52px; bottom: 7px; font-weight: 700; font-size: 13px; line-height: 1.25; letter-spacing: .06em; text-transform: uppercase; }
+.win .dur { position: absolute; z-index: 1; right: 8px; bottom: 7px; font-weight: 700; font-size: 12px; color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.win.channel { display: grid; place-items: center; background: var(--glass); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.win.channel::after { display: none; }
+.win.channel .channel-name { font: 800 clamp(18px, 1.6vw, 22px)/1 var(--display); letter-spacing: .01em; }
+.win.channel .cap { right: 10px; color: var(--cyan); }
+
+/* Sphere controls */
+.dock { grid-area: dock; display: grid; gap: 10px; justify-items: center; text-align: center; }
+/* 360° badge: tells visitors the sphere turns. It stays after the first drag, only calmer. */
+.hint {
+  margin: 0; display: inline-flex; align-items: center; gap: 10px; padding: 7px 16px 7px 12px; border: 1px solid var(--edge); border-radius: 999px;
+  background: var(--glass); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  color: var(--ink); font-weight: 700; font-size: 13px; letter-spacing: .04em; transition: opacity .6s ease;
+}
+.hint svg { width: 34px; height: 20px; flex: none; fill: none; stroke: var(--cyan); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; animation: sway 2.6s ease-in-out infinite; }
+.hint b { font: 800 17px/1 var(--display); color: var(--cyan); letter-spacing: .01em; }
+.hint.gone { opacity: .6; }
+.hint.gone svg { animation: none; }
+.touch-only { display: none; }
+@media (pointer: coarse) { .touch-only { display: inline; } .mouse-only { display: none; } }
+@keyframes sway { 0%, 100% { transform: translateX(-3px) rotate(-6deg); } 50% { transform: translateX(3px) rotate(6deg); } }
+.controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; }
+.btn {
+  min-height: 48px; padding: 0 22px; border-radius: 6px; border: 1px solid var(--edge); background: var(--glass); color: var(--ink);
+  font: 700 15px/1 var(--label); letter-spacing: .07em; text-transform: uppercase; cursor: pointer;
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: background-color .2s, border-color .2s, opacity .2s;
+}
+.btn:hover { border-color: var(--ink); }
+.btn:focus-visible, .seg button:focus-visible, .panel input:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.btn.primary { min-width: 9.5em; background: var(--blue); border-color: var(--blue); }
+.btn.primary:hover { background: var(--blue-hi); border-color: var(--blue-hi); }
+.btn:disabled { opacity: .42; cursor: not-allowed; }
+.btn:disabled:hover { border-color: var(--edge); }
+.btn.primary:disabled:hover { background: var(--blue); border-color: var(--blue); }
+.btn.icon { width: 48px; padding: 0; display: grid; place-items: center; }
+.btn.icon svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.btn.icon[aria-expanded="true"] { border-color: var(--cyan); color: var(--cyan); }
+.status { margin: 0; min-height: 1.35em; max-width: 36em; color: var(--ink-soft); font-weight: 700; font-size: 13px; letter-spacing: .03em; font-variant-numeric: tabular-nums; overflow-wrap: anywhere; }
+.status.error { color: var(--ink); }
+/* The AR page, one tap from the first screen. Owner, 23.10.2026: the globe of the logo, raised ("выпуклый, как бы выступал"), with AR on it.
+   The globe is the owner's transparent logo globe (assets/ar-globe); light from the top left and shade at the bottom right make it stand out. */
+.ar-row { margin: 4px 0 0; display: flex; justify-content: center; }
+.ar-link { display: flex; flex-direction: column; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); }
+/* The globe itself stays untouched (owner: nothing written on it); shadows below and a soft light from the top left make it stand out. */
+.ar-globe { position: relative; display: block; width: 78px; height: 78px; filter: drop-shadow(0 14px 18px rgba(0, 0, 0, .7)) drop-shadow(0 2px 3px rgba(0, 0, 0, .55)); transition: transform .25s, filter .25s; }
+.ar-globe img { display: block; width: 100%; height: 100%; }
+.ar-globe::after { content: ""; position: absolute; inset: 3% 2% 2% 4%; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(circle at 34% 24%, rgba(255, 255, 255, .38) 0, rgba(255, 255, 255, .1) 20%, rgba(255, 255, 255, 0) 42%), radial-gradient(circle at 64% 84%, rgba(0, 0, 0, .3) 0, rgba(0, 0, 0, 0) 50%); }
+.ar-plate { display: inline-flex; align-items: center; gap: 10px; min-height: 32px; padding: 0 14px; border: 1px solid var(--edge); border-radius: 8px; background: var(--glass); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); transition: border-color .2s; }
+.ar-plate b { font: 800 14px/1 var(--display); letter-spacing: .1em; color: var(--cyan); }
+.ar-plate i { font-style: normal; font-weight: 700; font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.ar-link:hover .ar-globe, .ar-link:focus-visible .ar-globe { transform: translateY(-3px) scale(1.05); filter: drop-shadow(0 18px 22px rgba(0, 0, 0, .7)) drop-shadow(0 0 14px rgba(0, 157, 224, .65)); }
+.ar-link:hover .ar-plate, .ar-link:focus-visible .ar-plate { border-color: var(--cyan); }
+.ar-link:focus-visible { outline: none; }
+@media (max-width: 560px) { .ar-globe { width: 68px; height: 68px; } }
+.narrow-only { display: none; }
+@media (max-width: 430px) { .wide-only { display: none; } .narrow-only { display: inline; } }
+.offscreen { position: fixed; left: -4px; top: -4px; width: 2px; height: 2px; opacity: 0; pointer-events: none; }
+
+/* Virtual projector panel */
+.panel {
+  position: fixed; z-index: 5; width: min(320px, calc(100vw - 32px)); max-height: calc(100% - 150px); overflow-y: auto; box-sizing: border-box;
+  top: calc(env(safe-area-inset-top, 0px) + 124px); right: max(16px, env(safe-area-inset-right, 0px));
+  display: grid; gap: 14px; padding: 0 16px 16px; border: 1px solid var(--edge); border-radius: 8px; background: var(--panel);
+  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-weight: 700; font-size: 13px; line-height: 1.35; letter-spacing: .03em;
+}
+/* The heading row stays at the top while the panel scrolls. It is also the handle (owner, 23.10.2026): drag it to move the panel
+   anywhere on the screen, and the fold button leaves a strip with only Framing and Edges. */
+.panel-head {
+  position: sticky; top: 0; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 8px;
+  margin: 0 -16px; padding: 18px 12px 10px 16px; background: var(--panel-head); touch-action: none; cursor: grab; user-select: none; -webkit-user-select: none;
+}
+.panel-head::before { content: ""; position: absolute; left: 50%; top: 6px; width: 44px; height: 5px; translate: -50%; border-radius: 3px; background: rgba(243, 246, 249, .4); }
+.panel-head:active { cursor: grabbing; }
+.panel-head h2 { flex: 1; }
+.panel-head .fold { width: 40px; min-height: 40px; flex: none; }
+.panel-head .fold svg { width: 18px; height: 18px; transition: rotate .2s; }
+.panel.strip .fold svg { rotate: 180deg; }
+.panel.strip > :not(.panel-head):not(.keep) { display: none; }
+.panel.strip { gap: 10px; }
+.panel-head .close { width: 40px; min-height: 40px; flex: none; }
+.panel-head .close svg { width: 18px; height: 18px; }
+.panel h2 { margin: 0; font: 800 18px/1.1 var(--display); letter-spacing: .01em; }
+.panel h2.sub { padding-top: 14px; border-top: 1px solid var(--edge); }
+.adv { display: grid; gap: 12px; border-top: 1px solid var(--edge); padding-top: 12px; }
+.adv summary { cursor: pointer; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; color: var(--ink-soft); }
+.adv h2.sub { padding-top: 0; border-top: 0; }
+.field { display: grid; gap: 8px; }
+.field > span { display: flex; justify-content: space-between; gap: 8px; color: var(--ink-soft); text-transform: uppercase; letter-spacing: .08em; font-size: 12px; }
+.field output { color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.field input[type="range"] { width: 100%; margin: 0; accent-color: var(--cyan); }
+.seg { display: flex; gap: 6px; }
+.seg button { flex: 1; min-height: 36px; border-radius: 6px; border: 1px solid var(--edge); background: transparent; color: var(--ink); font: 700 13px/1 var(--label); letter-spacing: .04em; cursor: pointer; font-variant-numeric: tabular-nums; }
+.seg button[aria-pressed="true"] { background: var(--blue); border-color: var(--blue); }
+.check { display: flex; align-items: center; gap: 10px; cursor: pointer; text-transform: uppercase; letter-spacing: .08em; font-size: 12px; }
+.check input { width: 18px; height: 18px; margin: 0; accent-color: var(--cyan); }
+.frame { display: grid; gap: 6px; margin: 0; }
+.frame canvas { display: block; width: 100%; height: auto; border: 1px solid var(--edge); background: var(--sky); }
+.frame figcaption, .readout, .note { margin: 0; color: var(--ink-soft); font-size: 13px; line-height: 1.4; font-variant-numeric: tabular-nums; }
+.readout { color: var(--ink); }
+
+/* What is Lumin AirTv */
+.about { grid-area: about; display: grid; gap: 18px; }
+.about h2 { margin: 0 0 4px; font: 800 clamp(28px, 4vw, 44px)/1.05 var(--display); text-wrap: balance; }
+.about p { margin: 0; color: var(--ink); }
+.about p.try { color: var(--ink-soft); }
+.facts { list-style: none; margin: 14px 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.facts li { display: grid; gap: 4px; padding: 14px 14px 16px; border-top: 2px solid var(--blue); background: rgba(4, 9, 18, .5); }
+.facts b { font: 800 26px/1 var(--display); }
+.facts span { color: var(--ink-soft); font-size: 14px; line-height: 1.35; }
+.press { margin: 6px 0 0; padding: 12px 14px 14px; border-left: 2px solid var(--cyan); background: rgba(4, 9, 18, .5); color: var(--ink-soft); font-size: 14px; line-height: 1.4; }
+.press span { display: block; margin-bottom: 4px; color: var(--cyan); font-weight: 700; font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.press a { color: var(--ink); font-weight: 700; text-decoration-color: var(--cyan); text-underline-offset: 3px; }
+.press a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.soon { margin: 10px 0 0; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
+.soon a { color: var(--cyan); text-decoration: none; border-bottom: 1px solid var(--cyan); }
+.soon a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+/* What could you show? and Planning a project: between the story and the gallery, the width of the About column. */
+.uses, .plan { max-width: 64ch; margin: clamp(40px, 7vh, 80px) auto 0; display: grid; gap: 14px; }
+.uses h2, .plan h2 { margin: 0; font: 800 clamp(24px, 3.4vw, 36px)/1.05 var(--display); text-wrap: balance; }
+.uses-list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.uses-list li { display: grid; gap: 6px; align-content: start; padding: 14px; border-top: 2px solid var(--cyan); background: rgba(4, 9, 18, .5); }
+.uses-list b { font: 800 17px/1.2 var(--display); }
+.uses-list span { color: var(--ink-soft); font-size: 14px; line-height: 1.4; }
+.plan-list { margin: 0; display: grid; gap: 10px; }
+.plan-list div { display: grid; grid-template-columns: 9em minmax(0, 1fr); gap: 12px; padding: 12px 14px; border-left: 2px solid var(--blue); background: rgba(4, 9, 18, .5); }
+.plan-list dt { margin: 0; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--cyan); }
+.plan-list dd { margin: 0; color: var(--ink); font-size: 15px; line-height: 1.45; }
+.err { display: block; grid-column: 1 / -1; color: #ff8a7a; font-size: 13px; font-weight: 700; line-height: 1.35; }
+.f-note { color: var(--ink-soft); font-size: 13px; line-height: 1.4; letter-spacing: 0; text-transform: none; font-weight: 400; }
+
+/* Gallery: film strips. With a mouse the strip runs toward the side the pointer is on; on touch screens it is swiped. */
+.gallery { max-width: 1440px; margin: clamp(56px, 10vh, 120px) auto 0; display: grid; gap: 14px; }
+.gallery h2 { margin: 0; font: 800 clamp(28px, 4vw, 44px)/1.05 var(--display); text-wrap: balance; }
+.gallery h3 { margin: 22px 0 0; font: 800 clamp(20px, 2.6vw, 28px)/1.1 var(--display); }
+.gallery-lede { margin: 0; max-width: 64ch; color: var(--ink-soft); }
+.strip {
+  --frame-h: clamp(150px, 21vw, 250px); --perforation: repeating-linear-gradient(90deg, transparent 0 10px, var(--perf) 10px 22px, transparent 22px 32px);
+  overflow-x: auto; overflow-y: hidden; scrollbar-width: none; overscroll-behavior-x: contain;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+}
+.strip::-webkit-scrollbar { display: none; }
+.strip ul {
+  list-style: none; margin: 0; padding: 24px 40px; width: max-content; display: flex; gap: 12px;
+  background: var(--perforation) left 8px top 8px / 100% 8px no-repeat, var(--perforation) left 8px bottom 8px / 100% 8px no-repeat, var(--film);
+}
+.strip li { flex: none; }
+.shot { position: relative; display: block; padding: 0; border: 0; border-radius: 3px; overflow: hidden; background: #000; color: inherit; text-decoration: none; cursor: zoom-in; transition: transform .25s ease, box-shadow .25s ease; }
+.shot img { display: block; height: var(--frame-h); width: auto; }
+.shot:hover, .shot:focus-visible { transform: scale(1.06); position: relative; z-index: 1; box-shadow: 0 10px 30px rgba(0, 0, 0, .6); }
+.shot:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.shot-cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 22px 10px 8px; background: linear-gradient(transparent, rgba(2, 4, 10, .88)); font-weight: 700; font-size: 13px; line-height: 1.3; letter-spacing: .05em; text-transform: uppercase; text-align: left; opacity: 0; transition: opacity .2s; }
+.shot:hover .shot-cap, .shot:focus-visible .shot-cap { opacity: 1; }
+@media (pointer: coarse) { .shot-cap { opacity: 1; } }
+.gallery-block { display: grid; gap: 8px; }
+.strip-nav { display: flex; gap: 8px; justify-content: flex-end; }
+.strip-nav .btn { width: 44px; min-height: 40px; padding: 0; font-size: 24px; line-height: 1; }
+
+/* Photo viewer */
+.viewer {
+  position: fixed; inset: 0; z-index: 10; display: grid; grid-template-rows: minmax(0, 1fr) auto; justify-items: center; align-items: center; gap: 12px;
+  padding: calc(env(safe-area-inset-top, 0px) + 76px) max(16px, env(safe-area-inset-right, 0px)) calc(env(safe-area-inset-bottom, 0px) + 20px) max(16px, env(safe-area-inset-left, 0px));
+  background: rgba(2, 4, 10, .95);
+}
+.viewer img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 3px; }
+.viewer p { margin: 0; color: var(--ink-soft); font-weight: 700; font-size: 13px; letter-spacing: .06em; text-transform: uppercase; text-align: center; font-variant-numeric: tabular-nums; }
+.viewer .close { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); right: max(16px, env(safe-area-inset-right, 0px)); }
+.viewer .step { position: absolute; top: 50%; translate: 0 -50%; width: 52px; padding: 0; font-size: 28px; line-height: 1; }
+.viewer .step.prev { left: max(12px, env(safe-area-inset-left, 0px)); }
+.viewer .step.next { right: max(12px, env(safe-area-inset-right, 0px)); }
+
+/* Request form */
+.contact { max-width: 760px; margin: clamp(56px, 10vh, 120px) auto 0; display: grid; gap: 14px; }
+.contact h2 { margin: 0; font: 800 clamp(28px, 4vw, 44px)/1.05 var(--display); text-wrap: balance; }
+.contact-lede { margin: 0 0 6px; color: var(--ink-soft); }
+#request { display: grid; gap: 18px; padding: clamp(16px, 3vw, 28px); border: 1px solid var(--edge); border-radius: 8px; background: var(--panel); }
+.choice { margin: 0; padding: 0; border: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.choice legend { padding: 0; margin-bottom: 10px; font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.choice label { display: flex; align-items: center; gap: 10px; min-height: 44px; padding: 8px 12px; border: 1px solid var(--edge); border-radius: 6px; cursor: pointer; font-weight: 700; font-size: 15px; line-height: 1.25; }
+.choice label:has(input:checked) { border-color: var(--cyan); background: rgba(0, 91, 168, .35); }
+.choice input, .consent input { width: 18px; height: 18px; margin: 0; flex: none; accent-color: var(--cyan); }
+.row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.f { display: grid; gap: 6px; min-width: 0; }
+.f > span { font-weight: 700; font-size: 13px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+.f.wide { grid-column: 1 / -1; }
+.req, .opt { font-weight: 400; letter-spacing: .02em; text-transform: none; color: var(--ink-soft); opacity: .8; }
+.f input, .f select, .f textarea {
+  width: 100%; box-sizing: border-box; min-height: 44px; padding: 10px 12px; border: 1px solid var(--edge); border-radius: 6px;
+  background: rgba(3, 5, 11, .7); color: var(--ink); font: 400 16px/1.4 var(--label);
+}
+.f textarea { resize: vertical; min-height: 120px; }
+.f input:focus-visible, .f select:focus-visible, .f textarea:focus-visible, .choice input:focus-visible, .consent input:focus-visible, .more summary:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+.f [aria-invalid="true"] { border-color: #ff8a7a; }
+.more { border-top: 1px solid var(--edge); border-bottom: 1px solid var(--edge); padding-block: 12px; }
+.more summary { cursor: pointer; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; font-size: 13px; }
+.more[open] summary { margin-bottom: 14px; }
+.consent { display: flex; gap: 10px; align-items: flex-start; color: var(--ink-soft); font-size: 14px; line-height: 1.45; cursor: pointer; }
+.consent input { margin-top: 2px; }
+.trap { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.send { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; }
+.form-status { margin: 0; font-weight: 700; font-size: 14px; color: var(--ink-soft); }
+.form-status.ok { color: #7fe0a8; }
+.form-status.error { color: #ff8a7a; }
+@media (max-width: 640px) {
+  .choice, .row { grid-template-columns: minmax(0, 1fr); }
+  .uses-list { grid-template-columns: minmax(0, 1fr); }
+  .plan-list div { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+}
+.foot { max-width: 64ch; margin: clamp(48px, 8vh, 96px) auto 0; padding-block: 24px calc(env(safe-area-inset-bottom, 0px) + 32px); border-top: 1px solid var(--edge); display: grid; gap: 8px; color: var(--ink-soft); font-size: 14px; }
+.foot nav { display: flex; flex-wrap: wrap; gap: 8px 20px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; }
+.foot a { color: var(--ink); text-decoration-color: var(--cyan); text-underline-offset: 4px; }
+.foot a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 3px; }
+.foot .fine { font-size: 13px; }
+
+/* YouTube player over the page (site build only) */
+.lightbox { position: fixed; inset: 0; z-index: 10; display: grid; place-items: center; padding: 24px; background: rgba(2, 4, 10, .9); }
+.lightbox-frame { width: min(960px, 100%); aspect-ratio: 16 / 9; max-width: 100%; }
+.lightbox-frame iframe { width: 100%; height: 100%; border: 0; border-radius: 6px; }
+.lightbox .btn { position: absolute; top: calc(env(safe-area-inset-top, 0px) + 16px); right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Phones, tablets and unfolded foldables upright: the first screen is the sphere, with the slogan above and the controls below. */
+@media (max-width: 1024px) {
+  .hero { grid-template-rows: auto minmax(0, 1fr) auto; }
+  .stage-wrap { min-height: min(92vw, 300px); }
+  .story { grid-template-columns: minmax(0, 1fr); grid-template-areas: "about" "walls"; margin-top: clamp(32px, 6vh, 56px); }
+  .walls { grid-area: walls; display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; padding: 8px 2px 12px; }
+  .wall { display: contents; }
+  .walls li { flex: 0 0 min(72vw, 300px); scroll-snap-align: start; }
+}
+/* Phones and foldables held sideways: the sphere takes the left half at full height, slogan and controls stand on the right. */
+@media (orientation: landscape) and (max-width: 1024px) {
+  .hero {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); grid-template-rows: minmax(0, 1fr) auto auto minmax(0, 1fr);
+    grid-template-areas: "stage ." "stage brand" "stage dock" "stage ."; column-gap: clamp(12px, 3vw, 32px); row-gap: 12px;
+    padding-block: calc(env(safe-area-inset-top, 0px) + 12px) calc(env(safe-area-inset-bottom, 0px) + 12px);
+  }
+  .stage-wrap { min-height: 0; }
+  .slogan { font-size: clamp(24px, 4vw, 44px); }
+  .controls { flex-wrap: nowrap; gap: 8px; }
+  .btn { padding: 0 14px; font-size: 13px; }
+  .btn.primary { min-width: 6.2em; }
+  .btn.icon { width: 44px; padding: 0; }
+  .panel { top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100% - 24px); }
+  .dock { gap: 8px; }
+  .ar-row { margin-top: 0; }
+  .ar-link { gap: 4px; }   /* the plate stays right under the globe (owner); only smaller, so the first screen fits a phone held sideways */
+  .ar-globe { width: 40px; height: 40px; }
+  .ar-plate { min-height: 24px; padding: 0 10px; gap: 8px; }
+  .ar-plate b { font-size: 12px; }
+  .ar-plate i { font-size: 11px; }
+  /* Held sideways the language row moves out of the text column into the empty top corner of the sphere's half,
+     so the slogan, the controls and the AR plate still fit the first screen (as before the row was added). */
+  .hero { position: relative; }
+  .langs { position: absolute; z-index: 3; top: calc(env(safe-area-inset-top, 0px) + 6px); left: 0; font-size: 12px; }
+  [dir="rtl"] .langs { left: auto; right: 0; }   /* the row itself runs left to right, so its side follows the page */
+  .langs a { min-height: 26px; padding: 0 8px; }
+}
+@media (max-width: 560px) {
+  .lede { font-size: 13px; letter-spacing: .06em; }
+  .controls { gap: 8px; }
+  .btn { padding: 0 12px; font-size: 13px; }
+  .btn.primary { min-width: 6.2em; }
+  .btn.icon { width: 44px; }
+  .panel { top: calc(env(safe-area-inset-top, 0px) + 12px); max-height: calc(100% - 24px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .hint, .btn, .win, .win img { transition: none; }
+  .hint svg { animation: none; }
+}
+/* Languages. build.py makes /he/ (right to left) and /ru/ from this page; the rules below change nothing on the English page.
+   Owner, 24.10.2026: Hebrew in Rubik (headings 800, text 400, buttons 700); Russian headings in Rubik, text in Roboto Condensed.
+   The slogan stays English in Work Sans on every page. */
+.langs { display: flex; flex-wrap: wrap; justify-content: center; gap: 4px 6px; direction: ltr; font: 700 13px/1 var(--label); letter-spacing: .03em; }
+.langs a { display: inline-flex; align-items: center; min-height: 30px; padding: 0 10px; border: 1px solid transparent; border-radius: 6px; color: var(--ink-soft); text-decoration: none; }
+.langs a:hover { color: var(--ink); }
+.langs a[aria-current="page"] { color: var(--ink); border-color: var(--cyan); }
+.langs a:focus-visible { outline: 2px solid var(--cyan); outline-offset: 2px; }
+html[lang="he"] { --display: "Rubik", "Arial Hebrew", Arial, sans-serif; --label: "Rubik", "Arial Hebrew", Arial, sans-serif; }
+html[lang="ru"] { --display: "Rubik", Arial, sans-serif; }
+html:not([lang="en"]) .slogan { font-family: "Work Sans LUMIN", "Work Sans", "Arial Black", sans-serif; }
+html:not([lang="en"]) :is(.about, .uses, .plan, .gallery, .contact) h2 .squeeze { display: inline; transform: none; white-space: normal; margin-inline: 0 !important; }
+html[lang="he"] :is(.lede, .loading, .hint, .btn, .status, .ar-plate i, .win .cap, .panel, .field > span, .check, .adv summary, .seg button, .press span, .soon, .plan-list dt, .choice legend, .f > span, .more summary, .shot-cap, .viewer p, .foot nav) { letter-spacing: 0; }
+[dir="rtl"] .win .cap { left: 52px; right: 10px; }
+[dir="rtl"] .win .dur { right: auto; left: 8px; }
+[dir="rtl"] .win.channel .cap { left: 10px; }
+[dir="rtl"] .hint { padding: 7px 12px 7px 16px; }
+[dir="rtl"] .panel { right: auto; left: max(16px, env(safe-area-inset-left, 0px)); }
+[dir="rtl"] .panel-head { padding: 18px 16px 10px 12px; }
+[dir="rtl"] .press { border-left: 0; border-right: 2px solid var(--cyan); }
+[dir="rtl"] .plan-list div { border-left: 0; border-right: 2px solid var(--blue); }
+[dir="rtl"] .shot-cap { text-align: right; }
+[dir="rtl"] .viewer .close, [dir="rtl"] .lightbox .btn { right: auto; left: max(16px, env(safe-area-inset-left, 0px)); }
+[dir="rtl"] .viewer .step.prev { left: auto; right: max(12px, env(safe-area-inset-right, 0px)); }
+[dir="rtl"] .viewer .step.next { right: auto; left: max(12px, env(safe-area-inset-left, 0px)); }
+[dir="rtl"] .trap { left: auto; right: -9999px; }   /* off the start side, so it adds no sideways scroll */
+[dir="rtl"] #res button, [dir="rtl"] #lens-fov-out { direction: ltr; }
+[dir="rtl"] :is(#f-email, #f-phone) { direction: ltr; text-align: right; }
+</style>
+</head>
+<body>
+
+<div class="sky" aria-hidden="true"></div>
+<main class="page">
+  <section class="hero" aria-label="Шар Lumin AirTv">
+    <header class="brand">
+      <nav class="langs" aria-label="Язык"><a href="/" hreflang="en" lang="en">English</a><a href="/he/" hreflang="he" lang="he" dir="rtl">עברית</a><a href="/ru/" hreflang="ru" aria-current="page" lang="ru">Русский</a></nav>
+      <h1 class="slogan" lang="en" dir="ltr"><span class="squeeze">YOUR OWN MOON.</span> <span class="squeeze">ANYWHERE.</span></h1>
+      <p class="lede">Летающие проекционные шары для событий, брендов и городов</p>
+    </header>
+
+    <div class="stage-wrap">
+      <img class="poster" id="poster" src="../poster.webp" width="900" height="900" alt="" decoding="async">
+      <div id="stage" data-layout="container" data-demo="../demo.mp4" role="img" aria-label="3D-модель проекционного шара Lumin AirTv. Потяните, чтобы повернуть."></div>
+      <p class="loading" id="loading">Загружаем шар…</p>
+      <noscript><style>#loading { display: none; }</style><p class="loading">Для 3D-модели нужен JavaScript. Фотографии и информация о проекте ниже.</p></noscript>
+    </div>
+
+    <div class="dock">
+      <p class="hint" id="hint">
+        <svg viewBox="0 0 40 24" aria-hidden="true"><path d="M23.5 6.3A16 6 0 1 0 31 8.4"/><path d="M27.5 3.4l4.2 4.9-6 1.6"/><circle cx="20" cy="12" r="2.4"/></svg>
+        <b>360°</b><span><span class="mouse-only">Тяните: поворот · колёсико: масштаб</span><span class="touch-only">Свайп: поворот · щипок: масштаб</span></span>
+      </p>
+      <div class="controls">
+        <button class="btn primary" id="play" type="button" disabled aria-pressed="false">Смотреть демо</button>
+        <button class="btn" id="pick" type="button"><span class="wide-only">Выбрать видео</span><span class="narrow-only">Своё видео</span></button>
+        <button class="btn icon" id="sound" type="button" disabled aria-pressed="true" aria-label="Выключить звук" title="Звук">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path id="sound-on" d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/><path id="sound-off" d="M16 9.5l5 5M21 9.5l-5 5" hidden/></svg>
+        </button>
+        <button class="btn icon" id="proj-toggle" type="button" aria-expanded="false" aria-controls="proj-panel" aria-label="Настройки видео" title="Настройки видео">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="8" width="13" height="8" rx="2"/><circle cx="11.5" cy="12" r="2.2"/><path d="M15.5 10.5l6-2.5M15.5 13.5l6 2.5"/></svg>
+        </button>
+      </div>
+      <p class="status" id="status" aria-live="polite">Запустите демо или выберите своё видео. Оно останется на вашем устройстве.</p>
+      <p class="ar-row"><a class="ar-link" href="/ar/"><span class="ar-globe"><img src="../ar-globe.webp" alt="" width="240" height="240" decoding="async"></span><span class="ar-plate"><b>AR</b><i>Посмотреть у себя</i></span></a></p>
+      <input id="video-file" type="file" accept="video/*" hidden>
+    </div>
+  </section>
+
+  <div class="story">
+  <div class="walls" aria-label="Lumin AirTv на YouTube">
+    <ul class="wall left">
+        <li><a class="win" href="https://www.youtube.com/watch?v=qLkhX_xhZJ0" target="_blank" rel="noopener" data-yt="qLkhX_xhZJ0" data-title="Иерусалим · флаг Израиля" aria-label="Смотреть на YouTube: Иерусалим · флаг Израиля, 0:29"><img src="../yt/qLkhX_xhZJ0.jpg" alt="" width="480" height="270" loading="lazy"><span class="play" aria-hidden="true"></span><span class="cap">Иерусалим · флаг Израиля</span><span class="dur">0:29</span></a></li>
+        <li><a class="win" href="https://www.youtube.com/watch?v=tP_q_tKmm0Q" target="_blank" rel="noopener" data-yt="tP_q_tKmm0Q" data-title="Разные видео одно за другим" aria-label="Смотреть на YouTube: Разные видео одно за другим, 1:40"><img src="../yt/tP_q_tKmm0Q.jpg" alt="" width="480" height="270" loading="lazy"><span class="play" aria-hidden="true"></span><span class="cap">Разные видео одно за другим</span><span class="dur">1:40</span></a></li>
+    </ul>
+    <ul class="wall right">
+        <li><a class="win" href="https://www.youtube.com/watch?v=J0SsE_HPCdI" target="_blank" rel="noopener" data-yt="J0SsE_HPCdI" data-title="На концертной сцене" aria-label="Смотреть на YouTube: На концертной сцене, 5:55"><img src="../yt/J0SsE_HPCdI.jpg" alt="" width="480" height="270" loading="lazy"><span class="play" aria-hidden="true"></span><span class="cap">На концертной сцене</span><span class="dur">5:55</span></a></li>
+        <li><a class="win channel" href="https://www.youtube.com/@LuminAirTv" target="_blank" rel="noopener" aria-label="Больше видео на YouTube: канал Lumin AirTv"><span class="channel-name" dir="ltr">@LuminAirTv</span><span class="cap">Больше видео на YouTube</span></a></li>
+    </ul>
+  </div>
+  <section class="about" aria-labelledby="about-title">
+    <h2 id="about-title"><span class="squeeze">Что такое Lumin AirTv</span></h2>
+    <p>Летающие проекционные шары для событий, брендов и городов. Ваше видео, логотип или прямая трансляция на сферическом экране с углом обзора 160°.</p>
+    <p>Шар показывает видео большого формата там, где обычный экран не поставить. Он работает в помещении и на улице, и ему не нужны стена или сцена.</p>
+    <p>Экран с углом обзора 160° показывает любое видео: ролик, логотип или прямую трансляцию с камеры. Днём это большой светлый шар над зрителями. После заката экран загорается.</p>
+    <p>Он подходит для концертов и фестивалей, выставок, презентаций продуктов и корпоративных мероприятий. А также для городских праздников, парков, стадионов и арен, отелей, марин и частных событий: на один вечер или как долгая установка.</p>
+    <ul class="facts">
+      <li><b>3,7 м</b><span>флагманская модель</span></li>
+      <li><b>160°</b><span>угол обзора экрана на передней половине</span></li>
+      <li><b>Изнутри</b><span>проектор освещает экран изнутри шара</span></li>
+      <li><b>Гелий</b><span>парит на тросе или висит на четырёх точках</span></li>
+      <li><b>До 1 ч</b><span>обычное время установки</span></li>
+      <li><b>Ваш логотип</b><span>на белой задней половине</span></li>
+    </ul>
+    <p class="press"><span>Пресса о нас</span><a href="https://jerusalemnews.co.il/%d7%9e%d7%94%d7%a4%d7%9b%d7%aa-%d7%94%d7%9b%d7%93%d7%95%d7%a8-%d7%a2%d7%95%d7%9c%d7%94-%d7%94%d7%97%d7%93%d7%a9-%d7%9e%d7%99%d7%a8%d7%95%d7%a9%d7%9c%d7%99%d7%9d-%d7%9c%d7%a2%d7%95%d7%9c%d7%9d-%d7%94/" target="_blank" rel="noopener">Jerusalem News, июль 2020</a> (статья на иврите): «Революция шара: новичок из Иерусалима приносит в мир событий сферический экран». Также в печатном выпуске «Маарив Иерусалим», 10 июля 2020.</p>
+    <p class="try">Шар вверху страницы — 3D-модель. Поверните его, выберите видео и посмотрите его на экране.</p>
+    <p class="soon"><a href="#contact">Планируете мероприятие? Расскажите о нём ниже.</a></p>
+  </section>
+  </div>
+
+  <section class="uses" aria-labelledby="uses-title">
+    <h2 id="uses-title"><span class="squeeze">Что можно показать?</span></h2>
+    <ul class="uses-list">
+      <li><b>События и шоу</b><span>Видео выступления и визуальный контент над площадкой.</span></li>
+      <li><b>Бренды и выставки</b><span>Рекламные ролики, визуалы продукта и контент бренда на сферическом экране.</span></li>
+      <li><b>Города и общественные пространства</b><span>Визуальная инсталляция для праздника, парка или городского события.</span></li>
+    </ul>
+  </section>
+
+  <section class="plan" id="plan" aria-labelledby="plan-title">
+    <h2 id="plan-title"><span class="squeeze">Планирование проекта</span></h2>
+    <dl class="plan-list">
+      <div><dt>Размер</dt><dd>Диаметр флагманской модели 3,7 м. Если нужен другой размер или форма, расскажите о вашей площадке.</dd></div>
+      <div><dt>Установка</dt><dd>В полёте на гелии шар держат тросы; для подвеса нужны подходящие точки крепления. Небольшие шары подвешивают, а не поднимают на гелии. Питание и способ установки планируют под площадку.</dd></div>
+      <div><dt>В помещении или на улице</dt><dd>Укажите место и будет ли событие в помещении или на улице. Пространство, погоду, точки крепления и нужные разрешения проверяем для каждого проекта.</dd></div>
+      <div><dt>Сроки</dt><dd>Установка обычно занимает до часа, в зависимости от площадки и согласованной конфигурации. Сообщите дату события, чтобы обсудить подготовку.</dd></div>
+      <div><dt>Контент</dt><dd>Расскажите, что хотите показать: видео, логотип, прямую трансляцию или визуальное шоу, и нужна ли помощь с подготовкой.</dd></div>
+    </dl>
+    <p class="soon"><a href="#contact">Отправить заявку</a></p>
+  </section>
+
+  <section class="gallery" id="gallery" aria-labelledby="gallery-title">
+    <h2 id="gallery-title"><span class="squeeze">Галерея</span></h2>
+    <p class="gallery-lede">Фотографии реальных установок. <span class="mouse-only">Наведите курсор на край ленты, чтобы прокрутить её. Нажмите на фото, чтобы открыть.</span><span class="touch-only">Листайте ленту. Нажмите на фото, чтобы открыть.</span></p>
+    <div class="gallery-block">
+    <div class="strip">
+      <ul>
+        <li><a class="shot" href="../gallery/full/01.jpg" data-full="../gallery/full/01.jpg" data-cap="Белая задняя половина шара ночью"><img src="../gallery/thumb/01.jpg" alt="Белая задняя половина шара ночью" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Белая задняя половина шара ночью</span></a></li>
+        <li><a class="shot" href="../gallery/full/02.jpg" data-full="../gallery/full/02.jpg" data-cap="Ночное шоу у здания"><img src="../gallery/thumb/02.jpg" alt="Ночное шоу у здания" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Ночное шоу у здания</span></a></li>
+        <li><a class="shot" href="../gallery/full/03.jpg" data-full="../gallery/full/03.jpg" data-cap="Реклама на шаре ночью"><img src="../gallery/thumb/03.jpg" alt="Реклама на шаре ночью" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Реклама на шаре ночью</span></a></li>
+        <li><a class="shot" href="../gallery/full/04.jpg" data-full="../gallery/full/04.jpg" data-cap="Городской праздник ночью, над сценой"><img src="../gallery/thumb/04.jpg" alt="Городской праздник ночью, над сценой" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Городской праздник ночью, над сценой</span></a></li>
+        <li><a class="shot" href="../gallery/full/05.jpg" data-full="../gallery/full/05.jpg" data-cap="Городской праздник ночью"><img src="../gallery/thumb/05.jpg" alt="Городской праздник ночью" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Городской праздник ночью</span></a></li>
+        <li><a class="shot" href="../gallery/full/06.jpg" data-full="../gallery/full/06.jpg" data-cap="Ночное шоу над площадью"><img src="../gallery/thumb/06.jpg" alt="Ночное шоу над площадью" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Ночное шоу над площадью</span></a></li>
+        <li><a class="shot" href="../gallery/full/07.jpg" data-full="../gallery/full/07.jpg" data-cap="Над зданием ночью"><img src="../gallery/thumb/07.jpg" alt="Над зданием ночью" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Над зданием ночью</span></a></li>
+        <li><a class="shot" href="../gallery/full/08.jpg" data-full="../gallery/full/08.jpg" data-cap="Картинка на экране в сумерках"><img src="../gallery/thumb/08.jpg" alt="Картинка на экране в сумерках" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Картинка на экране в сумерках</span></a></li>
+        <li><a class="shot" href="../gallery/full/09.jpg" data-full="../gallery/full/09.jpg" data-cap="В сумерках, рядом с новыми домами"><img src="../gallery/thumb/09.jpg" alt="В сумерках, рядом с новыми домами" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">В сумерках, рядом с новыми домами</span></a></li>
+        <li><a class="shot" href="../gallery/full/10.jpg" data-full="../gallery/full/10.jpg" data-cap="Абстрактные узоры на экране"><img src="../gallery/thumb/10.jpg" alt="Абстрактные узоры на экране" width="720" height="400" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Абстрактные узоры на экране</span></a></li>
+        <li><a class="shot" href="../gallery/full/11.jpg" data-full="../gallery/full/11.jpg" data-cap="Видео с огнём на экране"><img src="../gallery/thumb/11.jpg" alt="Видео с огнём на экране" width="720" height="400" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Видео с огнём на экране</span></a></li>
+        <li><a class="shot" href="../gallery/full/12.jpg" data-full="../gallery/full/12.jpg" data-cap="Листья на экране"><img src="../gallery/thumb/12.jpg" alt="Листья на экране" width="720" height="400" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Листья на экране</span></a></li>
+        <li><a class="shot" href="../gallery/full/13.jpg" data-full="../gallery/full/13.jpg" data-cap="Белый голубь на экране"><img src="../gallery/thumb/13.jpg" alt="Белый голубь на экране" width="720" height="400" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Белый голубь на экране</span></a></li>
+        <li><a class="shot" href="../gallery/full/14.jpg" data-full="../gallery/full/14.jpg" data-cap="Ночное шоу во дворе"><img src="../gallery/thumb/14.jpg" alt="Ночное шоу во дворе" width="720" height="404" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Ночное шоу во дворе</span></a></li>
+        <li><a class="shot" href="../gallery/full/15.jpg" data-full="../gallery/full/15.jpg" data-cap="Экран сбоку"><img src="../gallery/thumb/15.jpg" alt="Экран сбоку" width="720" height="404" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Экран сбоку</span></a></li>
+        <li><a class="shot" href="../gallery/full/16.jpg" data-full="../gallery/full/16.jpg" data-cap="Белая задняя половина, край экрана светится"><img src="../gallery/thumb/16.jpg" alt="Белая задняя половина, край экрана светится" width="720" height="404" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Белая задняя половина, край экрана светится</span></a></li>
+        <li><a class="shot" href="../gallery/full/17.jpg" data-full="../gallery/full/17.jpg" data-cap="Автосалон, в помещении"><img src="../gallery/thumb/17.jpg" alt="Автосалон, в помещении" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Автосалон, в помещении</span></a></li>
+        <li><a class="shot" href="../gallery/full/18.jpg" data-full="../gallery/full/18.jpg" data-cap="Автосалон: закат на экране"><img src="../gallery/thumb/18.jpg" alt="Автосалон: закат на экране" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Автосалон: закат на экране</span></a></li>
+        <li><a class="shot" href="../gallery/full/19.jpg" data-full="../gallery/full/19.jpg" data-cap="Автосалон, вид через окно"><img src="../gallery/thumb/19.jpg" alt="Автосалон, вид через окно" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Автосалон, вид через окно</span></a></li>
+        <li><a class="shot" href="../gallery/full/20.jpg" data-full="../gallery/full/20.jpg" data-cap="Живое видео на шаре на концерте"><img src="../gallery/thumb/20.jpg" alt="Живое видео на шаре на концерте" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Живое видео на шаре на концерте</span></a></li>
+        <li><a class="shot" href="../gallery/full/21.jpg" data-full="../gallery/full/21.jpg" data-cap="Концерт: певец на шаре"><img src="../gallery/thumb/21.jpg" alt="Концерт: певец на шаре" width="720" height="520" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Концерт: певец на шаре</span></a></li>
+        <li><a class="shot" href="../gallery/full/22.jpg" data-full="../gallery/full/22.jpg" data-cap="Концерт: соло на скрипке"><img src="../gallery/thumb/22.jpg" alt="Концерт: соло на скрипке" width="720" height="596" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Концерт: соло на скрипке</span></a></li>
+        <li><a class="shot" href="../gallery/full/23.jpg" data-full="../gallery/full/23.jpg" data-cap="Выставочная сцена"><img src="../gallery/thumb/23.jpg" alt="Выставочная сцена" width="720" height="404" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Выставочная сцена</span></a></li>
+        <li><a class="shot" href="../gallery/full/24.jpg" data-full="../gallery/full/24.jpg" data-cap="Над городской площадью днём"><img src="../gallery/thumb/24.jpg" alt="Над городской площадью днём" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Над городской площадью днём</span></a></li>
+        <li><a class="shot" href="../gallery/full/25.jpg" data-full="../gallery/full/25.jpg" data-cap="Над праздником днём"><img src="../gallery/thumb/25.jpg" alt="Над праздником днём" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Над праздником днём</span></a></li>
+        <li><a class="shot" href="../gallery/full/26.jpg" data-full="../gallery/full/26.jpg" data-cap="В мастерской, рядом человек для масштаба"><img src="../gallery/thumb/26.jpg" alt="В мастерской, рядом человек для масштаба" width="720" height="480" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">В мастерской, рядом человек для масштаба</span></a></li>
+      </ul>
+    </div>
+    <div class="strip-nav"><button type="button" class="btn icon strip-prev" aria-label="Предыдущие фото">‹</button><button type="button" class="btn icon strip-next" aria-label="Следующие фото">›</button></div>
+    </div>
+    <h3>Ранние и небольшие модели</h3>
+    <p class="gallery-lede">Ранние и небольшие шары. У нынешнего шара один экран на передней половине.</p>
+    <div class="gallery-block">
+    <div class="strip">
+      <ul>
+        <li><a class="shot" href="../gallery/full/27.jpg" data-full="../gallery/full/27.jpg" data-cap="Небольшой носимый шар"><img src="../gallery/thumb/27.jpg" alt="Небольшой носимый шар" width="720" height="540" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Небольшой носимый шар</span></a></li>
+        <li><a class="shot" href="../gallery/full/28.jpg" data-full="../gallery/full/28.jpg" data-cap="Носимый шар в торговом центре"><img src="../gallery/thumb/28.jpg" alt="Носимый шар в торговом центре" width="720" height="478" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Носимый шар в торговом центре</span></a></li>
+        <li><a class="shot" href="../gallery/full/29.jpg" data-full="../gallery/full/29.jpg" data-cap="Ранняя модель с отдельными окнами экрана"><img src="../gallery/thumb/29.jpg" alt="Ранняя модель с отдельными окнами экрана" width="594" height="396" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Ранняя модель с отдельными окнами экрана</span></a></li>
+        <li><a class="shot" href="../gallery/full/30.jpg" data-full="../gallery/full/30.jpg" data-cap="Ранняя модель на подставке"><img src="../gallery/thumb/30.jpg" alt="Ранняя модель на подставке" width="414" height="552" loading="lazy" decoding="async"><span class="shot-cap" aria-hidden="true">Ранняя модель на подставке</span></a></li>
+      </ul>
+    </div>
+    <div class="strip-nav"><button type="button" class="btn icon strip-prev" aria-label="Предыдущие фото">‹</button><button type="button" class="btn icon strip-next" aria-label="Следующие фото">›</button></div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <h2 id="contact-title"><span class="squeeze">Расскажите о вашем проекте</span></h2>
+    <p class="contact-lede">Расскажите идею, место и примерную дату. Если размер или способ установки пока неизвестны, выберите «Пока не знаю». Мы отвечаем по почте. Это заявка, а не подтверждённое бронирование.</p>
+    <form id="request" action="https://api.web3forms.com/submit" method="POST" novalidate>
+      <input type="hidden" name="access_key" value="3cbbeb21-a70c-425d-8152-a025a1675869">
+      <input type="hidden" name="subject" value="[Lumin AirTv] Website request">
+      <input type="hidden" name="from_name" value="Lumin AirTv website">
+      <fieldset class="choice">
+        <legend>Что вас интересует? <span class="req">обязательно</span></legend>
+        <label><input type="radio" name="request" value="A show at my event" required> Шоу на моём мероприятии</label>
+        <label><input type="radio" name="request" value="A long-term installation or partnership"> Долгосрочная установка или партнёрство</label>
+        <label><input type="radio" name="request" value="A sphere made to order"> Шар на заказ</label>
+        <label><input type="radio" name="request" value="Advertising on the sphere"> Реклама на шаре</label>
+        <label><input type="radio" name="request" value="Operation and support for my own sphere"> Обслуживание и поддержка моего шара</label>
+        <label><input type="radio" name="request" value="Something else"> Другое</label>
+        <small class="err" id="err-request" hidden></small>
+      </fieldset>
+      <div class="row">
+        <label class="f" for="f-name"><span>Имя <span class="req">обязательно</span></span><input id="f-name" dir="auto" name="name" type="text" autocomplete="name" maxlength="120" required><small class="err" id="err-name" hidden></small></label>
+        <label class="f" for="f-company"><span>Компания</span><input id="f-company" dir="auto" name="company" type="text" autocomplete="organization" maxlength="160"></label>
+        <label class="f" for="f-email"><span>Эл. почта <span class="req">обязательно</span></span><input id="f-email" name="email" type="email" autocomplete="email" maxlength="200" required><small class="err" id="err-email" hidden></small></label>
+        <label class="f" for="f-phone"><span>Телефон или WhatsApp</span><input id="f-phone" name="phone" type="tel" autocomplete="tel" maxlength="40"></label>
+      </div>
+      <details class="more">
+        <summary>Подробности <span class="opt">по желанию</span></summary>
+        <div class="row">
+          <label class="f" for="f-where"><span>Где будет использоваться</span>
+            <select id="f-where" name="where">
+              <option value="">Выберите…</option>
+              <option value="Events and exhibitions">События и выставки</option><option value="Concerts, festivals and shows">Концерты, фестивали и шоу</option><option value="Brands and advertising">Бренды и реклама</option>
+              <option value="City and public spaces">Город и общественные пространства</option><option value="Sports">Спорт</option><option value="Hotels, marinas and venues">Отели, марины и площадки</option>
+              <option value="Retail and real estate">Ритейл и недвижимость</option><option value="Private events and weddings">Частные события и свадьбы</option><option value="Transport hubs">Транспортные узлы</option>
+              <option value="Media and studios">Медиа и студии</option><option value="Other">Другое</option>
+            </select></label>
+          <label class="f" for="f-size"><span>Размер</span>
+            <select id="f-size" name="size">
+              <option value="">Выберите…</option>
+              <option value="Not sure yet">Пока не знаю</option><option value="3.7 m flagship">Флагман 3,7 м</option><option value="Larger sphere">Шар побольше</option><option value="Smaller suspended sphere">Шар поменьше, подвесной</option><option value="Custom size or shape">Свой размер или форма</option>
+            </select></label>
+          <label class="f" for="f-setup"><span>Установка</span>
+            <select id="f-setup" name="setup" aria-describedby="setup-note">
+              <option value="">Выберите…</option>
+              <option value="Not sure yet">Пока не знаю</option><option value="Floating on helium">Парит на гелии</option><option value="Suspended from support points">Подвес на точках крепления</option><option value="Standing on the ground">Стоит на земле</option><option value="Other — please describe">Другое, опишите</option>
+            </select><small class="f-note" id="setup-note">Небольшие шары подвешивают, а не поднимают на гелии. Конфигурацию обсуждаем под ваш проект.</small></label>
+          <label class="f" for="f-content"><span>Что показать</span>
+            <select id="f-content" name="content">
+              <option value="">Выберите…</option>
+              <option value="My own video">Своё видео</option><option value="Logo or brand">Логотип или бренд</option><option value="Live camera feed">Прямая трансляция с камеры</option><option value="Moon or visual show">Луна или визуальное шоу</option><option value="Need help with content">Нужна помощь с контентом</option>
+            </select></label>
+          <label class="f" for="f-place"><span>В помещении или на улице</span>
+            <select id="f-place" name="indoor_outdoor">
+              <option value="">Выберите…</option><option value="Indoor">В помещении</option><option value="Outdoor">На улице</option><option value="Both">И там, и там</option>
+            </select></label>
+          <label class="f" for="f-length"><span>На какой срок</span>
+            <select id="f-length" name="duration">
+              <option value="">Выберите…</option><option value="One evening">Один вечер</option><option value="A few days">Несколько дней</option><option value="Long-term">Надолго</option>
+            </select></label>
+          <label class="f" for="f-date"><span>Дата</span><input id="f-date" dir="auto" name="date" type="text" maxlength="60" placeholder="например, март 2027 или пока не решено"></label>
+          <label class="f" for="f-city"><span>Город или место</span><input id="f-city" dir="auto" name="city" type="text" maxlength="120"></label>
+          <label class="f wide" for="f-lang"><span>Язык ответа</span>
+            <select id="f-lang" name="reply_language"><option value="English">Английский</option><option value="Hebrew">Иврит</option><option value="Russian" selected>Русский</option></select></label>
+        </div>
+      </details>
+      <label class="f wide" for="f-message"><span>Сообщение <span class="req">обязательно</span></span><textarea id="f-message" dir="auto" name="message" rows="5" maxlength="4000" required></textarea><small class="err" id="err-message" hidden></small></label>
+      <label class="consent" for="f-consent"><input id="f-consent" name="consent" type="checkbox" value="yes" required>
+        <span>Разрешаю использовать эти данные для ответа на мою заявку. Форму обрабатывает Web3Forms и пересылает в Lumin AirTv по почте.</span></label>
+      <small class="err" id="err-consent" hidden></small>
+      <input class="trap" type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="send">
+        <button class="btn primary" id="send" type="submit">Отправить заявку</button>
+        <p class="form-status" id="form-status" role="status" aria-live="polite"></p>
+        <noscript><p class="form-status">Без JavaScript после отправки откроется страница подтверждения сервиса форм.</p></noscript>
+      </div>
+    </form>
+  </section>
+
+  <footer class="foot">
+    <nav aria-label="Lumin AirTv в сетях">
+      <a href="https://www.youtube.com/@LuminAirTv" target="_blank" rel="noopener">YouTube</a>
+      <a href="https://www.facebook.com/LUMIN.AirTv/" target="_blank" rel="noopener">Facebook</a>
+      <a href="https://www.linkedin.com/company/lumin-airtv/" target="_blank" rel="noopener">LinkedIn</a>
+    </nav>
+    <p class="fine">Lumin AirTv · Израиль. 3D-шар — предварительная модель. Выбранные вами видео остаются на вашем устройстве.</p>
+  </footer>
+</main>
+
+<section class="panel" id="proj-panel" aria-label="Настройки видео" hidden>
+  <div class="panel-head" id="proj-head">
+    <h2>Видео на шаре</h2>
+    <button class="btn icon fold" id="proj-fold" type="button" aria-expanded="true" aria-label="Свернуть до полосы с кадрированием и краями" title="Свернуть">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9l7 7 7-7"/></svg>
+    </button>
+    <button class="btn icon close" id="proj-close" type="button" aria-label="Закрыть настройки видео" title="Закрыть">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+  </div>
+  <div class="field keep">
+    <span>Кадрирование</span>
+    <div class="seg" id="fit" role="group" aria-label="Кадрирование">
+      <button type="button" data-fit="fill" aria-pressed="true">Заполнить экран</button>
+      <button type="button" data-fit="whole" aria-pressed="false">Видео целиком</button>
+    </div>
+  </div>
+  <label class="field keep" for="spread"><span>Края <output id="spread-out" for="spread">70% равномерно</output></span>
+    <input id="spread" type="range" min="0" max="100" step="5" value="70"></label>
+  <p class="note">При 0% видео выглядит ровным, если смотреть прямо, но растягивается к краям. При 100% оно ложится равномерно на весь экран.</p>
+  <details class="adv">
+  <summary>Расширенные настройки просмотра</summary>
+  <h2 class="sub">Виртуальный проектор</h2>
+  <div class="field">
+    <span>Кадр проектора</span>
+    <div class="seg" id="res" role="group" aria-label="Кадр проектора">
+      <button type="button" data-w="1280" data-h="800" aria-pressed="true">1280 × 800</button>
+      <button type="button" data-w="1920" data-h="1080" aria-pressed="false">1920 × 1080</button>
+    </div>
+  </div>
+  <label class="field" for="lens-fov"><span>Поле объектива <output id="lens-fov-out" for="lens-fov">180°</output></span>
+    <input id="lens-fov" type="range" min="90" max="200" step="1" value="180"></label>
+  <label class="field" for="lens-depth"><span>Глубина объектива от задней части <output id="lens-depth-out" for="lens-depth">0,39 м</output></span>
+    <input id="lens-depth" type="range" min="0.10" max="1.20" step="0.01" value="0.39"></label>
+  <label class="check" for="chart"><input id="chart" type="checkbox"> Показать тестовую таблицу</label>
+  <figure class="frame">
+    <canvas id="frame-preview" width="320" height="200"></canvas>
+    <figcaption id="frame-caption">Что получает проектор · 1280 × 800</figcaption>
+  </figure>
+  <p class="readout" id="readout"></p>
+  <p class="note">Это визуальная симуляция. Настройки меняют только просмотр и не создают видео для проектора. Параметры объектива предварительные, их нужно проверить на настоящем шаре.</p>
+  </details>
+</section>
+
+<div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-label="Фото" hidden>
+  <img id="viewer-img" alt="">
+  <p id="viewer-cap"></p>
+  <button class="btn step prev" id="viewer-prev" type="button" aria-label="Предыдущее фото">‹</button>
+  <button class="btn step next" id="viewer-next" type="button" aria-label="Следующее фото">›</button>
+  <button class="btn close" id="viewer-close" type="button">Закрыть</button>
+</div>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Видео YouTube" hidden>
+  <div class="lightbox-frame" id="lightbox-frame"></div>
+  <button class="btn" id="lightbox-close" type="button">Закрыть</button>
+</div>
+
+<script>
+// Modal windows: while one is open the page behind it is inert and Tab stays inside the window (W3C APG dialog pattern).
+function shade(on) { ['main', '#proj-panel'].forEach(function (q) { var el = document.querySelector(q); if (el) el.inert = on; }); }
+function trap(dialog) {
+  dialog.addEventListener('keydown', function (e) {
+    if (e.key !== 'Tab') return;
+    var f = [].slice.call(dialog.querySelectorAll('button, [href], input, select, textarea, iframe, [tabindex]:not([tabindex="-1"])')).filter(function (el) { return !el.disabled && el.offsetParent !== null; });
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
+}
+setTimeout(function () {
+  if (!window.luminSphere) document.getElementById('loading').textContent = 'Интерактивный просмотр недоступен. Фотографии и информация о проекте ниже.';
+}, 15000);
+// Video windows. On the website a click opens the YouTube player over the page (privacy-enhanced youtube-nocookie.com);
+// where YouTube frames are not allowed, the window stays a plain link to the video on YouTube.
+(function () {
+  if ('iframe' !== 'iframe') return;
+  var box = document.getElementById('lightbox'), frame = document.getElementById('lightbox-frame'), closer = document.getElementById('lightbox-close'), opener = null;
+  function close() { box.hidden = true; frame.replaceChildren(); shade(false); if (opener) opener.focus(); }
+  trap(box);
+  document.querySelectorAll('.win').forEach(function (a) {
+    if (!a.dataset.yt) return;   // the channel tile is a plain link to YouTube (found by the Codex audit, 23.10.2026)
+    a.addEventListener('click', function (e) {
+      e.preventDefault(); opener = a;
+      if (window.luminSphere && window.luminSphere.video) window.luminSphere.video.pause();
+      var f = document.createElement('iframe');
+      f.src = 'https://www.youtube-nocookie.com/embed/' + a.dataset.yt + '?autoplay=1&rel=0&playsinline=1';
+      f.title = a.dataset.title; f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+      frame.replaceChildren(f); box.hidden = false; shade(true); closer.focus();
+    });
+  });
+  closer.addEventListener('click', close);
+  box.addEventListener('click', function (e) { if (e.target === box) close(); });
+  addEventListener('keydown', function (e) { if (e.key === 'Escape' && !box.hidden) close(); });
+})();
+// Gallery. With a mouse a strip runs toward the side the pointer is on, faster nearer the edge and still in the middle third;
+// a click opens the photo over the page, with previous / next by buttons, arrow keys or a swipe.
+(function () {
+  var slow = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('.strip').forEach(function (strip) {
+    var speed = 0, last = 0, carry = 0, running = false;
+    function step(now) {
+      if (!speed) { running = false; return; }
+      carry += speed * Math.min(.05, (now - (last || now)) / 1000); last = now;
+      var whole = Math.trunc(carry); if (whole) { strip.scrollLeft += whole; carry -= whole; }
+      requestAnimationFrame(step);
+    }
+    strip.addEventListener('pointermove', function (e) {
+      if (slow || e.pointerType !== 'mouse') return;
+      var r = strip.getBoundingClientRect(), v = (e.clientX - r.left) / r.width * 2 - 1, a = Math.max(0, Math.abs(v) - 1 / 3) * 1.5;
+      speed = Math.sign(v) * a * a * 900;
+      if (speed && !running) { running = true; last = 0; requestAnimationFrame(step); }
+    });
+    strip.addEventListener('pointerleave', function () { speed = 0; });
+  });
+  var shots = [].slice.call(document.querySelectorAll('.shot')), viewer = document.getElementById('viewer'), img = document.getElementById('viewer-img');
+  var cap = document.getElementById('viewer-cap'), closer = document.getElementById('viewer-close'), at = 0, opener = null, x0 = null;
+  var fw = document.documentElement.dir === 'rtl' ? -1 : 1;   // right to left: forward is to the left
+  function show(k) { at = (k + shots.length) % shots.length; var b = shots[at]; img.src = b.dataset.full; img.alt = b.dataset.cap; cap.textContent = b.dataset.cap + ' · \u2066' + (at + 1) + ' / ' + shots.length + '\u2069'; }
+  function close() { viewer.hidden = true; img.removeAttribute('src'); shade(false); if (opener) opener.focus(); }
+  trap(viewer);
+  shots.forEach(function (b, k) { b.addEventListener('click', function (e) { e.preventDefault(); opener = b; show(k); viewer.hidden = false; shade(true); closer.focus(); }); });
+  // Previous / next for each strip, for touch screens and for people who prefer no pointer-driven motion.
+  document.querySelectorAll('.strip-nav button').forEach(function (b) {
+    b.addEventListener('click', function () { var strip = b.closest('.gallery-block').querySelector('.strip'); strip.scrollBy({ left: (b.classList.contains('strip-next') ? 1 : -1) * fw * strip.clientWidth * .8, behavior: slow ? 'auto' : 'smooth' }); });
+  });
+  document.getElementById('viewer-prev').addEventListener('click', function () { show(at - 1); });
+  document.getElementById('viewer-next').addEventListener('click', function () { show(at + 1); });
+  closer.addEventListener('click', close);
+  viewer.addEventListener('click', function (e) { if (e.target === viewer) close(); });
+  viewer.addEventListener('pointerdown', function (e) { x0 = e.clientX; });
+  viewer.addEventListener('pointerup', function (e) { if (x0 !== null && Math.abs(e.clientX - x0) > 50) show(at + (e.clientX < x0 ? 1 : -1) * fw); x0 = null; });
+  addEventListener('keydown', function (e) {
+    if (viewer.hidden) return;
+    if (e.key === 'Escape') close(); else if (e.key === 'ArrowLeft') show(at - fw); else if (e.key === 'ArrowRight') show(at + fw);
+  });
+})();
+// Request form. On the website it posts to Web3Forms, which emails the request to the owner; the address is not on the page.
+(function () {
+  var form = document.getElementById('request'), status = document.getElementById('form-status'), send = document.getElementById('send');
+  var KEY = '3cbbeb21-a70c-425d-8152-a025a1675869', live = 'iframe' === 'iframe' && KEY !== '', opened = Date.now();
+  function say(text, kind) { status.textContent = text; status.className = 'form-status' + (kind ? ' ' + kind : ''); }
+  // Each required field explains itself: the message sits under the field and is read with it (aria-describedby).
+  var MSG = { name: 'Введите имя.', email: 'Введите email для ответа.', message: 'Добавьте короткое описание проекта.',
+              request: 'Выберите, с чем вам помочь.', consent: 'Подтвердите, что мы можем использовать эти данные для ответа.' };
+  function flag(key, el, bad) {
+    var err = document.getElementById('err-' + key); err.hidden = !bad; err.textContent = bad ? MSG[key] : '';
+    el.setAttribute('aria-invalid', String(bad)); if (bad) el.setAttribute('aria-describedby', err.id); else el.removeAttribute('aria-describedby');
+  }
+  function keyOf(el) { return el.name === 'request' ? 'request' : el.name === 'consent' ? 'consent' : /^f-(name|email|message)$/.test(el.id) ? el.id.slice(2) : ''; }
+  ['input', 'change'].forEach(function (ev) { form.addEventListener(ev, function (e) { var k = keyOf(e.target); if (k) flag(k, k === 'request' ? form.querySelector('input[name="request"]') : e.target, false); }); });
+  // A smaller sphere hangs; it cannot be chosen together with helium flight.
+  var size = document.getElementById('f-size'), setup = document.getElementById('f-setup');
+  function sizeRule() {
+    var small = size.value === 'Smaller suspended sphere';
+    for (var i = 0; i < setup.options.length; i++) { var o = setup.options[i]; if (o.value === 'Floating on helium') { o.disabled = small; if (small && o.selected) setup.value = 'Not sure yet'; } }
+  }
+  size.addEventListener('change', sizeRule); sizeRule();
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var bad = [];
+    ['name', 'email', 'message'].forEach(function (key) {
+      var el = document.getElementById('f-' + key), v = el.value.trim();
+      var ok = v !== '' && (key !== 'email' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v));
+      flag(key, el, !ok); if (!ok) bad.push(el);
+    });
+    var first = form.querySelector('input[name="request"]'), chosen = !!form.querySelector('input[name="request"]:checked');
+    flag('request', first, !chosen); if (!chosen) bad.unshift(first);
+    flag('consent', form.consent, !form.consent.checked); if (!form.consent.checked) bad.push(form.consent);
+    if (bad.length) { say('Проверьте отмеченные поля.', 'error'); bad[0].focus(); return; }
+    // Bots tick the hidden box: thank them and send nothing. A person who was quick (autofill) keeps the text and is asked to wait.
+    if (form.botcheck.checked) { say('Спасибо. Мы получили вашу заявку.', 'ok'); form.reset(); return; }
+    if (Date.now() - opened < 3000) { say('Подождите немного и отправьте снова. Ваши данные сохранены.', 'error'); return; }
+    if (!live) { say('Отправка работает на luminairtv.co.il. Этот предпросмотр ничего не отправляет.', 'error'); return; }
+    var data = {};
+    new FormData(form).forEach(function (v, k) { if (v !== '' && ['botcheck', 'access_key', 'subject', 'from_name'].indexOf(k) < 0) data[k] = String(v).trim(); });
+    var subject = '[Lumin AirTv] ' + [data.request, data.where, data.date, data.city].filter(Boolean).join(' · ');
+    var payload = Object.assign({ access_key: KEY, subject: subject, from_name: 'Lumin AirTv website', replyto: data.email, page_language: document.documentElement.lang }, data);
+    send.disabled = true; say('Отправляем…');
+    var stop = new AbortController(), late = setTimeout(function () { stop.abort(); }, 20000);   // never leave the button on "Sending…"
+    fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload), signal: stop.signal })
+      .then(function (r) { return r.json(); })
+      .then(function (j) {
+        if (j.success) { say('Спасибо. Мы получили заявку и ответим по почте.', 'ok'); form.reset(); }
+        else say('Заявка не отправлена. Ваши данные остались здесь; попробуйте позже.', 'error');
+      })
+      .catch(function () { say('Не удалось подтвердить отправку. Ваши данные остались здесь; попробуйте ещё раз чуть позже.', 'error'); })
+      .finally(function () { clearTimeout(late); send.disabled = false; });
+  });
+})();
+</script>
+<script type="importmap">{"imports": {"three": "../vendor/three-0.186.0/three.module.js", "three/addons/": "../vendor/three-0.186.0/addons/"}}</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+// Model: 3d/build/web-v003/lumin-sphere-web-v003.glb (Blender, 3d/scripts/build_web_v003.py). Screen faces +Z, lens node PROJ_Lens.
+const MODEL = 'url:../model-v003.glb';
+// Projector data and evidence classes: 3d/params/flagship_3_7m_web_v003.json → parameters.projector.
+const PROJECTOR = {"model": {"value": "Epson EB-1771W"}, "native_resolution": {"value": [1280, 800]}, "lens": {"value": "Digital King AF Ultra Super Wide Conversion Lens"}, "lens_field_deg": {"value": 180}, "lens_mapping": {"value": "equidistant"}, "image_circle": {"value": "inscribed in the frame height"}, "lens_position": {"value": "inner end of the cylinder on the projection axis"}, "rear_projection_mode": {"value": true}};
+const R = 1.85;
+const SCREEN_OFF = '#999897', WELD_OFF = '#8e8d8c';
+const $ = (id) => document.getElementById(id);
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Test chart in projector-frame pixels: rings every 50 px from the frame centre, so the screen edge can be read off.
+function drawChart(cv, w, h) {
+  cv.width = w; cv.height = h;
+  const g = cv.getContext('2d'), cx = w / 2, cy = h / 2, fs = Math.round(h / 34);
+  g.fillStyle = '#000'; g.fillRect(0, 0, w, h);
+  g.font = `700 ${fs}px "Roboto Condensed", "Arial Narrow", Arial, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle';
+  for (let r = 50; r <= Math.hypot(cx, cy); r += 50) {
+    const major = r % 100 === 0;
+    g.lineWidth = major ? 3 : 2; g.strokeStyle = major ? '#ffffff' : '#7d8794';
+    g.beginPath(); g.arc(cx, cy, r, 0, Math.PI * 2); g.stroke();
+  }
+  g.lineWidth = 2; g.strokeStyle = '#009de0';
+  g.beginPath(); g.moveTo(0, cy); g.lineTo(w, cy); g.moveTo(cx, 0); g.lineTo(cx, h); g.stroke();
+  for (let r = 100; r <= Math.hypot(cx, cy); r += 100) {
+    for (const [dx, dy] of [[0, -1], [1, 0], [0, 1], [-1, 0]]) {
+      const x = cx + dx * r, y = cy + dy * r;
+      if (x < fs * 1.5 || x > w - fs * 1.5 || y < fs || y > h - fs) continue;
+      g.fillStyle = '#000'; g.fillRect(x - fs * 1.15, y - fs * .62, fs * 2.3, fs * 1.24);
+      g.fillStyle = '#fff'; g.fillText(String(r), x, y);
+    }
+  }
+  g.lineWidth = 3; g.strokeStyle = '#ffffff'; g.strokeRect(1.5, 1.5, w - 3, h - 3);
+  g.fillStyle = '#ffd200'; g.fillText('TOP', cx, fs * 1.4); g.fillText('LEFT', fs * 2.6, cy - fs * 1.3); g.fillText('RIGHT', w - fs * 2.8, cy - fs * 1.3);
+  g.textAlign = 'left'; g.fillStyle = '#a9b4c1';
+  g.fillText(`LUMIN AIRTV TEST CHART · ${w} × ${h} · rings every 50 px from the centre`, fs, h - fs * 1.2);
+}
+
+// #chart-1280x800 shows only the chart at that size, for a projector or a PNG export.
+const chartOnly = /^#chart-(\d{3,4})x(\d{3,4})$/.exec(location.hash);
+if (chartOnly) {
+  await document.fonts.ready;
+  const cv = document.createElement('canvas'); drawChart(cv, +chartOnly[1], +chartOnly[2]); cv.className = 'chart-only';
+  document.body.replaceChildren(cv);
+  window.luminSphere = { chart: true };
+} else {
+  await start();
+}
+
+async function start() {
+  const ui = { stage: $('stage'), loading: $('loading'), pick: $('pick'), play: $('play'), sound: $('sound'), file: $('video-file'), status: $('status'), hint: $('hint'),
+    toggle: $('proj-toggle'), panel: $('proj-panel'), spread: $('spread'), fov: $('lens-fov'), depth: $('lens-depth'), chart: $('chart'), preview: $('frame-preview'), caption: $('frame-caption'), readout: $('readout') };
+  const say = (text, isError = false) => { ui.status.textContent = text; ui.status.classList.toggle('error', isError); };
+  const clock = (s) => isFinite(s) ? `${Math.floor(s / 60)}:${String(Math.round(s % 60)).padStart(2, '0')}` : '';
+  const dir = (az, el) => { const a = THREE.MathUtils.degToRad(az), e = THREE.MathUtils.degToRad(el); return new THREE.Vector3(Math.sin(a) * Math.cos(e), Math.sin(e), Math.cos(a) * Math.cos(e)); };
+
+  // The slogan is set at 81% width like the AIRTV ISRAEL lettering; trim the layout box to the squeezed width.
+  const squeeze = () => { for (const el of document.querySelectorAll('.squeeze')) { el.style.marginInline = '0'; el.style.marginInline = `${-el.offsetWidth * .095}px`; } };
+  document.fonts.ready.then(squeeze); addEventListener('resize', squeeze);
+
+  let renderer;
+  try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }); }
+  catch (e) { ui.loading.textContent = 'Интерактивный просмотр недоступен: в этом браузере выключен 3D (WebGL). Фотографии и информация о проекте ниже.'; throw e; }
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.setClearColor(0x000000, 0);
+  renderer.toneMapping = THREE.NeutralToneMapping;
+  ui.stage.append(renderer.domElement);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(28, 1, .1, 200);
+  scene.environment = new THREE.PMREMGenerator(renderer).fromScene(new RoomEnvironment(), .04).texture;
+  scene.environmentIntensity = .4;
+  // Key light from the upper side so the glossy rear shell reads lighter than the matte screen, as on the owner's photo.
+  scene.add(new THREE.HemisphereLight(0xd9e3ef, 0x070a11, .6));
+  for (const [color, power, at] of [[0xffffff, 2.4, [-7, 6, -1.5]], [0xffffff, .8, [2, 1, 8]], [0x9fd0ff, 1.4, [6, 2.5, -7]]]) {
+    const l = new THREE.DirectionalLight(color, power); l.position.set(...at); scene.add(l);
+  }
+
+  // 'container' (scrolling page): only the circle of the sphere takes drags, pinches and the wheel, so around it the page
+  // scrolls as usual. On touch screens vertical swipes on the sphere scroll the page too, sideways ones turn the sphere.
+  const layout = ui.stage.dataset.layout || 'viewport';
+  // The touch circle sits in a box clipped to the stage, so even a zoomed sphere never covers the buttons for touches.
+  let hit = null;
+  if (layout === 'container') {
+    const clip = document.createElement('div'); hit = document.createElement('div');
+    Object.assign(clip.style, { position: 'absolute', inset: '0', overflow: 'hidden', pointerEvents: 'none' });
+    Object.assign(hit.style, { position: 'absolute', borderRadius: '50%', cursor: 'grab', pointerEvents: 'auto' });
+    renderer.domElement.style.pointerEvents = 'none';
+    clip.append(hit); ui.stage.append(clip);
+  }
+  const controls = new OrbitControls(camera, hit || renderer.domElement);
+  controls.enableDamping = true; controls.enablePan = false; controls.rotateSpeed = .75;
+  controls.autoRotate = !reduceMotion; controls.autoRotateSpeed = .55;
+  if (hit) {
+    // The controls set touch-action: none on the circle, so inside it every finger movement turns the sphere, up and down included
+    // (owner, 23.10.2026: a vertical swipe on the sphere scrolled the page); the page still scrolls from a swipe beside the sphere.
+    controls.addEventListener('start', () => { hit.style.cursor = 'grabbing'; }); controls.addEventListener('end', () => { hit.style.cursor = 'grab'; });
+  }
+
+  // The touch circle follows the sphere's size on screen as it is zoomed, from the camera distance.
+  let hitKey = '', canvasH = 1;
+  function placeHit() {
+    if (!hit) return;
+    const w = ui.stage.clientWidth, h = ui.stage.clientHeight;
+    const r = Math.round(canvasH / 2 * Math.tan(Math.asin(Math.min(1, R / camera.position.length()))) / Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)) * 1.04);
+    const key = `${w} ${h} ${r}`;
+    if (key === hitKey) return;
+    hitKey = key;
+    Object.assign(hit.style, { left: `${w / 2 - r}px`, top: `${h / 2 - r}px`, width: `${2 * r}px`, height: `${2 * r}px` });
+  }
+
+  // Sphere size. 'viewport' (one-screen page): fit the free band between the slogan and the controls and centre it there.
+  // 'container' (scrolling page): fill the stage box. The canvas reaches past the stage, across the page and almost half a
+  // stage up and down, so a zoomed sphere draws over the slogan and the controls instead of being cut at the stage edge;
+  // the camera view is shifted so the sphere stays centred on the stage.
+  function fit() {
+    const w = ui.stage.clientWidth, h = ui.stage.clientHeight;
+    if (!w || !h) return;
+    let px;
+    if (layout === 'container') {
+      const box = ui.stage.getBoundingClientRect(), cw = document.documentElement.clientWidth, ext = Math.round(h * .45), ch = h + 2 * ext;
+      const cx = box.left + w / 2, fw = 2 * Math.max(cx, cw - cx);
+      Object.assign(renderer.domElement.style, { position: 'absolute', left: `${-box.left}px`, top: `${-ext}px`, width: `${cw}px`, height: `${ch}px` });
+      renderer.setSize(cw, ch, false); camera.aspect = fw / ch; camera.setViewOffset(fw, ch, fw / 2 - cx, 0, cw, ch);
+      px = Math.min(w, h) * .44; canvasH = ch;
+    } else {
+      renderer.setSize(w, h, false); camera.aspect = w / h;
+      const top = document.querySelector('.brand').getBoundingClientRect().bottom, bottom = document.querySelector('.dock').getBoundingClientRect().top;
+      const band = Math.max(bottom - top, h * .4); px = Math.min(band * .47, w * .41);
+      camera.setViewOffset(w, h, 0, h / 2 - (top + bottom) / 2, w, h); canvasH = h;
+    }
+    const d = R / Math.sin(Math.atan(px / (canvasH / 2) * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))));
+    controls.minDistance = d * .55; controls.maxDistance = d * 1.9;
+    camera.position.setLength(d);
+  }
+  camera.position.copy(dir(-50, 9));
+  fit(); addEventListener('resize', fit); document.fonts.ready.then(fit);
+  if (layout === 'container') new ResizeObserver(fit).observe(ui.stage);
+
+  // The website serves the model as its own cacheable file (MODEL = 'url:...'); the single-file builds keep it inline as base64.
+  const gltf = MODEL.startsWith('url:') ? await new GLTFLoader().loadAsync(MODEL.slice(4))
+    : await new GLTFLoader().parseAsync(Uint8Array.from(atob(MODEL), (c) => c.charCodeAt(0)).buffer, '');
+  const parts = {};
+  gltf.scene.traverse((o) => { if (o.isMesh) parts[o.name] = o; });
+  const lensNode = gltf.scene.getObjectByName('PROJ_Lens');
+
+  // Virtual projector. Frame pixels are measured from the frame centre (+x right, +y up as seen from outside).
+  // Equidistant lens: a ray at angle a from the axis lands at radius a / (field / 2) × image-circle radius.
+  const proj = {
+    w: PROJECTOR.native_resolution.value[0], h: PROJECTOR.native_resolution.value[1],
+    fov: PROJECTOR.lens_field_deg.value, depth: lensNode ? +(R + lensNode.position.z).toFixed(2) : .39, chart: false,
+  };
+  const lensUniforms = { frame: { value: new THREE.Vector2() }, circleR: { value: 0 }, halfFov: { value: 0 }, lens: { value: new THREE.Vector3() }, R: { value: R } };
+  const frameRT = new THREE.WebGLRenderTarget(proj.w, proj.h, { type: THREE.HalfFloatType, depthBuffer: false });
+  const chartCanvas = document.createElement('canvas'), chartTex = new THREE.CanvasTexture(chartCanvas);
+  chartTex.colorSpace = THREE.SRGBColorSpace;
+
+  const video = document.createElement('video');
+  video.className = 'offscreen'; video.loop = true; video.preload = 'auto'; video.playsInline = true; video.setAttribute('playsinline', '');
+  document.body.append(video);
+  const videoTex = new THREE.VideoTexture(video); videoTex.colorSpace = THREE.SRGBColorSpace;
+  // Mipmaps and anisotropic filtering keep the video sharp and calm where the screen turns away or the sphere is small.
+  videoTex.generateMipmaps = true; videoTex.minFilter = THREE.LinearMipmapLinearFilter; videoTex.anisotropy = renderer.capabilities.getMaxAnisotropy();
+
+  // How the video lies on the screen. A screen point n (unit vector from the sphere centre, screen axis +Z) at angle th from
+  // the axis takes the video at radius rho: sin(th) looks flat from straight ahead but stretches the video towards the edge,
+  // th / 90° spreads it evenly over the screen; 'spread' mixes the two. Both reach the screen edge at rho = 1.
+  const picture = { videoTex: { value: videoTex }, videoScale: { value: new THREE.Vector2(1, 1) }, spread: { value: .7 } };
+  // three.js uploads video frames without the sRGB decode that other textures get (its own materials decode in the shader),
+  // so videoColor() decodes here; without it the picture is encoded twice and looks pale.
+  const VIDEO_UV = `
+      uniform sampler2D videoTex; uniform vec2 videoScale; uniform float spread;
+      vec2 videoUv(vec3 n) {
+        float th = acos(clamp(n.z, -1.0, 1.0)), rho = mix(sin(th), th / 1.5707963, spread), len = length(n.xy);
+        return 0.5 + 0.5 * rho * (len > 1e-6 ? n.xy / len : vec2(0.0)) * videoScale;
+      }
+      vec3 videoColor(vec2 uv) {
+        vec3 c = texture2D(videoTex, uv).rgb;
+        return mix(c / 12.92, pow((c + 0.055) / 1.055, vec3(2.4)), step(vec3(0.04045), c));
+      }
+      bool inside(vec2 uv) { return uv.x >= 0.0 && uv.x <= 1.0 && uv.y >= 0.0 && uv.y <= 1.0; }`;
+
+  // Pass 1, the automatic conversion into the projector file: for every projector pixel, follow its ray through the lens to
+  // the sphere. If it lands on the screen, paint the part of the video that belongs to that screen point.
+  const frameMat = new THREE.ShaderMaterial({
+    uniforms: { ...lensUniforms, ...picture, mode: { value: 0 }, chartTex: { value: chartTex } },
+    vertexShader: 'varying vec2 vUv; void main() { vUv = uv; gl_Position = vec4(position.xy, 0.0, 1.0); }',
+    fragmentShader: `
+      uniform sampler2D chartTex; uniform int mode; uniform vec2 frame; uniform float circleR, halfFov, R; uniform vec3 lens;
+      ${VIDEO_UV}
+      varying vec2 vUv;
+      void main() {
+        if (mode == 2) { gl_FragColor = vec4(texture2D(chartTex, vUv).rgb, 1.0); return; }
+        vec2 p = (vUv - 0.5) * frame; float r = length(p);
+        gl_FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+        if (mode == 0 || r > circleR) return;
+        float a = r / circleR * halfFov, psi = atan(p.y, p.x);
+        vec3 d = vec3(sin(a) * cos(psi), sin(a) * sin(psi), cos(a));
+        float b = dot(lens, d), t = -b + sqrt(b * b - dot(lens, lens) + R * R);
+        vec3 s = lens + t * d;
+        if (s.z < 0.0) return;
+        vec2 uv = videoUv(s / R);
+        if (inside(uv)) gl_FragColor = vec4(videoColor(uv), 1.0);
+      }`,
+  });
+  const frameScene = new THREE.Scene(), flatCam = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
+  frameScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), frameMat));
+
+  // Pass 2: the screen lit from inside. A video is read straight from the video file at full resolution, at the same place the
+  // projector file puts it, so the view is not softened by the projector frame; only screen parts the lens cannot reach stay
+  // dark. The test chart goes through the projector frame and the lens, as on the real sphere.
+  const screenMode = { value: 0 };
+  const screenGlow = (gain, base) => new THREE.ShaderMaterial({
+    uniforms: { ...lensUniforms, ...picture, mode: screenMode, frameTex: { value: frameRT.texture }, gain: { value: gain }, base: { value: new THREE.Color(base) } },
+    vertexShader: `varying vec3 vObj, vN; void main() { vObj = position; vN = normalize(mat3(modelMatrix) * normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0); }`,
+    fragmentShader: `
+      uniform sampler2D frameTex; uniform int mode; uniform vec2 frame; uniform float circleR, halfFov, gain; uniform vec3 lens, base;
+      ${VIDEO_UV}
+      varying vec3 vObj, vN;
+      void main() {
+        vec3 d = normalize(vObj - lens);
+        float a = acos(clamp(d.z, -1.0, 1.0)), r = a / halfFov * circleR, psi = atan(d.y, d.x);
+        vec2 uv = mode == 1 ? videoUv(normalize(vObj)) : r * vec2(cos(psi), sin(psi)) / frame + 0.5;
+        vec3 light = vec3(0.0);
+        if (r <= circleR && inside(uv)) light = mode == 1 ? videoColor(uv) : texture2D(frameTex, uv).rgb;
+        float shade = 0.35 + 0.65 * max(dot(normalize(vN), normalize(vec3(-0.6, 0.6, 0.5))), 0.0);
+        gl_FragColor = vec4(base * shade + light * gain, 1.0);
+        #include <colorspace_fragment>
+      }`,
+  });
+  const offMats = { screen: new THREE.MeshStandardMaterial({ color: SCREEN_OFF, roughness: .62 }), weld: new THREE.MeshStandardMaterial({ color: WELD_OFF, roughness: .5 }) };
+  // A faint base keeps the round shape readable in black parts of the picture without greying the video's blacks.
+  const glowMats = { screen: screenGlow(1, '#0a0a0a'), weld: screenGlow(.72, '#080808') };
+  scene.add(gltf.scene);
+  ui.loading.hidden = true; $('poster')?.classList.add('gone'); if (ui.stage.dataset.demo) ui.play.disabled = false;   // start() runs before demoSrc below is declared
+
+  // What the projector receives, shown small in the panel.
+  const previewRT = new THREE.WebGLRenderTarget(320, 200); previewRT.texture.colorSpace = THREE.SRGBColorSpace;
+  const previewScene = new THREE.Scene();
+  previewScene.add(new THREE.Mesh(new THREE.PlaneGeometry(2, 2), new THREE.MeshBasicMaterial({ map: frameRT.texture, toneMapped: false })));
+  const previewCtx = ui.preview.getContext('2d');
+  let previewPixels = null, lastPreview = 0;
+  function drawPreview() {
+    const w = ui.preview.width, h = ui.preview.height;
+    if (previewRT.width !== w || previewRT.height !== h) previewRT.setSize(w, h);
+    if (!previewPixels || previewPixels.length !== w * h * 4) previewPixels = new Uint8Array(w * h * 4);
+    renderer.setRenderTarget(previewRT); renderer.render(previewScene, flatCam); renderer.setRenderTarget(null);
+    renderer.readRenderTargetPixels(previewRT, 0, 0, w, h, previewPixels);
+    const img = previewCtx.createImageData(w, h), row = w * 4;
+    for (let y = 0; y < h; y++) img.data.set(previewPixels.subarray((h - 1 - y) * row, (h - y) * row), y * row);
+    previewCtx.putImageData(img, 0, 0);
+  }
+
+  let ready = false, fileName = '', blobUrl = null, frameDirty = true, demo = false, demoLoading = false;
+  const demoSrc = ui.stage.dataset.demo || '';   // the page's demo clip (landing page: demo.mp4), fetched only when Play demo is pressed
+  const mode = () => proj.chart ? 2 : ready ? 1 : 0;
+  function applyProjector() {
+    const halfFov = THREE.MathUtils.degToRad(proj.fov / 2), circleR = proj.h / 2, lensZ = -(R - proj.depth);
+    lensUniforms.frame.value.set(proj.w, proj.h); lensUniforms.circleR.value = circleR; lensUniforms.halfFov.value = halfFov; lensUniforms.lens.value.set(0, 0, lensZ);
+    if (frameRT.width !== proj.w || frameRT.height !== proj.h) frameRT.setSize(proj.w, proj.h);
+    if (chartCanvas.width !== proj.w || chartCanvas.height !== proj.h) { drawChart(chartCanvas, proj.w, proj.h); chartTex.needsUpdate = true; }
+    const lit = mode() !== 0;
+    parts.GEO_Screen.material = lit ? glowMats.screen : offMats.screen;
+    parts.GEO_Weld_Screen.material = lit ? glowMats.weld : offMats.weld;
+    frameMat.uniforms.mode.value = screenMode.value = mode();
+    // Where the screen edge falls in the frame, and how much of the projector the screen uses.
+    const edge = Math.atan2(R, -lensZ), reach = edge / halfFov, used = Math.min(1, reach) * circleR;
+    ui.preview.height = Math.round(ui.preview.width * proj.h / proj.w);
+    ui.caption.textContent = `Что получает проектор · ${proj.w} × ${proj.h}`;
+    ui.readout.textContent = reach > 1
+      ? `Объектив не достаёт до края экрана: внешняя часть экрана остаётся тёмной. Круг изображения ${Math.round(2 * circleR)} px.`
+      : `Край экрана в ${Math.round(used)} px от центра кадра. Изображение на экране: круг шириной ${Math.round(2 * used)} px, ${Math.round(100 * Math.PI * used * used / (proj.w * proj.h))}% пикселей проектора.`;
+    $('lens-fov-out').textContent = `${proj.fov}°`; $('lens-depth-out').textContent = `${proj.depth.toFixed(2).replace('.', ',')} м`;
+    frameDirty = true;
+  }
+  ui.fov.value = proj.fov; ui.depth.value = proj.depth;
+  for (const b of document.querySelectorAll('#res button')) {
+    b.addEventListener('click', () => {
+      proj.w = +b.dataset.w; proj.h = +b.dataset.h;
+      for (const o of document.querySelectorAll('#res button')) o.setAttribute('aria-pressed', String(o === b));
+      applyProjector(); if (ready) say(`⁨${fileName}⁩ · файл проектора ${proj.w} × ${proj.h}`);
+    });
+  }
+
+  // Fill: the centre of the video covers the round screen. Whole: the full video fits inside the circle, corners on its edge.
+  let fitMode = 'fill', videoAspect = 16 / 9;
+  function applyFit() {
+    const a = videoAspect, k = Math.hypot(a, 1);
+    if (fitMode === 'whole') picture.videoScale.value.set(k / a, k);
+    else picture.videoScale.value.set(a >= 1 ? 1 / a : 1, a >= 1 ? 1 : a);
+    frameDirty = true;
+  }
+  for (const b of document.querySelectorAll('#fit button')) {
+    b.addEventListener('click', () => {
+      fitMode = b.dataset.fit;
+      for (const o of document.querySelectorAll('#fit button')) o.setAttribute('aria-pressed', String(o === b));
+      applyFit();
+    });
+  }
+  const showSpread = () => { picture.spread.value = ui.spread.value / 100; $('spread-out').textContent = `${ui.spread.value}% равномерно`; frameDirty = true; };
+  ui.spread.addEventListener('input', showSpread); showSpread();
+  ui.fov.addEventListener('input', () => { proj.fov = +ui.fov.value; applyProjector(); });
+  ui.depth.addEventListener('input', () => { proj.depth = +ui.depth.value; applyProjector(); });
+  ui.chart.addEventListener('change', () => { proj.chart = ui.chart.checked; applyProjector(); if (proj.chart) faceFront(); });
+  // On phones the panel covers the button that opened it, so it also closes with its own Close button, a tap outside it, or Escape.
+  const showPanel = (open) => { ui.panel.hidden = !open; ui.toggle.setAttribute('aria-expanded', String(open)); frameDirty = true; if (open) $('proj-close')?.focus(); };
+  ui.toggle.addEventListener('click', () => showPanel(ui.panel.hidden));
+  $('proj-close')?.addEventListener('click', () => { showPanel(false); ui.toggle.focus(); });
+  document.addEventListener('pointerdown', (e) => { if (!ui.panel.hidden && !ui.panel.contains(e.target) && !ui.toggle.contains(e.target)) showPanel(false); });
+  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !ui.panel.hidden) { showPanel(false); ui.toggle.focus(); } });
+  // The panel's head is a handle: a finger or the mouse drags the panel anywhere on the screen (owner, 23.10.2026). It stays within
+  // the window with its head visible. The fold button keeps only the rows marked .keep (Framing and Edges).
+  const head = $('proj-head'), fold = $('proj-fold');
+  if (head) {
+    let drag = null;
+    head.addEventListener('pointerdown', (e) => {
+      if (e.target.closest('button')) return;
+      const r = ui.panel.getBoundingClientRect(); drag = { x: e.clientX, y: e.clientY, left: r.left, top: r.top, w: r.width, moved: false };
+      head.setPointerCapture(e.pointerId); e.preventDefault();
+    });
+    head.addEventListener('pointermove', (e) => {
+      if (!drag) return;
+      const dx = e.clientX - drag.x, dy = e.clientY - drag.y;
+      if (!drag.moved && Math.hypot(dx, dy) < 4) return;
+      drag.moved = true;
+      const left = Math.min(Math.max(8, drag.left + dx), Math.max(8, innerWidth - drag.w - 8)), top = Math.min(Math.max(8, drag.top + dy), innerHeight - 64);
+      ui.panel.style.right = 'auto'; ui.panel.style.left = `${left}px`; ui.panel.style.top = `${top}px`;
+    });
+    const endDrag = () => { drag = null; };
+    head.addEventListener('pointerup', endDrag); head.addEventListener('pointercancel', endDrag);
+  }
+  fold?.addEventListener('click', () => {
+    const strip = ui.panel.classList.toggle('strip');
+    fold.setAttribute('aria-expanded', String(!strip)); fold.setAttribute('aria-label', strip ? 'Развернуть настройки' : 'Свернуть до полосы с кадрированием и краями'); fold.title = strip ? 'Развернуть' : 'Свернуть';
+    frameDirty = true;
+  });
+  applyProjector();
+  document.fonts.ready.then(() => { drawChart(chartCanvas, proj.w, proj.h); chartTex.needsUpdate = true; frameDirty = true; });
+
+  let tween = null;
+  function faceFront() {
+    const d = camera.position.length(), to = dir(-20, 5).multiplyScalar(d);
+    controls.autoRotate = false;
+    if (reduceMotion) { camera.position.copy(to); return; }
+    tween = { from: camera.position.clone(), to, start: performance.now(), ms: 1400 };
+  }
+  function stepTween(now) {
+    if (!tween) return;
+    const k = Math.min(1, (now - tween.start) / tween.ms), e = k < .5 ? 2 * k * k : 1 - (-2 * k + 2) ** 2 / 2, d = tween.from.length();
+    camera.position.copy(tween.from.clone().normalize().lerp(tween.to.clone().normalize(), e).normalize().multiplyScalar(d));
+    if (k === 1) tween = null;
+  }
+  controls.addEventListener('start', () => { tween = null; controls.autoRotate = false; ui.hint.classList.add('gone'); });
+
+  function soundIcon() {
+    const on = !video.muted;
+    $('sound-on').toggleAttribute('hidden', !on); $('sound-off').toggleAttribute('hidden', on);
+    ui.sound.setAttribute('aria-pressed', String(on)); ui.sound.setAttribute('aria-label', on ? 'Выключить звук' : 'Включить звук');
+  }
+
+  // Video stays local: a blob URL from the chosen file, never uploaded.
+  ui.pick.addEventListener('click', () => ui.file.click());
+  ui.file.addEventListener('change', () => {
+    const f = ui.file.files && ui.file.files[0];
+    if (!f) return;
+    video.pause();
+    if (blobUrl) URL.revokeObjectURL(blobUrl);
+    ready = false; ui.play.disabled = true; ui.sound.disabled = true; applyProjector();
+    fileName = f.name; demo = false; ui.play.textContent = 'Смотреть'; blobUrl = URL.createObjectURL(f);
+    video.muted = false; video.src = blobUrl; video.load();
+    say(`Открываем ⁨${fileName}⁩…`);
+    ui.file.value = '';
+  });
+  video.addEventListener('loadedmetadata', () => {
+    videoAspect = video.videoWidth && video.videoHeight ? video.videoWidth / video.videoHeight : 16 / 9;
+    applyFit();
+  });
+  video.addEventListener('loadeddata', () => {
+    ready = true; ui.play.disabled = false; ui.sound.disabled = demo; soundIcon(); applyProjector();
+    if (video.currentTime === 0 && video.duration > .2) video.currentTime = .1;
+    if (!demo) say(`⁨${fileName}⁩ · ${clock(video.duration)} · нажмите «Смотреть»`);
+    if (!proj.chart) faceFront();
+  });
+  video.addEventListener('seeked', () => { videoTex.needsUpdate = true; frameDirty = true; });
+  video.addEventListener('error', () => {
+    const wasDemo = demo; demo = false; ready = false; ui.sound.disabled = true; applyProjector();
+    ui.play.textContent = demoSrc ? 'Смотреть демо' : 'Смотреть'; ui.play.setAttribute('aria-pressed', 'false'); ui.play.disabled = !demoSrc;
+    say(wasDemo ? 'Демо не загрузилось. Выберите своё видео.' : 'Этот браузер не может открыть файл. Попробуйте видео MP4 (H.264).', true);
+  });
+  video.addEventListener('play', () => { ui.play.textContent = 'Пауза'; ui.play.setAttribute('aria-pressed', 'true'); say(demo ? 'Демо на шаре · выберите своё видео, чтобы увидеть его' : `⁨${fileName}⁩ · идёт на шаре`); });
+  video.addEventListener('pause', () => { ui.play.textContent = demo ? 'Смотреть демо' : 'Смотреть'; ui.play.setAttribute('aria-pressed', 'false'); if (ready) say(demo ? 'Демо на паузе' : `⁨${fileName}⁩ · на паузе`); });
+  video.addEventListener('volumechange', soundIcon);
+  ui.play.addEventListener('click', async () => {
+    if (!ready) {
+      // No video yet: the first press opens the page's demo clip, a separate file fetched only now. It has no sound.
+      if (!demoSrc || demoLoading) return;
+      demoLoading = true; demo = true; fileName = 'Демо'; video.muted = true; video.src = demoSrc; video.load(); say('Открываем демо…');
+      await new Promise((done) => { video.addEventListener('loadeddata', done, { once: true }); video.addEventListener('error', done, { once: true }); });
+      demoLoading = false;
+      if (!ready) return;
+    }
+    if (!video.paused) { video.pause(); return; }
+    try { await video.play(); }
+    catch (e) {
+      video.muted = true;
+      try { await video.play(); say('Браузер заблокировал звук. Нажмите кнопку динамика.'); }
+      catch (e2) { say('Видео не запустилось. Попробуйте другой файл MP4.', true); }
+    }
+  });
+  ui.sound.addEventListener('click', () => { video.muted = !video.muted; });
+
+  const frame = (now) => {
+    stepTween(now); controls.update(); placeHit();
+    // The projector frame is only needed for the test chart on the screen and for the preview in the panel.
+    const playing = mode() === 1 && !video.paused, previewDue = !ui.panel.hidden && (frameDirty || (playing && now - lastPreview > 120));
+    if ((mode() === 2 && frameDirty) || previewDue) { renderer.setRenderTarget(frameRT); renderer.render(frameScene, flatCam); renderer.setRenderTarget(null); }
+    renderer.render(scene, camera);
+    if (previewDue) { drawPreview(); lastPreview = now; }
+    frameDirty = false;
+  };
+  // Draw only while the sphere is on screen and the tab is visible (no work while the visitor reads the page below).
+  let onScreen = true;
+  const run = () => renderer.setAnimationLoop(onScreen && !document.hidden ? frame : null);
+  new IntersectionObserver((entries) => { onScreen = entries[0].isIntersecting; run(); }).observe(ui.stage);
+  document.addEventListener('visibilitychange', run); run();
+  window.luminSphere = { model: 'web-v003', parts: Object.keys(parts), video, camera, controls, proj, picture: () => ({ fit: fitMode, spread: picture.spread.value }), readout: () => ui.readout.textContent };
+}
+
+</script>
+</body>
+</html>
