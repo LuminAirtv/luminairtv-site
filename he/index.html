@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-zRE0u8G5W5Kojv7Co6S+vEnPs1VxrtjTj5zx3nSj7Gs=' 'sha256-li/KBF27NSwqd0cMUrT0oPxh9n4izHzIZxbvQcOuOAo=' 'sha256-j+Ulxl5AqUJ2+pCrZxshZdPsJpue98v/tKzuxt9aLxU='; style-src 'sha256-7n7J0XH/M7BPjBLGe0GqRZZN15Sxj9tCS2cfsVmv3yE='; font-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-zRE0u8G5W5Kojv7Co6S+vEnPs1VxrtjTj5zx3nSj7Gs=' 'sha256-li/KBF27NSwqd0cMUrT0oPxh9n4izHzIZxbvQcOuOAo=' 'sha256-j+Ulxl5AqUJ2+pCrZxshZdPsJpue98v/tKzuxt9aLxU='; style-src 'sha256-RqsJ8vHZyDWLYPCDgvbAj4i1R/jt0Bgr0g7SQuaAa78='; font-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv | כדורי הקרנה מרחפים לאירועים בישראל</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -475,6 +475,8 @@ html[lang="he"] :is(.lede, .loading, .hint, .btn, .status, .ar-plate i, .win .ca
 [dir="rtl"] .trap { left: auto; right: -9999px; }   /* off the start side, so it adds no sideways scroll */
 [dir="rtl"] #res button, [dir="rtl"] #lens-fov-out { direction: ltr; }
 [dir="rtl"] :is(#f-email, #f-phone) { direction: ltr; text-align: right; }
+/* Russian capitals are wider: on phones up to 430 px the four sphere buttons keep one row with tighter letters (site session, 24.10.2026). */
+@media (max-width: 430px) { html[lang="ru"] .controls .btn:not(.icon) { padding: 0 10px; letter-spacing: .02em; } }
 </style>
 </head>
 <body>
