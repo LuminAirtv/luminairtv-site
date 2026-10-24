@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-iXGI7Jf8xVvLu4SyZTL/oQwgyLkmABwIY4vQ6Ee0BVI=' 'sha256-L7AJcfjT9lK1jWHa/sdIaOiPI4W6NJ0AmPh8O6XN/MQ=' 'sha256-wgxWwhWAlGRaobwllB+P8wzUgGL1cEXBN2putcxDYtc=' 'sha256-WPqsTt8XtK1dtQEKLG2Zx0mkul2xLHeiCxzPz2lOUDw='; style-src 'sha256-dYa1uSnVoO3XzdMiuwaaP37lzOp7uTUJbvEtOyOWDHY='; font-src 'self'; img-src 'self' blob:; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com; frame-src https://www.youtube-nocookie.com; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-Ob75FOmwpO+ofqx6fZPuDF42fKf9oSP3M7u7v13MYiY=' 'sha256-lkQ2IrPaMWa1SIVEqLug8BwFTILyiGeqVsd3CAUhHTM=' 'sha256-tLuUudvauJTw+NngjVTaBIP3JgNzNedLotg21CVs/eM=' 'sha256-wgxWwhWAlGRaobwllB+P8wzUgGL1cEXBN2putcxDYtc=' 'sha256-WPqsTt8XtK1dtQEKLG2Zx0mkul2xLHeiCxzPz2lOUDw=' https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; style-src 'sha256-dYa1uSnVoO3XzdMiuwaaP37lzOp7uTUJbvEtOyOWDHY='; font-src 'self'; img-src 'self' blob: https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.g.doubleclick.net https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; media-src 'self' blob:; connect-src 'self' https://api.web3forms.com https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.g.doubleclick.net https://*.analytics.google.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com wss://mc.yandex.ru wss://mc.yandex.com wss://mc.webvisor.org wss://mc.webvisor.com; frame-src https://www.youtube-nocookie.com https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; child-src blob: https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; worker-src 'self' blob:; base-uri 'none'; form-action https://api.web3forms.com; object-src 'none'; upgrade-insecure-requests">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <title>Lumin AirTv — Flying Projection Spheres in Israel</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -466,16 +466,88 @@ html[lang="he"] :is(.lede, .loading, .hint, .btn, .status, .ar-plate i, .win .ca
   window.luminPickLang = pick;
   var stored = null; try { stored = localStorage.getItem(KEY); } catch (e) {}
   var to = pick(here, navigator.languages || [navigator.language], stored, document.referrer, navigator.userAgent, location.hostname);
-  if (to && location.pathname !== to) { location.replace(to + location.search + location.hash); return; }
+  if (to && location.pathname !== to) { window.luminRedirecting = true; location.replace(to + location.search + location.hash); return; }
   document.addEventListener('click', function (e) {
     var a = e.target && e.target.closest ? e.target.closest('nav.langs a[hreflang]') : null; if (!a) return;
     try { localStorage.setItem(KEY, a.getAttribute('hreflang')); } catch (err) {}
   });
 })();
 </script>
+<script>
+// Lumin AirTv — visitor statistics: Google Analytics 4 and Yandex Metrica, v001, 24.10.2026 (owner: as much detail as possible).
+// Runs only on luminairtv.co.il (or with localStorage luminAnalyticsTest = 1 for a check), never in previews or the claude.ai artifact,
+// and not on a page that is leaving for another language. Reports page views, the sections a visitor reaches, every button,
+// link or tab pressed with the section it sits in, Play demo and own video, AR opened, language switched, YouTube or photo
+// opened, form options chosen and the form sent. Device, browser, screen, country and city come from the tools themselves.
+// Nothing typed into the form (name, e-mail, message) is sent to either tool.
+(function () {
+  var GA = 'G-FQTJQK7WMG', YM = null, HOST = 'luminairtv.co.il';
+  var test = false; try { test = localStorage.getItem('luminAnalyticsTest') === '1'; } catch (e) {}
+  if ((location.hostname !== HOST && !test) || window.luminRedirecting) return;
+  var lang = document.documentElement.lang || 'en', area = document.body.getAttribute('data-area') || 'site';
+  function load(src) { var s = document.createElement('script'); s.async = true; s.src = src; document.head.appendChild(s); }
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  if (!window.gtag) window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', GA, { page_lang: lang, area: area });
+  load('https://www.googletagmanager.com/gtag/js?id=' + GA);
+  if (YM) {
+    if (!window.ym) { window.ym = function () { (window.ym.a = window.ym.a || []).push(arguments); }; window.ym.l = 1 * new Date(); }
+    window.ym(YM, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true, trackHash: true, params: { page_lang: lang, area: area } });
+    load('https://mc.yandex.ru/metrika/tag.js?id=' + YM);
+  }
+  function track(name, params) {
+    params = params || {}; params.page_lang = lang; params.area = area;
+    try { gtag('event', name, params); } catch (e) {}
+    if (YM) { try { window.ym(YM, 'reachGoal', name, params); } catch (e) {} }
+  }
+  window.luminTrack = track;
+  function key(el) { return el.id || el.getAttribute('data-track') || (el.className || '').split(' ')[0] || el.tagName.toLowerCase(); }   // language-neutral names for sections
+  function describe(el) {
+    var sec = el.closest('section,header,footer,nav,.walls,.gallery-block,.panel,.viewer,.lightbox');
+    var text = (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+    return { label: el.id || el.getAttribute('aria-label') || text || el.getAttribute('href') || el.tagName.toLowerCase(), where: sec ? key(sec) : 'page' };
+  }
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('a,button,[role="tab"],summary') : null; if (!el) return;
+    var d = describe(el), href = el.getAttribute('href') || '';
+    if (el.matches('nav.langs a')) { track('lang_switch', { to: el.getAttribute('hreflang') || href, label: d.label, where: d.where }); return; }
+    if (el.matches('.ar-link')) { track('ar_open', { label: 'ar-link', where: d.where }); return; }
+    if (el.id === 'play') { track(el.getAttribute('aria-pressed') === 'true' ? 'demo_pause' : 'demo_play', { label: 'play', where: d.where }); return; }
+    if (el.id === 'pick') { track('own_video_pick', { label: 'pick', where: d.where }); return; }
+    if (el.getAttribute('data-yt')) { track('youtube_open', { video_id: el.getAttribute('data-yt'), label: d.label, where: d.where }); return; }
+    if (el.matches('.shot')) { track('photo_open', { photo: href.split('/').pop(), label: d.label, where: d.where }); return; }
+    if (el.id === 'send') return;   // what happened to the request is reported below
+    track('ui_click', { label: d.label, where: d.where, href: href });
+  }, true);
+  document.addEventListener('change', function (e) {
+    var t = e.target; if (!t) return;
+    if (t.id === 'file') { if (t.files && t.files.length) track('own_video_loaded', { label: t.files[0].type || 'video', where: 'stage' }); return; }
+    if (t.tagName === 'SELECT' || t.type === 'radio' || t.type === 'checkbox') track('ui_change', { label: t.name || t.id || '', value: t.type === 'checkbox' ? String(t.checked) : String(t.value).slice(0, 40), where: 'form' });
+  }, true);
+  document.addEventListener('lumin:lead', function (e) {
+    var d = (e && e.detail) || {};
+    track(d.ok ? 'generate_lead' : 'lead_error', { label: d.request || '', size: d.size || '', reason: d.reason || '', where: 'form' });
+  });
+  function sections() {   // a section counts as seen when half of it, or half a screen of it, is in view; once per page view
+    if (!('IntersectionObserver' in window)) return;
+    var seen = {}, io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting || (en.intersectionRatio < .5 && en.intersectionRect.height < innerHeight * .5)) return;
+        var k = key(en.target); if (seen[k]) return; seen[k] = 1; io.unobserve(en.target); track('section_view', { section: k, where: k });
+      });
+    }, { threshold: [0, .25, .5] });
+    var strips = 0;
+    [].forEach.call(document.querySelectorAll('main > section, main > footer, .walls, .gallery-block'), function (s) { if (!s.id && s.className.indexOf('gallery-block') === 0) s.setAttribute('data-track', 'gallery-block-' + (++strips)); io.observe(s); });
+  }
+  // This script sits at the top of the body, before the sections exist: watch them once the page is parsed.
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sections); else sections();
+})();
+</script>
 <div class="sky" aria-hidden="true"></div>
 <main class="page">
-  <section class="hero" aria-label="The Lumin AirTv sphere">
+  <section class="hero" id="hero" aria-label="The Lumin AirTv sphere">
     <header class="brand">
       <nav class="langs" aria-label="Language"><a href="/" hreflang="en" aria-current="page" lang="en">English</a><a href="/he/" hreflang="he" lang="he" dir="rtl">עברית</a><a href="/ru/" hreflang="ru" lang="ru">Русский</a></nav>
       <h1 class="slogan" lang="en" dir="ltr"><span class="squeeze">YOUR OWN MOON.</span> <span class="squeeze">ANYWHERE.</span></h1>
@@ -696,6 +768,7 @@ html[lang="he"] :is(.lede, .loading, .hint, .btn, .status, .ar-plate i, .win .ca
       <a href="https://www.linkedin.com/company/lumin-airtv/" target="_blank" rel="noopener">LinkedIn</a>
     </nav>
     <p class="fine">Lumin AirTv · Israel. The 3D sphere is a preliminary model. Videos you upload stay on your device.</p>
+    <p class="fine">Visits are counted with Google Analytics and Yandex Metrica to see how the site is used. The form sends only what you type in it.</p>
   </footer>
 </main>
 
@@ -841,6 +914,7 @@ setTimeout(function () {
   var form = document.getElementById('request'), status = document.getElementById('form-status'), send = document.getElementById('send');
   var KEY = '3cbbeb21-a70c-425d-8152-a025a1675869', live = 'iframe' === 'iframe' && KEY !== '', opened = Date.now();
   function say(text, kind) { status.textContent = text; status.className = 'form-status' + (kind ? ' ' + kind : ''); }
+  function lead(d) { try { document.dispatchEvent(new CustomEvent('lumin:lead', { detail: d })); } catch (e) {} }   // counted by the statistics script, without the form's text
   // Each required field explains itself: the message sits under the field and is read with it (aria-describedby).
   var MSG = { name: 'Enter your name.', email: 'Enter an email address we can reply to.', message: 'Add a short description of your project.',
               request: 'Choose what you would like help with.', consent: 'Please confirm that we may use these details to reply.' };
@@ -882,10 +956,10 @@ setTimeout(function () {
     fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload), signal: stop.signal })
       .then(function (r) { return r.json(); })
       .then(function (j) {
-        if (j.success) { say('Thank you. We received your request and will answer by email.', 'ok'); form.reset(); }
-        else say('The request was not sent: ' + (j.message || 'unknown error') + '. Your details are still here; please try again later.', 'error');
+        if (j.success) { say('Thank you. We received your request and will answer by email.', 'ok'); form.reset(); lead({ ok: true, request: data.request || '', size: data.size || '' }); }
+        else { say('The request was not sent: ' + (j.message || 'unknown error') + '. Your details are still here; please try again later.', 'error'); lead({ ok: false, reason: 'rejected' }); }
       })
-      .catch(function () { say('We could not confirm that the request was sent. Your details are still here; please try again in a moment.', 'error'); })
+      .catch(function () { say('We could not confirm that the request was sent. Your details are still here; please try again in a moment.', 'error'); lead({ ok: false, reason: 'no-answer' }); })
       .finally(function () { clearTimeout(late); send.disabled = false; });
   });
 })();
