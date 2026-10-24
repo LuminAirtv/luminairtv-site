@@ -3,14 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-Vm+EwPtbniltv467Ss2SOHD3fmtclBEHC9lMaBmC5do=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-8zJzrVZN953vahq2LZPb4QfGQ0WDedEX2si9+MPdqJY='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-TC7akoNOEEwzpN8QtB+MXUhsoSRBEyD4i1RQIuYJWwE=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU='; style-src 'sha256-GR0DcofrD3W4WSUGytIgwdcy61SCU1bajaZ5yRMeHmA='; font-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self' blob: data:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
 <title>Lumin AirTv in your space</title>
 <style>
 @font-face { font-family: "Work Sans"; src: url(/fonts/WorkSans-800-latin.woff2) format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
 @font-face { font-family: "Roboto Condensed"; src: url(/fonts/RobotoCondensed-latin-wght.woff2) format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
-/* v15 (23.10.2026, owner): the sphere turns like the one on the main page. "Та, которая на главной… не переворачивается кверх ногами.
+/* v16 (24.10.2026, owner on his iPad): in portrait the sphere came out on its side, in landscape it was fine. The screen-rotation
+   figure the browser reports differs between iPad and iPhone, and the gyroscope formula used it to roll the camera. The view
+   direction never depended on that figure, only the roll did, so the camera is now rebuilt from its view direction with the world's up:
+   the horizon stays level on the screen whatever the device says about its rotation.
+   v15 (23.10.2026, owner): the sphere turns like the one on the main page. "Та, которая на главной… не переворачивается кверх ногами.
    А виртуальная… поворачиваешь влево-вправо, и она задирается. Может вообще перевернуться." Measured: adding turns about two axes one
    after another builds up a roll, and 200 px of dragging down left the sphere upside down. Now the turn is kept as two angles, left-right
    without limit and up-down within ±80°, and the orientation is rebuilt from them every time: no roll, no flipping, the horizon stays level.
@@ -316,6 +320,7 @@ $('compact').addEventListener('click', () => foldPanel(!panel.classList.contains
 
 // Camera behind and the gyroscope: the camera turns with the phone, the sphere stays in its world direction.
 const zee = new THREE.Vector3(0, 0, 1), euler = new THREE.Euler(), q0 = new THREE.Quaternion(), q1 = new THREE.Quaternion(-Math.SQRT1_2, 0, 0, Math.SQRT1_2), qd = new THREE.Quaternion(), fwd = new THREE.Vector3();
+const ORIGIN = new THREE.Vector3(), lookM = new THREE.Matrix4();
 let gyro = false, yawFix = null, stream = null, motionNote = '';
 function onOrientation(e) {
   if (e.alpha == null) return;
@@ -326,6 +331,10 @@ function onOrientation(e) {
     fwd.set(0, 0, -1).applyQuaternion(qd); yawFix = new THREE.Quaternion().setFromAxisAngle(Y, -Math.atan2(-fwd.x, -fwd.z));
   }
   camera.quaternion.copy(yawFix).multiply(qd); gyro = true;
+  // Only the view direction is taken from the gyroscope; the camera is rebuilt around it with the world's up, so no roll from a
+  // misreported screen rotation (iPad in portrait, 24.10.2026) can turn the sphere on its side.
+  fwd.set(0, 0, -1).applyQuaternion(camera.quaternion);
+  if (Math.abs(fwd.y) < .995) { lookM.lookAt(ORIGIN, fwd, Y); camera.quaternion.setFromRotationMatrix(lookM); }
 }
 const MOTION_NOTE = 'Motion access is unavailable. The preview will stay relative to the screen.';
 async function startCamera() {
@@ -368,7 +377,7 @@ function resize() { renderer.setSize(innerWidth, innerHeight, false); camera.asp
 addEventListener('resize', resize); resize();
 const frame = () => { renderer.render(scene, camera); try { drawMini(); } catch (err) { console.error('mini:', err); } };
 renderer.setAnimationLoop(frame);
-window.luminAR = { ok: true, sphere, placed: () => placed, frames: () => renderer.info.render.frame, miniFrames: () => mini.info.render.frame };
+window.luminAR = { ok: true, sphere, camera, placed: () => placed, frames: () => renderer.info.render.frame, miniFrames: () => mini.info.render.frame };
 </script>
 <script>
 setTimeout(function () {
