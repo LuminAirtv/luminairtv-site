@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-uKy5pIRz2boDU8Edc/KBqPbLK/iTMquxGYoqW0Wgq20=' 'sha256-TC7akoNOEEwzpN8QtB+MXUhsoSRBEyD4i1RQIuYJWwE=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU=' https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; style-src 'sha256-GR0DcofrD3W4WSUGytIgwdcy61SCU1bajaZ5yRMeHmA='; font-src 'self'; img-src 'self' data: blob: https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.google.co.il https://*.google.ru https://*.g.doubleclick.net https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; media-src 'self' blob:; connect-src 'self' blob: data: https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.google.co.il https://*.google.ru https://*.g.doubleclick.net https://*.analytics.google.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com wss://mc.yandex.ru wss://mc.yandex.com wss://mc.webvisor.org wss://mc.webvisor.com; frame-src https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; child-src blob: https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; worker-src 'self' blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-kWfKJ0cuIR8yiOeHJE7n95f1fNFq0QBpc/rRn6LL6dw=' 'sha256-TC7akoNOEEwzpN8QtB+MXUhsoSRBEyD4i1RQIuYJWwE=' 'sha256-Vn5gD627RWYGI20Vbvo0Pfy8Jn80MJTtX8MUj3s4piU=' https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; style-src 'sha256-GR0DcofrD3W4WSUGytIgwdcy61SCU1bajaZ5yRMeHmA='; font-src 'self'; img-src 'self' data: blob: https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.google.co.il https://*.google.ru https://*.g.doubleclick.net https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; media-src 'self' blob:; connect-src 'self' blob: data: https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.google.co.il https://*.google.ru https://*.g.doubleclick.net https://*.analytics.google.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com wss://mc.yandex.ru wss://mc.yandex.com wss://mc.webvisor.org wss://mc.webvisor.com; frame-src https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; child-src blob: https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; worker-src 'self' blob:; base-uri 'none'; form-action 'none'; object-src 'none'">
 <meta name="referrer" content="strict-origin-when-cross-origin">
 <meta name="robots" content="noindex">
-<title>Lumin AirTv in your space</title>
+<title>Place your moon · Lumin AirTv</title>
 <style>
 @font-face { font-family: "Work Sans"; src: url(/fonts/WorkSans-800-latin.woff2) format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
 @font-face { font-family: "Roboto Condensed"; src: url(/fonts/RobotoCondensed-latin-wght.woff2) format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
@@ -105,7 +105,7 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 <video id="cam" playsinline muted autoplay aria-hidden="true"></video>
 <canvas id="stage" aria-label="The sphere in your space"></canvas>
 <div class="top">
-  <span class="brand">Lumin AirTv</span>
+  <span class="brand">Lumin AirTv · Place your moon</span>
   <span class="pill" id="status" aria-live="polite">Tap where the sphere should hang</span>
   <button class="btn pill-btn" id="compact" type="button" aria-expanded="true" aria-controls="panel">Hide</button>
 </div>
@@ -140,7 +140,7 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
 </section>
 <input id="file" type="file" accept="video/*" hidden>
 <script>
-// Lumin AirTv — visitor statistics: Google Analytics 4 and Yandex Metrica, v001, 24.10.2026 (owner: as much detail as possible).
+// Lumin AirTv — visitor statistics: Google Analytics 4 and Yandex Metrica, v001, 24.10.2026 (owner: as much detail as possible); 26.10: situation buttons, data-cta links, sections anywhere in main.
 // Runs only on luminairtv.co.il (or with localStorage luminAnalyticsTest = 1 for a check), never in previews or the claude.ai artifact,
 // and not on a page that is leaving for another language. Reports page views, the sections a visitor reaches, every button,
 // link or tab pressed with the section it sits in, Play demo and own video, AR opened, language switched, YouTube or photo
@@ -179,7 +179,9 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
     var el = e.target && e.target.closest ? e.target.closest('a,button,[role="tab"],summary') : null; if (!el) return;
     var d = describe(el), href = el.getAttribute('href') || '';
     if (el.matches('nav.langs a')) { track('lang_switch', { to: el.getAttribute('hreflang') || href, label: d.label, where: d.where }); return; }
-    if (el.matches('.ar-link')) { track('ar_open', { label: 'ar-link', where: d.where }); return; }
+    if (el.matches('.ar-link, a[data-cta="ar"]')) { track('ar_open', { label: el.getAttribute('data-cta') ? 'place-your-moon' : 'ar-link', where: d.where }); return; }
+    if (el.matches('.sit-photo')) return;   // opens the gallery viewer, which reports photo_open itself
+    if (el.matches('.sit')) { track('situation_select', { situation: el.getAttribute('data-situation') || '', label: el.getAttribute('data-situation') || '', where: 'situations' }); return; }   // not counted as ui_click as well
     if (el.id === 'play') { track(el.getAttribute('aria-pressed') === 'true' ? 'demo_pause' : 'demo_play', { label: 'play', where: d.where }); return; }
     if (el.id === 'pick') { track('own_video_pick', { label: 'pick', where: d.where }); return; }
     if (el.getAttribute('data-yt')) { track('youtube_open', { video_id: el.getAttribute('data-yt'), label: d.label, where: d.where }); return; }
@@ -189,12 +191,12 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
   }, true);
   document.addEventListener('change', function (e) {
     var t = e.target; if (!t) return;
-    if (t.id === 'file') { if (t.files && t.files.length) track('own_video_loaded', { label: t.files[0].type || 'video', where: 'stage' }); return; }
-    if (t.tagName === 'SELECT' || t.type === 'radio' || t.type === 'checkbox') track('ui_change', { label: t.name || t.id || '', value: t.type === 'checkbox' ? String(t.checked) : String(t.value).slice(0, 40), where: 'form' });
+    if (t.type === 'file') { if (t.files && t.files.length) track('own_video_loaded', { label: t.files[0].type || 'video', where: 'stage' }); return; }   // main page: #video-file, AR: #file
+    if (t.tagName === 'SELECT' || t.type === 'radio' || t.type === 'checkbox') track('ui_change', { label: t.name || t.id || '', choice: t.type === 'checkbox' ? String(t.checked) : String(t.value).slice(0, 40), where: 'form' });
   }, true);
   document.addEventListener('lumin:lead', function (e) {
     var d = (e && e.detail) || {};
-    track(d.ok ? 'generate_lead' : 'lead_error', { label: d.request || '', size: d.size || '', reason: d.reason || '', where: 'form' });
+    track(d.ok ? 'generate_lead' : 'lead_error', { label: d.request || '', size: d.size || '', reason: d.reason || '', situation: d.situation || '', dates: d.dates || '', presentation: d.presentation || '', where: 'form' });   // audit A01: no text in the numeric value
   });
   function sections() {   // a section counts as seen when half of it, or half a screen of it, is in view; once per page view
     if (!('IntersectionObserver' in window)) return;
@@ -205,7 +207,7 @@ body { background: radial-gradient(120% 80% at 50% 20%, #0b1424 0%, var(--sky) 6
       });
     }, { threshold: [0, .25, .5] });
     var strips = 0;
-    [].forEach.call(document.querySelectorAll('main > section, main > footer, .walls, .gallery-block'), function (s) { if (!s.id && s.className.indexOf('gallery-block') === 0) s.setAttribute('data-track', 'gallery-block-' + (++strips)); io.observe(s); });
+    [].forEach.call(document.querySelectorAll('main section[id]:not(#situation), main > footer, .walls, .gallery-block'), function (s) { if (!s.id && s.className.indexOf('gallery-block') === 0) s.setAttribute('data-track', 'gallery-block-' + (++strips)); io.observe(s); });
   }
   // This script sits at the top of the body, before the sections exist: watch them once the page is parsed.
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sections); else sections();
