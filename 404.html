@@ -3,14 +3,88 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'sha256-r/MHUEeR7LySIiB6/MOAhT+aCxuTnceO37tqKlh+jgk='; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'sha256-kWfKJ0cuIR8yiOeHJE7n95f1fNFq0QBpc/rRn6LL6dw=' https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; style-src 'sha256-r/MHUEeR7LySIiB6/MOAhT+aCxuTnceO37tqKlh+jgk='; img-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.google.co.il https://*.google.ru https://*.g.doubleclick.net https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.google.com https://*.google.co.il https://*.google.ru https://*.g.doubleclick.net https://*.analytics.google.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com wss://mc.yandex.ru wss://mc.yandex.com wss://mc.webvisor.org wss://mc.webvisor.com; frame-src https://www.googletagmanager.com https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; child-src blob: https://mc.yandex.ru https://mc.yandex.com https://mc.webvisor.org https://mc.webvisor.com; base-uri 'none'; form-action 'none'; object-src 'none'; upgrade-insecure-requests">
 <meta name="robots" content="noindex">
 <title>Page not found — Lumin AirTv</title>
 <style>body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;box-sizing:border-box;background:#03050b;color:#f3f6f9;font:16px/1.5 Arial,sans-serif}main{display:grid;gap:18px;max-width:36em}p{margin:0}a{color:#009de0}</style>
 </head>
-<body><main>
+<body data-area="404"><main>
 <p>This page could not be found. <a href="/">Return to Lumin AirTv</a> to explore the sphere and the project enquiry form.</p>
 <p lang="he" dir="rtl">הדף לא נמצא. <a href="/he/">לעמוד הראשי של Lumin AirTv</a>, ל-AirTv ולטופס הפנייה.</p>
 <p lang="ru">Страница не найдена. <a href="/ru/">Вернуться на Lumin AirTv</a>, к сфере и форме заявки.</p>
-</main></body>
+</main><script>
+// Lumin AirTv — visitor statistics: Google Analytics 4 and Yandex Metrica, v001, 24.10.2026 (owner: as much detail as possible); 26.10: situation buttons, data-cta links, sections anywhere in main.
+// Runs only on luminairtv.co.il (or with localStorage luminAnalyticsTest = 1 for a check), never in previews or the claude.ai artifact,
+// and not on a page that is leaving for another language. Reports page views, the sections a visitor reaches, every button,
+// link or tab pressed with the section it sits in, Play demo and own video, AR opened, language switched, YouTube or photo
+// opened, form options chosen and the form sent. Device, browser, screen, country and city come from the tools themselves.
+// Nothing typed into the form (name, e-mail, message) is sent to either tool.
+(function () {
+  var GA = 'G-FQTJQK7WMG', YM = 113769254, HOST = 'luminairtv.co.il';
+  var test = false; try { test = localStorage.getItem('luminAnalyticsTest') === '1'; } catch (e) {}
+  if ((location.hostname !== HOST && !test) || window.luminRedirecting) return;
+  var lang = document.documentElement.lang || 'en', area = document.body.getAttribute('data-area') || 'site';
+  function load(src) { var s = document.createElement('script'); s.async = true; s.src = src; document.head.appendChild(s); }
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { window.dataLayer.push(arguments); }
+  if (!window.gtag) window.gtag = gtag;
+  gtag('js', new Date());
+  gtag('config', GA, { page_lang: lang, area: area });
+  load('https://www.googletagmanager.com/gtag/js?id=' + GA);
+  if (YM) {
+    if (!window.ym) { window.ym = function () { (window.ym.a = window.ym.a || []).push(arguments); }; window.ym.l = 1 * new Date(); }
+    window.ym(YM, 'init', { clickmap: true, trackLinks: true, accurateTrackBounce: true, webvisor: true, trackHash: true, params: { page_lang: lang, area: area } });
+    load('https://mc.yandex.ru/metrika/tag.js?id=' + YM);
+  }
+  function track(name, params) {
+    params = params || {}; params.page_lang = lang; params.area = area;
+    try { gtag('event', name, params); } catch (e) {}
+    if (YM) { try { window.ym(YM, 'reachGoal', name, params); } catch (e) {} }
+  }
+  window.luminTrack = track;
+  function key(el) { return el.id || el.getAttribute('data-track') || (el.className || '').split(' ')[0] || el.tagName.toLowerCase(); }   // language-neutral names for sections
+  function describe(el) {
+    var sec = el.closest('section,header,footer,nav,.walls,.gallery-block,.panel,.viewer,.lightbox');
+    var text = (el.textContent || '').replace(/\s+/g, ' ').trim().slice(0, 40);
+    return { label: el.id || el.getAttribute('aria-label') || text || el.getAttribute('href') || el.tagName.toLowerCase(), where: sec ? key(sec) : 'page' };
+  }
+  document.addEventListener('click', function (e) {
+    var el = e.target && e.target.closest ? e.target.closest('a,button,[role="tab"],summary') : null; if (!el) return;
+    var d = describe(el), href = el.getAttribute('href') || '';
+    if (el.matches('nav.langs a')) { track('lang_switch', { to: el.getAttribute('hreflang') || href, label: d.label, where: d.where }); return; }
+    if (el.matches('.ar-link, a[data-cta="ar"]')) { track('ar_open', { label: el.getAttribute('data-cta') ? 'place-your-moon' : 'ar-link', where: d.where }); return; }
+    if (el.matches('.sit-photo')) return;   // opens the gallery viewer, which reports photo_open itself
+    if (el.matches('.sit')) { track('situation_select', { situation: el.getAttribute('data-situation') || '', label: el.getAttribute('data-situation') || '', where: 'situations' }); return; }   // not counted as ui_click as well
+    if (el.id === 'play') { track(el.getAttribute('aria-pressed') === 'true' ? 'demo_pause' : 'demo_play', { label: 'play', where: d.where }); return; }
+    if (el.id === 'pick') { track('own_video_pick', { label: 'pick', where: d.where }); return; }
+    if (el.getAttribute('data-yt')) { track('youtube_open', { video_id: el.getAttribute('data-yt'), label: d.label, where: d.where }); return; }
+    if (el.matches('.shot')) { track('photo_open', { photo: href.split('/').pop(), label: d.label, where: d.where }); return; }
+    if (el.id === 'send') return;   // what happened to the request is reported below
+    track('ui_click', { label: d.label, where: d.where, href: href });
+  }, true);
+  document.addEventListener('change', function (e) {
+    var t = e.target; if (!t) return;
+    if (t.type === 'file') { if (t.files && t.files.length) track('own_video_loaded', { label: t.files[0].type || 'video', where: 'stage' }); return; }   // main page: #video-file, AR: #file
+    if (t.tagName === 'SELECT' || t.type === 'radio' || t.type === 'checkbox') track('ui_change', { label: t.name || t.id || '', choice: t.type === 'checkbox' ? String(t.checked) : String(t.value).slice(0, 40), where: 'form' });
+  }, true);
+  document.addEventListener('lumin:lead', function (e) {
+    var d = (e && e.detail) || {};
+    track(d.ok ? 'generate_lead' : 'lead_error', { label: d.request || '', size: d.size || '', reason: d.reason || '', situation: d.situation || '', dates: d.dates || '', presentation: d.presentation || '', where: 'form' });   // audit A01: no text in the numeric value
+  });
+  function sections() {   // a section counts as seen when half of it, or half a screen of it, is in view; once per page view
+    if (!('IntersectionObserver' in window)) return;
+    var seen = {}, io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting || (en.intersectionRatio < .5 && en.intersectionRect.height < innerHeight * .5)) return;
+        var k = key(en.target); if (seen[k]) return; seen[k] = 1; io.unobserve(en.target); track('section_view', { section: k, where: k });
+      });
+    }, { threshold: [0, .25, .5] });
+    var strips = 0;
+    [].forEach.call(document.querySelectorAll('main section[id]:not(#situation), main > footer, .walls, .gallery-block'), function (s) { if (!s.id && s.className.indexOf('gallery-block') === 0) s.setAttribute('data-track', 'gallery-block-' + (++strips)); io.observe(s); });
+  }
+  // This script sits at the top of the body, before the sections exist: watch them once the page is parsed.
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', sections); else sections();
+})();
+</script>
+</body>
 </html>
